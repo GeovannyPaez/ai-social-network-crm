@@ -21,7 +21,7 @@ import { i18n } from "../../translate/i18n";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { Can } from "../Can";
 import TicketsQueueSelect from "../TicketsQueueSelect";
-import { Button } from "@material-ui/core";
+import { Button, Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   ticketsWrapper: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
   tabsHeader: {
     flex: "none",
-    backgroundColor: "#eee",
+    // backgroundColor: "#eee",
   },
 
   settingsIcon: {
@@ -54,13 +54,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    background: "#fafafa",
+    background: "rgb(80, 80, 80)",
     padding: theme.spacing(1),
   },
 
   serachInputWrapper: {
     flex: 1,
-    background: "#fff",
+    // background: "#fff",
     display: "flex",
     borderRadius: 40,
     padding: 4,
@@ -167,6 +167,7 @@ const TicketsManager = () => {
           variant="fullWidth"
           indicatorColor="primary"
           textColor="primary"
+          style={{ backgroundColor: "rgb(80, 80, 80)" }}
           aria-label="icon label tabs example"
         >
           <Tab
@@ -189,6 +190,9 @@ const TicketsManager = () => {
           />
         </Tabs>
       </Paper>
+      <Divider />
+      <Divider />
+      <Divider />
       <Paper square elevation={0} className={classes.ticketOptionsBox}>
         {tab === "search" ? (
           <div className={classes.serachInputWrapper}>
@@ -205,7 +209,6 @@ const TicketsManager = () => {
           <>
             <Button
               variant="outlined"
-              color="primary"
               onClick={() => setNewTicketModalOpen(true)}
             >
               {i18n.t("ticketsManager.buttons.newTicket")}
@@ -254,6 +257,7 @@ const TicketsManager = () => {
                 className={classes.badge}
                 badgeContent={openCount}
                 color="primary"
+              // style={{ color: "white" }}
               >
                 {i18n.t("ticketsList.assignedHeader")}
               </Badge>
@@ -265,7 +269,7 @@ const TicketsManager = () => {
               <Badge
                 className={classes.badge}
                 badgeContent={pendingCount}
-                color="secondary"
+                color="primary"
               >
                 {i18n.t("ticketsList.pendingHeader")}
               </Badge>
@@ -303,7 +307,7 @@ const TicketsManager = () => {
           selectedQueueIds={selectedQueueIds}
         />
       </TabPanel>
-    </Paper>
+    </Paper >
   );
 };
 

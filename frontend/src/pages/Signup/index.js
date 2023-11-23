@@ -28,6 +28,7 @@ import { i18n } from "../../translate/i18n";
 
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
+import Logo from "../../components/Logo";
 
 // const Copyright = () => {
 // 	return (
@@ -93,10 +94,8 @@ const SignUp = () => {
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
-				<Avatar className={classes.avatar}>
-					<LockOutlined />
-				</Avatar>
-				<Typography component="h1" variant="h5">
+				<Logo />
+				<Typography component="h1" style={{ marginTop: 20 }} variant="h5">
 					{i18n.t("signup.title")}
 				</Typography>
 				{/* <form className={classes.form} noValidate onSubmit={handleSignUp}> */}

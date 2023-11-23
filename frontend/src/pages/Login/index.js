@@ -22,6 +22,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { i18n } from "../../translate/i18n";
 
 import { AuthContext } from "../../context/Auth/AuthContext";
+import Footer from "../../components/Footer";
+import Logo from "../../components/Logo";
 
 // const Copyright = () => {
 // 	return (
@@ -43,10 +45,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
+
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -77,10 +76,8 @@ const Login = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlined />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+        <Logo />
+        <Typography component="h1" style={{ marginTop: 20 }} variant="h5">
           {i18n.t("login.title")}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handlSubmit}>
@@ -146,6 +143,8 @@ const Login = () => {
         </form>
       </div>
       <Box mt={8}>{/* <Copyright /> */}</Box>
+      <Footer />
+
     </Container>
   );
 };

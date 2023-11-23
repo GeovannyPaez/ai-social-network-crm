@@ -12,6 +12,7 @@ import {
   MenuItem,
   IconButton,
   Menu,
+  Box,
 } from "@material-ui/core";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -24,6 +25,8 @@ import UserModal from "../components/UserModal";
 import { AuthContext } from "../context/Auth/AuthContext";
 import BackdropLoading from "../components/BackdropLoading";
 import { i18n } from "../translate/i18n";
+import Footer from "../components/Footer";
+import MessageAbFooter from "../components/Footer/MessageAbFooter";
 
 const drawerWidth = 240;
 
@@ -71,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   drawerPaper: {
+    backgroundColor: "rgb(33 33 33)",
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
@@ -100,6 +104,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+    // backgroundColor: "#000000",
   },
   paper: {
     padding: theme.spacing(2),
@@ -178,14 +183,18 @@ const LoggedInLayout = ({ children }) => {
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon color="primary" />
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List  >
           <MainListItems drawerClose={drawerClose} />
         </List>
         <Divider />
+        <Box style={{ position: "absolute", bottom: 5, left: "5%" }}>
+          <MessageAbFooter />
+        </Box>
+
       </Drawer>
       <UserModal
         open={userModalOpen}
@@ -194,13 +203,13 @@ const LoggedInLayout = ({ children }) => {
       />
       <AppBar
         position="absolute"
+        color="default"
         className={clsx(classes.appBar, drawerOpen && classes.appBarShift)}
-        color={process.env.NODE_ENV === "development" ? "inherit" : "primary"}
       >
         <Toolbar variant="dense" className={classes.toolbar}>
           <IconButton
             edge="start"
-            color="inherit"
+            color="secondary"
             aria-label="open drawer"
             onClick={() => setDrawerOpen(!drawerOpen)}
             className={clsx(
@@ -213,11 +222,12 @@ const LoggedInLayout = ({ children }) => {
           <Typography
             component="h1"
             variant="h6"
-            color="inherit"
+            color="primary"
             noWrap
+
             className={classes.title}
           >
-            WhaTicket
+            AB Whatsapp
           </Typography>
           {user.id && <NotificationsPopOver />}
 
@@ -227,7 +237,7 @@ const LoggedInLayout = ({ children }) => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleMenu}
-              color="inherit"
+              color="secondary"
             >
               <AccountCircle />
             </IconButton>
@@ -256,12 +266,16 @@ const LoggedInLayout = ({ children }) => {
           </div>
         </Toolbar>
       </AppBar>
-      <main className={classes.content}>
+      <main style={{
+        backgroundColor: "rgb(80 80 80)",
+        // color: "#ffffff",
+      }} className={classes.content}>
         <div className={classes.appBarSpacer} />
 
         {children ? children : null}
       </main>
     </div>
+
   );
 };
 

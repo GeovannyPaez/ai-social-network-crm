@@ -152,9 +152,9 @@ const reducer = (state, action) => {
 	}
 };
 
-	const TicketsList = (props) => {
-		const { status, searchParam, showAll, selectedQueueIds, updateCount, style } =
-			props;
+const TicketsList = (props) => {
+	const { status, searchParam, showAll, selectedQueueIds, updateCount, style } =
+		props;
 	const classes = useStyles();
 	const [pageNumber, setPageNumber] = useState(1);
 	const [ticketsList, dispatch] = useReducer(reducer, []);
@@ -247,11 +247,11 @@ const reducer = (state, action) => {
 	}, [status, searchParam, showAll, user, selectedQueueIds]);
 
 	useEffect(() => {
-    if (typeof updateCount === "function") {
-      updateCount(ticketsList.length);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ticketsList]);
+		if (typeof updateCount === "function") {
+			updateCount(ticketsList.length);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ticketsList]);
 
 	const loadMore = () => {
 		setPageNumber(prevState => prevState + 1);
@@ -269,7 +269,7 @@ const reducer = (state, action) => {
 	};
 
 	return (
-    <Paper className={classes.ticketsListWrapper} style={style}>
+		<Paper className={classes.ticketsListWrapper} style={style}>
 			<Paper
 				square
 				name="closed"
@@ -297,7 +297,7 @@ const reducer = (state, action) => {
 					{loading && <TicketsListSkeleton />}
 				</List>
 			</Paper>
-    </Paper>
+		</Paper >
 	);
 };
 

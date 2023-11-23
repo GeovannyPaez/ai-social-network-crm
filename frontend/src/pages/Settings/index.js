@@ -95,7 +95,7 @@ const Settings = () => {
 	return (
 		<div className={classes.root}>
 			<Container className={classes.container} maxWidth="sm">
-				<Typography variant="body2" gutterBottom>
+				<Typography variant="h4" color="textPrimary" gutterBottom>
 					{i18n.t("settings.title")}
 				</Typography>
 				<Paper className={classes.paper}>
@@ -132,6 +132,7 @@ const Settings = () => {
 						margin="dense"
 						variant="outlined"
 						fullWidth
+						color="textSecondary"
 						value={settings && settings.length > 0 && getSettingValue("userApiToken")}
 					/>
 				</Paper>

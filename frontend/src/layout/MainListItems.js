@@ -35,7 +35,7 @@ function ListItemLink(props) {
   return (
     <li>
       <ListItem button component={renderLink} className={className}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        {icon ? <ListItemIcon color="secodary">{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
       </ListItem>
     </li>
@@ -71,65 +71,68 @@ const MainListItems = (props) => {
   }, [whatsApps]);
 
   return (
-    <div onClick={drawerClose}>
-      <ListItemLink
-        to="/"
-        primary="Dashboard"
-        icon={<DashboardOutlinedIcon />}
-      />
-      <ListItemLink
-        to="/connections"
-        primary={i18n.t("mainDrawer.listItems.connections")}
-        icon={
-          <Badge badgeContent={connectionWarning ? "!" : 0} color="error">
-            <SyncAltIcon />
-          </Badge>
-        }
-      />
-      <ListItemLink
-        to="/tickets"
-        primary={i18n.t("mainDrawer.listItems.tickets")}
-        icon={<WhatsAppIcon />}
-      />
+    <>
+      <div onClick={drawerClose}>
+        <ListItemLink
+          to="/"
+          primary="Dashboard"
+          icon={<DashboardOutlinedIcon color="secondary" />}
+        />
+        <ListItemLink
+          to="/connections"
+          primary={i18n.t("mainDrawer.listItems.connections")}
+          icon={
+            <Badge badgeContent={connectionWarning ? "!" : 0} color="error">
+              <SyncAltIcon color="secondary" />
+            </Badge>
+          }
+        />
+        <ListItemLink
+          to="/tickets"
+          primary={i18n.t("mainDrawer.listItems.tickets")}
+          icon={<WhatsAppIcon color="secondary" />}
+        />
 
-      <ListItemLink
-        to="/contacts"
-        primary={i18n.t("mainDrawer.listItems.contacts")}
-        icon={<ContactPhoneOutlinedIcon />}
-      />
-      <ListItemLink
-        to="/quickAnswers"
-        primary={i18n.t("mainDrawer.listItems.quickAnswers")}
-        icon={<QuestionAnswerOutlinedIcon />}
-      />
-      <Can
-        role={user.profile}
-        perform="drawer-admin-items:view"
-        yes={() => (
-          <>
-            <Divider />
-            <ListSubheader inset>
-              {i18n.t("mainDrawer.listItems.administration")}
-            </ListSubheader>
-            <ListItemLink
-              to="/users"
-              primary={i18n.t("mainDrawer.listItems.users")}
-              icon={<PeopleAltOutlinedIcon />}
-            />
-            <ListItemLink
-              to="/queues"
-              primary={i18n.t("mainDrawer.listItems.queues")}
-              icon={<AccountTreeOutlinedIcon />}
-            />
-            <ListItemLink
-              to="/settings"
-              primary={i18n.t("mainDrawer.listItems.settings")}
-              icon={<SettingsOutlinedIcon />}
-            />
-          </>
-        )}
-      />
-    </div>
+        <ListItemLink
+          to="/contacts"
+          primary={i18n.t("mainDrawer.listItems.contacts")}
+          icon={<ContactPhoneOutlinedIcon color="secondary" />}
+        />
+        <ListItemLink
+          to="/quickAnswers"
+          primary={i18n.t("mainDrawer.listItems.quickAnswers")}
+          icon={<QuestionAnswerOutlinedIcon color="secondary" />}
+        />
+        <Can
+          role={user.profile}
+          perform="drawer-admin-items:view"
+          yes={() => (
+            <>
+              <Divider />
+              <ListSubheader inset>
+                {i18n.t("mainDrawer.listItems.administration")}
+              </ListSubheader >
+              <ListItemLink
+                to="/users"
+                primary={i18n.t("mainDrawer.listItems.users")}
+                icon={<PeopleAltOutlinedIcon color="secondary" />}
+              />
+              <ListItemLink
+                to="/queues"
+                primary={i18n.t("mainDrawer.listItems.queues")}
+                icon={<AccountTreeOutlinedIcon color="secondary" />}
+              />
+              <ListItemLink
+                to="/settings"
+                primary={i18n.t("mainDrawer.listItems.settings")}
+                icon={<SettingsOutlinedIcon color="secondary" />}
+              />
+            </>
+          )}
+        />
+
+      </div>
+    </>
   );
 };
 

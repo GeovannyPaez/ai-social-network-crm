@@ -163,8 +163,7 @@ const Queues = () => {
       <ConfirmationModal
         title={
           selectedQueue &&
-          `${i18n.t("queues.confirmationModal.deleteTitle")} ${
-            selectedQueue.name
+          `${i18n.t("queues.confirmationModal.deleteTitle")} ${selectedQueue.name
           }?`
         }
         open={confirmModalOpen}

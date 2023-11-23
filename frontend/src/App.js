@@ -10,19 +10,30 @@ const App = () => {
 
   const theme = createTheme(
     {
-      scrollbarStyles: {
-        "&::-webkit-scrollbar": {
-          width: "8px",
-          height: "8px",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)",
-          backgroundColor: "#e8e8e8",
-        },
-      },
       palette: {
-        primary: { main: "#2576d2" },
+        type: "dark",
+        primary: {
+          main: "#0070f0", // Azul oscuro principal
+        },
+        "grey": {
+          "50": "#ffffff",
+        },
+        secondary: {
+          main: "#ffffff", // Blanco
+        },
+        background: {
+          default: "#000000", // Fondo negro
+          paper: "#313131" // Fondo de papel ligeramente más claro que el negro
+        },
+        "action": {
+
+        },
+        text: {
+          primary: "#ffffff", // Texto principal en blanco
+          secondary: "#cccccc" // Texto secundario en gris claro
+        },
       },
+
     },
     locale
   );
