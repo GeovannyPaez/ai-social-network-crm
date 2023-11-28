@@ -6,12 +6,12 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Select from "@material-ui/core/Select";
-import TextField from "@material-ui/core/TextField";
 import { toast } from "react-toastify";
-
+import manualDocuement from "../../assets/manual.pdf"
 import api from "../../services/api";
 import { i18n } from "../../translate/i18n.js";
 import toastError from "../../errors/toastError";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 		display: "flex",
 		alignItems: "center",
 		marginBottom: 12,
-
+		gap: 12,
 	},
 
 	settingOption: {
@@ -34,7 +34,6 @@ const useStyles = makeStyles(theme => ({
 	margin: {
 		margin: theme.spacing(1),
 	},
-
 }));
 
 const Settings = () => {
@@ -124,7 +123,7 @@ const Settings = () => {
 
 				</Paper>
 
-				<Paper className={classes.paper}>
+				{/* <Paper className={classes.paper}>
 					<TextField
 						id="api-token-setting"
 						readonly
@@ -135,8 +134,18 @@ const Settings = () => {
 						color="textSecondary"
 						value={settings && settings.length > 0 && getSettingValue("userApiToken")}
 					/>
-				</Paper>
+				</Paper> */}
+				<Paper className={classes.paper} style={{ justifyContent: "space-between" }}>
+					<a download href={manualDocuement}>
+						<Button variant="contained" color="secondary">
+							Descargar Manual
+						</Button>
 
+					</a>
+					<a rel="noreferrer" target="_blank" href={"https://api.whatsapp.com/send/?phone=%2B573158227811&text&type=phone_number&app_absent=0"}>
+						<Button variant="contained" color="primary">Soporte</Button>
+					</a>
+				</Paper>
 			</Container>
 		</div>
 	);
