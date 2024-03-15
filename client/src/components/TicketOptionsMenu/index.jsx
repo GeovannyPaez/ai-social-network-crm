@@ -42,9 +42,9 @@ const TicketOptionsMenu = ({ ticket, menuOpen, handleClose, anchorEl }) => {
 	};
 
 	const handleCloseTransferTicketModal = () => {
-		if (isMounted.current) {
-			setTransferTicketModalOpen(false);
-		}
+		// if (isMounted.current) {
+		setTransferTicketModalOpen(false);
+		// }
 	};
 
 	return (

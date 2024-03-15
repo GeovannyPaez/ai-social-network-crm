@@ -204,7 +204,8 @@ const TicketsManager = () => {
         ) : (
           <>
             <Button
-              variant="outlined"
+              color="secondary"
+              variant="contained"
               onClick={() => setNewTicketModalOpen(true)}
             >
               {i18n.t("ticketsManager.buttons.newTicket")}

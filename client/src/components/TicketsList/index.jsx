@@ -5,7 +5,7 @@ import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
 
 import TicketListItem from "../TicketListItem";
-// import TicketsListSkeleton from "../TicketsListSkeleton";
+import TicketsListSkeleton from "../TicketsListSkeleton";
 
 import useTickets from "../../hooks/useTickets";
 import { i18n } from "../../translate/i18n";
@@ -178,6 +178,7 @@ const TicketsList = (props) => {
 			type: "LOAD_TICKETS",
 			payload: tickets,
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tickets]);
 
 	useEffect(() => {
@@ -292,7 +293,7 @@ const TicketsList = (props) => {
 							))}
 						</>
 					)}
-					{/* {loading && <TicketsListSkeleton />} */}
+					{loading && <TicketsListSkeleton count={4} />}
 				</List>
 			</TicketsListStyled>
 		</TicketsListWrapper>
