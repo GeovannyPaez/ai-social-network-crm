@@ -11,7 +11,7 @@ import Hidden from "@mui/material/Hidden";
 
 const ChatContainer = styled("div")({
   flex: 1,
-  height: `calc(100vh - 115px)`,
+  height: `calc(100vh - 68px)`,
   overflow: "hidden",
 });
 const ChatPaper = styled(Paper)({

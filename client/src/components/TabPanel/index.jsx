@@ -1,15 +1,16 @@
+import { Box } from "@mui/material";
 
 const TabPanel = ({ children, value, name, ...rest }) => {
 	if (value === name) {
 		return (
-			<div
+			<Box
 				role="tabpanel"
 				id={`simple-tabpanel-${name}`}
 				aria-labelledby={`simple-tab-${name}`}
 				{...rest}
 			>
 				{children}
-			</div>
+			</Box>
 		);
 	} else return null;
 };

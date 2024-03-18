@@ -44,7 +44,7 @@ export default function LoggedInLayout() {
         <MainListItems drawerClose={handleDrawerClose} />
       </Drawer>
       <UserModal open={userModalOpen} onClose={() => setUserModalOpen(false)} userId={user?.id} />
-      <Box component="main" sx={{ flexGrow: 1, p: 3, overflow: "hidden" }}>
+      <Box component="main" sx={{ flexGrow: 1, overflow: "hidden" }}>
         <DrawerHeader />
         <Outlet />
       </Box>

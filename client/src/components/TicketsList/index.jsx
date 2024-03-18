@@ -269,7 +269,7 @@ const TicketsList = (props) => {
 	};
 
 	return (
-		<TicketsListWrapper style={style}>
+		<TicketsListWrapper sx={style}>
 			<TicketsListStyled
 				square
 				name="closed"

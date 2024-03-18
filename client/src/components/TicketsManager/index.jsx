@@ -153,7 +153,7 @@ const TicketsManager = () => {
   };
 
   return (
-    <TicketsWrapper elevation={0} variant="outlined">
+    <TicketsWrapper elevation={0} variant="outlined" >
       <NewTicketModal
         modalOpen={newTicketModalOpen}
         onClose={() => setNewTicketModalOpen(false)}
@@ -240,7 +240,7 @@ const TicketsManager = () => {
           onChange={(values) => setSelectedQueueIds(values)}
         />
       </TicketOptionsBox>
-      <TabPanel value={tab} name="open" >
+      <TabPanel value={tab} name="open" sx={{ height: "calc(100vh - 270px)" }}>
         <Tabs
           value={tabOpen}
           onChange={handleChangeTabOpen}
