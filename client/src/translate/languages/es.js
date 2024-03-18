@@ -196,7 +196,7 @@ const messages = {
         },
         buttons: {
           okAdd: "Añadir",
-          okEdit: "Ahorrar",
+          okEdit: "Editar",
           cancel: "Cancelar",
         },
       },
