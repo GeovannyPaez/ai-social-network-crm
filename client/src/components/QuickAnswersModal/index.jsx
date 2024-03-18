@@ -1,4 +1,4 @@
-import  { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { toast } from "react-toastify";
@@ -39,7 +39,6 @@ const QuickAnswersModal = ({
   initialValues,
   onSave,
 }) => {
-  const isMounted = useRef(true);
   const initialState = {
     shortcut: "",
     message: "",
@@ -47,11 +46,6 @@ const QuickAnswersModal = ({
 
   const [quickAnswer, setQuickAnswer] = useState(initialState);
 
-  useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     const fetchQuickAnswer = async () => {
@@ -65,9 +59,7 @@ const QuickAnswersModal = ({
 
       try {
         const { data } = await api.get(`/quickAnswers/${quickAnswerId}`);
-        if (isMounted.current) {
-          setQuickAnswer(data);
-        }
+        setQuickAnswer(data);
       } catch (err) {
         toastError(err);
       }
@@ -124,10 +116,10 @@ const QuickAnswersModal = ({
             }, 400);
           }}
         >
-          {({  errors, touched, isSubmitting }) => (
+          {({ errors, touched, isSubmitting }) => (
             <Form>
               <DialogContent dividers>
-                <Box sx={{width:"100%"}} >
+                <Box sx={{ width: "100%" }} >
                   <Field
                     as={TextField}
                     label={i18n.t("quickAnswersModal.form.shortcut")}
@@ -140,7 +132,7 @@ const QuickAnswersModal = ({
                     fullWidth
                   />
                 </Box>
-                <Box sx={{width:"100%"}}>
+                <Box sx={{ width: "100%" }}>
                   <Field
                     as={TextField}
                     label={i18n.t("quickAnswersModal.form.message")}
@@ -150,7 +142,7 @@ const QuickAnswersModal = ({
                     variant="outlined"
                     margin="dense"
                     multiline
-                    
+
                     rows={5}
                     fullWidth
                   />
