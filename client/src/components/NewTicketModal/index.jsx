@@ -8,9 +8,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-// import Autocomplete, {
-// 	createFilterOptions,
-// } from "@material-ui/lab/Autocomplete";
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { i18n } from "../../translate/i18n";
@@ -20,9 +18,9 @@ import ContactModal from "../ContactModal";
 import toastError from "../../errors/toastError";
 import { AuthContext } from "../../context/Auth/AuthContext";
 
-// const filter = createFilterOptions({
-// 	trim: true,
-// });
+const filter = createFilterOptions({
+	trim: true,
+});
 
 const NewTicketModal = ({ modalOpen, onClose }) => {
 	const history = useNavigate();
@@ -100,34 +98,24 @@ const NewTicketModal = ({ modalOpen, onClose }) => {
 		handleSaveTicket(contact.id);
 	};
 
-	// const createAddContactOption = (filterOptions, params) => {
-	// 	const filtered = filter(filterOptions, params);
+	const createAddContactOption = (filterOptions, params) => {
+		const filtered = filter(filterOptions, params);
 
-	// 	if (params.inputValue !== "" && !loading && searchParam.length >= 3) {
-	// 		filtered.push({
-	// 			name: `${params.inputValue}`,
-	// 		});
-	// 	}
-
-	// 	return filtered;
-	// };
-
-	const renderOption = option => {
-		if (option.number) {
-			return `${option.name} - ${option.number}`;
-		} else {
-			return `${i18n.t("newTicketModal.add")} ${option.name}`;
+		if (params.inputValue !== "" && !loading && searchParam.length >= 3) {
+			filtered.push({
+				name: `${params.inputValue}`,
+			});
 		}
+		return filtered;
 	};
 
-	const renderOptionLabel = option => {
+	const renderOptionLabel = (option) => {
 		if (option.number) {
 			return `${option.name} - ${option.number}`;
 		} else {
 			return `${option.name}`;
 		}
 	};
-
 	return (
 		<>
 			<ContactModal
@@ -141,26 +129,24 @@ const NewTicketModal = ({ modalOpen, onClose }) => {
 					{i18n.t("newTicketModal.title")}
 				</DialogTitle>
 				<DialogContent dividers>
-					{/* <Autocomplete
+					<Autocomplete
 						options={options}
 						loading={loading}
-						style={{ width: 300 }}
+						sx={{ width: 300 }}
 						clearOnBlur
 						autoHighlight
 						freeSolo
 						clearOnEscape
 						getOptionLabel={renderOptionLabel}
-						renderOption={renderOption}
 						filterOptions={createAddContactOption}
 						onChange={(e, newValue) => handleSelectOption(e, newValue)}
 						renderInput={params => (
 							<TextField
 								{...params}
 								label={i18n.t("newTicketModal.fieldLabel")}
-								variant="outlined"
 								autoFocus
 								onChange={e => setSearchParam(e.target.value)}
-								onKeyPress={e => {
+								onKeyDown={e => {
 									if (loading || !selectedContact) return;
 									else if (e.key === "Enter") {
 										handleSaveTicket(selectedContact.id);
@@ -179,7 +165,7 @@ const NewTicketModal = ({ modalOpen, onClose }) => {
 								}}
 							/>
 						)}
-					/> */}
+					/>
 				</DialogContent>
 				<DialogActions>
 					<Button
