@@ -1,4 +1,4 @@
-import  { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 import * as Yup from "yup";
 import { Formik, FieldArray, Form, Field } from "formik";
@@ -23,7 +23,7 @@ import api from "../../services/api";
 import toastError from "../../errors/toastError";
 import { InputsWrapper } from "../StyledComponents";
 
-const Root = styled("div") ({
+const Root = styled("div")({
 	display: "flex",
 	flexWrap: "wrap",
 });
@@ -31,7 +31,7 @@ const Root = styled("div") ({
 const ExtraAttr = styled("div")({
 	display: "flex",
 });
-const ButtonProgress = styled(CircularProgress) ({
+const ButtonProgress = styled(CircularProgress)({
 	color: green[500],
 	position: "absolute",
 	top: "50%",
@@ -50,7 +50,6 @@ const ContactSchema = Yup.object().shape({
 });
 
 const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
-	const isMounted = useRef(true);
 
 	const initialState = {
 		name: "",
@@ -60,11 +59,6 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 
 	const [contact, setContact] = useState(initialState);
 
-	useEffect(() => {
-		return () => {
-			isMounted.current = false;
-		};
-	}, []);
 
 	useEffect(() => {
 		const fetchContact = async () => {
@@ -78,9 +72,7 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 
 			try {
 				const { data } = await api.get(`/contacts/${contactId}`);
-				if (isMounted.current) {
-					setContact(data);
-				}
+				setContact(data);
 			} catch (err) {
 				toastError(err);
 			}
@@ -138,27 +130,27 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 									{i18n.t("contactModal.form.mainInfo")}
 								</Typography>
 								<InputsWrapper>
-								<Field
-									as={TextField}
-									label={i18n.t("contactModal.form.name")}
-									name="name"
-									autoFocus
-									error={touched.name && Boolean(errors.name)}
-									helperText={touched.name && errors.name}
-									variant="outlined"
-									margin="dense"
-									
-								/>
-								<Field
-									as={TextField}
-									label={i18n.t("contactModal.form.number")}
-									name="number"
-									error={touched.number && Boolean(errors.number)}
-									helperText={touched.number && errors.number}
-									placeholder="5513912344321"
-									variant="outlined"
-									margin="dense"
-								/>
+									<Field
+										as={TextField}
+										label={i18n.t("contactModal.form.name")}
+										name="name"
+										autoFocus
+										error={touched.name && Boolean(errors.name)}
+										helperText={touched.name && errors.name}
+										variant="outlined"
+										margin="dense"
+
+									/>
+									<Field
+										as={TextField}
+										label={i18n.t("contactModal.form.number")}
+										name="number"
+										error={touched.number && Boolean(errors.number)}
+										helperText={touched.number && errors.number}
+										placeholder="5513912344321"
+										variant="outlined"
+										margin="dense"
+									/>
 								</InputsWrapper>
 								<div>
 									<Field
@@ -190,20 +182,20 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 														key={`${index}-info`}
 													>
 														<InputsWrapper>
-														<Field
-															as={TextField}
-															label={i18n.t("contactModal.form.extraName")}
-															name={`extraInfo[${index}].name`}
-															variant="outlined"
-															margin="dense"
-														/>
-														<Field	
-															as={TextField}
-															label={i18n.t("contactModal.form.extraValue")}
-															name={`extraInfo[${index}].value`}
-															variant="outlined"
-															margin="dense"
-														/>
+															<Field
+																as={TextField}
+																label={i18n.t("contactModal.form.extraName")}
+																name={`extraInfo[${index}].name`}
+																variant="outlined"
+																margin="dense"
+															/>
+															<Field
+																as={TextField}
+																label={i18n.t("contactModal.form.extraValue")}
+																name={`extraInfo[${index}].value`}
+																variant="outlined"
+																margin="dense"
+															/>
 														</InputsWrapper>
 														<IconButton
 															size="small"
