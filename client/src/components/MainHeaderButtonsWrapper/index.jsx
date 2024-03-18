@@ -7,7 +7,8 @@ const MainHeaderButtonsWrapper = ({ children }) => {
 const CustomMainHeaderButtonsWrapper = styled("div")(({ theme }) => ({
   flex: "none",
   display: "flex",
-  justifyContent:"space-evenly",
+  justifyContent: "space-evenly",
+  gap: "1rem",
   marginLeft: "auto",
   "& > *": {
     margin: theme.spacing(1),
