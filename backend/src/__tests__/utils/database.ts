@@ -1,7 +1,7 @@
 import database from "../../database";
 
 const truncate = async (): Promise<void> => {
-  await database.truncate({ force: true, cascade: true });
+  await database.truncate({ cascade: true, truncate: true });
 };
 
 const disconnect = async (): Promise<void> => {
