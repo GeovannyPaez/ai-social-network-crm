@@ -1,4 +1,4 @@
-import { Sequelize, Op } from "sequelize";
+import { Sequelize, Op, WhereOptions } from "sequelize";
 import Queue from "../../models/Queue";
 import User from "../../models/User";
 import Whatsapp from "../../models/Whatsapp";
@@ -6,6 +6,7 @@ import Whatsapp from "../../models/Whatsapp";
 interface Request {
   searchParam?: string;
   pageNumber?: string | number;
+  parentId?: number;
 }
 
 interface Response {
@@ -16,9 +17,10 @@ interface Response {
 
 const ListUsersService = async ({
   searchParam = "",
-  pageNumber = "1"
+  pageNumber = "1",
+  parentId
 }: Request): Promise<Response> => {
-  const whereCondition = {
+  let whereCondition: WhereOptions = {
     [Op.or]: [
       {
         "$User.name$": Sequelize.where(
@@ -30,6 +32,14 @@ const ListUsersService = async ({
       { email: { [Op.like]: `%${searchParam.toLowerCase()}%` } }
     ]
   };
+
+  if (parentId !== undefined) {
+    whereCondition = {
+      ...whereCondition,
+      parentId: parentId
+    };
+  }
+
   const limit = 20;
   const offset = limit * (+pageNumber - 1);
 

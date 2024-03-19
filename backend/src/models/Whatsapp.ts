@@ -16,6 +16,8 @@ import {
 import Queue from "./Queue";
 import Ticket from "./Ticket";
 import WhatsappQueue from "./WhatsappQueue";
+import User from "./User";
+import UserWhatsapp from "./UserWhatsapp"; // Importa el modelo de la tabla de unión
 
 @Table
 class Whatsapp extends Model<Whatsapp> {
@@ -72,6 +74,9 @@ class Whatsapp extends Model<Whatsapp> {
 
   @HasMany(() => WhatsappQueue)
   whatsappQueues: WhatsappQueue[];
+
+  @BelongsToMany(() => User, () => UserWhatsapp) // Define la relación muchos a muchos con User
+  users: User[];
 }
 
 export default Whatsapp;

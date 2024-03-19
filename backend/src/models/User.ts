@@ -20,6 +20,7 @@ import Ticket from "./Ticket";
 import Queue from "./Queue";
 import UserQueue from "./UserQueue";
 import Whatsapp from "./Whatsapp";
+import UserWhatsapp from "./UserWhatsapp"; // Importa el modelo de la tabla de unión
 
 @Table
 class User extends Model<User> {
@@ -47,6 +48,18 @@ class User extends Model<User> {
   @Default("admin")
   @Column
   profile: string;
+
+  @Column
+  parentId: number; // Añade una columna para la referencia al usuario padre
+
+  @BelongsTo(() => User, "parentId") // Define la relación con el usuario padre
+  parent: User;
+
+  @HasMany(() => User, "parentId") // Define la relación con los usuarios hijos
+  children: User[];
+
+  @BelongsToMany(() => Whatsapp, () => UserWhatsapp) // Define la relación muchos a muchos con WhatsApp
+  whatsapps: Whatsapp[];
 
   @ForeignKey(() => Whatsapp)
   @Column

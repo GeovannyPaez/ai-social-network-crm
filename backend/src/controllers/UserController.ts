@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getIO } from "../libs/socket";
 
-import CheckSettingsHelper from "../helpers/CheckSettings";
+// import CheckSettingsHelper from "../helpers/CheckSettings";
 import AppError from "../errors/AppError";
 
 import CreateUserService from "../services/UserServices/CreateUserService";
@@ -19,6 +19,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
   const { searchParam, pageNumber } = req.query as IndexQuery;
 
   const { users, count, hasMore } = await ListUsersService({
+    parentId: Number(req.user.id),
     searchParam,
     pageNumber
   });
@@ -29,12 +30,16 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 export const store = async (req: Request, res: Response): Promise<Response> => {
   const { email, password, name, profile, queueIds, whatsappId } = req.body;
 
-  if (
-    req.url === "/signup" &&
-    (await CheckSettingsHelper("userCreation")) === "disabled"
-  ) {
-    throw new AppError("ERR_USER_CREATION_DISABLED", 403);
-  } else if (req.url !== "/signup" && req.user.profile !== "admin") {
+
+  // if (
+  //   req.url === "/signup" &&
+  //   (await CheckSettingsHelper("userCreation")) === "disabled"
+  // ) {
+  //   throw new AppError("ERR_USER_CREATION_DISABLED", 403);
+  // } else if (req.url !== "/signup" && req.user.profile !== "admin") {
+  //   throw new AppError("ERR_NO_PERMISSION", 403);
+  // }
+  if (req.url !== "/signup" && req.user.profile !== "admin") {
     throw new AppError("ERR_NO_PERMISSION", 403);
   }
 
@@ -44,7 +49,8 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     name,
     profile,
     queueIds,
-    whatsappId
+    whatsappId,
+    parentId: Number(req?.user?.id)
   });
 
   const io = getIO();
