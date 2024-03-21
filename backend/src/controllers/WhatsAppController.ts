@@ -5,9 +5,9 @@ import { StartWhatsAppSession } from "../services/WbotServices/StartWhatsAppSess
 
 import CreateWhatsAppService from "../services/WhatsappService/CreateWhatsAppService";
 import DeleteWhatsAppService from "../services/WhatsappService/DeleteWhatsAppService";
-import ListWhatsAppsService from "../services/WhatsappService/ListWhatsAppsService";
 import ShowWhatsAppService from "../services/WhatsappService/ShowWhatsAppService";
 import UpdateWhatsAppService from "../services/WhatsappService/UpdateWhatsAppService";
+import ListByUserParentWhatsappService from "../services/WhatsappService/ListByUserParentWhatsappService";
 
 interface WhatsappData {
   name: string;
@@ -19,7 +19,8 @@ interface WhatsappData {
 }
 
 export const index = async (req: Request, res: Response): Promise<Response> => {
-  const whatsapps = await ListWhatsAppsService();
+  const userId = Number(req.user.id); // This line is missing in the original code
+  const whatsapps = await ListByUserParentWhatsappService(userId);
 
   return res.status(200).json(whatsapps);
 };
@@ -33,14 +34,15 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     farewellMessage,
     queueIds
   }: WhatsappData = req.body;
-
+  const userId = Number(req.user.id); // This line is missing in the original code
   const { whatsapp, oldDefaultWhatsapp } = await CreateWhatsAppService({
     name,
     status,
     isDefault,
     greetingMessage,
     farewellMessage,
-    queueIds
+    queueIds,
+    userId
   });
 
   StartWhatsAppSession(whatsapp);

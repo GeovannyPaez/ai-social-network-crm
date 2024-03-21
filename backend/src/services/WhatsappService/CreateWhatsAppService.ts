@@ -2,7 +2,9 @@ import * as Yup from "yup";
 
 import AppError from "../../errors/AppError";
 import Whatsapp from "../../models/Whatsapp";
+import UserWhatsapp from "../../models/UserWhatsapp";
 import AssociateWhatsappQueue from "./AssociateWhatsappQueue";
+import User from "../../models/User";
 
 interface Request {
   name: string;
@@ -11,6 +13,7 @@ interface Request {
   farewellMessage?: string;
   status?: string;
   isDefault?: boolean;
+  userId: number;
 }
 
 interface Response {
@@ -24,7 +27,8 @@ const CreateWhatsAppService = async ({
   queueIds = [],
   greetingMessage,
   farewellMessage,
-  isDefault = false
+  isDefault = false,
+  userId,
 }: Request): Promise<Response> => {
   const schema = Yup.object().shape({
     name: Yup.string()
@@ -68,6 +72,14 @@ const CreateWhatsAppService = async ({
   if (queueIds.length > 1 && !greetingMessage) {
     throw new AppError("ERR_WAPP_GREETING_REQUIRED");
   }
+  const user = await User.findOne({
+    where: {
+      id: userId
+    },
+  });
+  if (!user) {
+    throw new AppError("ERR_USER_NOT_FOUND");
+  }
 
   const whatsapp = await Whatsapp.create(
     {
@@ -79,6 +91,11 @@ const CreateWhatsAppService = async ({
     },
     { include: ["queues"] }
   );
+  const parentUserId = user.parentId ? user.parentId : user.id;
+  await UserWhatsapp.create({
+    userId: parentUserId,
+    whatsappId: whatsapp.id,
+  })
 
   await AssociateWhatsappQueue(whatsapp, queueIds);
 
