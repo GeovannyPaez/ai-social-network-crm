@@ -9,6 +9,7 @@ import UpdateQuickAnswerService from "../services/QuickAnswerService/UpdateQuick
 import DeleteQuickAnswerService from "../services/QuickAnswerService/DeleteQuickAnswerService";
 
 import AppError from "../errors/AppError";
+import buildParentChannelString from "../helpers/BuildParentChannelString";
 
 type IndexQuery = {
   searchParam: string;
@@ -22,10 +23,11 @@ interface QuickAnswerData {
 
 export const index = async (req: Request, res: Response): Promise<Response> => {
   const { searchParam, pageNumber } = req.query as IndexQuery;
-
+  const { parentId } = req.user
   const { quickAnswers, count, hasMore } = await ListQuickAnswerService({
     searchParam,
-    pageNumber
+    pageNumber,
+    parentId
   });
 
   return res.json({ quickAnswers, count, hasMore });
@@ -33,7 +35,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 
 export const store = async (req: Request, res: Response): Promise<Response> => {
   const newQuickAnswer: QuickAnswerData = req.body;
-
+  const { parentId } = req.user;
   const QuickAnswerSchema = Yup.object().shape({
     shortcut: Yup.string().required(),
     message: Yup.string().required()
@@ -46,11 +48,13 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
   }
 
   const quickAnswer = await CreateQuickAnswerService({
-    ...newQuickAnswer
+    ...newQuickAnswer,
+    parentId
   });
 
   const io = getIO();
-  io.emit("quickAnswer", {
+  const channelParentId = buildParentChannelString(parentId);
+  io.to(channelParentId).emit("quickAnswer", {
     action: "create",
     quickAnswer
   });
@@ -89,9 +93,9 @@ export const update = async (
     quickAnswerData,
     quickAnswerId
   });
-
+  const channelParentId = buildParentChannelString(quickAnswer.userParentId);
   const io = getIO();
-  io.emit("quickAnswer", {
+  io.to(channelParentId).emit("quickAnswer", {
     action: "update",
     quickAnswer
   });
@@ -106,9 +110,9 @@ export const remove = async (
   const { quickAnswerId } = req.params;
 
   await DeleteQuickAnswerService(quickAnswerId);
-
+  const channelParentId = buildParentChannelString(req.user.parentId);
   const io = getIO();
-  io.emit("quickAnswer", {
+  io.to(channelParentId).emit("quickAnswer", {
     action: "delete",
     quickAnswerId
   });
