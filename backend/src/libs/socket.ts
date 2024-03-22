@@ -2,6 +2,7 @@ import { Server as SocketIO } from "socket.io";
 import { Server } from "http";
 import AppError from "../errors/AppError";
 import { logger } from "../utils/logger";
+import buildParentChannelString from "../helpers/BuildParentChannelString";
 
 let io: SocketIO;
 
@@ -14,6 +15,13 @@ export const initIO = (httpServer: Server): SocketIO => {
 
   io.on("connection", socket => {
     logger.info("Client Connected");
+
+    const parentId = socket.handshake.auth.parentId;
+    const nameChannel = buildParentChannelString(parentId);
+
+    socket.join(nameChannel);
+
+    logger.info(`A client joined to ${nameChannel} channel.`);
     socket.on("joinChatBox", (ticketId: string) => {
       logger.info("A client joined a ticket channel");
       socket.join(ticketId);

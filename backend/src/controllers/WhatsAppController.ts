@@ -8,6 +8,7 @@ import DeleteWhatsAppService from "../services/WhatsappService/DeleteWhatsAppSer
 import ShowWhatsAppService from "../services/WhatsappService/ShowWhatsAppService";
 import UpdateWhatsAppService from "../services/WhatsappService/UpdateWhatsAppService";
 import ListByUserParentWhatsappService from "../services/WhatsappService/ListByUserParentWhatsappService";
+import buildParentChannelString from "../helpers/BuildParentChannelString";
 
 interface WhatsappData {
   name: string;
@@ -44,17 +45,17 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     queueIds,
     userId
   });
-
-  StartWhatsAppSession(whatsapp);
+  const parentIdChannel = buildParentChannelString(req.user.parentId);
+  StartWhatsAppSession(whatsapp, parentIdChannel);
 
   const io = getIO();
-  io.emit("whatsapp", {
+  io.to(parentIdChannel).emit("whatsapp", {
     action: "update",
     whatsapp
   });
 
   if (oldDefaultWhatsapp) {
-    io.emit("whatsapp", {
+    io.to(parentIdChannel).emit("whatsapp", {
       action: "update",
       whatsapp: oldDefaultWhatsapp
     });
@@ -77,6 +78,7 @@ export const update = async (
 ): Promise<Response> => {
   const { whatsappId } = req.params;
   const whatsappData = req.body;
+  const parentId = req.user.parentId;
 
   const { whatsapp, oldDefaultWhatsapp } = await UpdateWhatsAppService({
     whatsappData,
@@ -84,16 +86,18 @@ export const update = async (
   });
 
   const io = getIO();
-  io.emit("whatsapp", {
+  io.to(buildParentChannelString(parentId)).emit("whatsapp", {
     action: "update",
     whatsapp
   });
 
+
   if (oldDefaultWhatsapp) {
-    io.emit("whatsapp", {
+    io.to(buildParentChannelString(parentId)).emit("whatsapp", {
       action: "update",
       whatsapp: oldDefaultWhatsapp
     });
+
   }
 
   return res.status(200).json(whatsapp);

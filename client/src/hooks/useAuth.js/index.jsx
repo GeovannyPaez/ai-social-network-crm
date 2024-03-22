@@ -90,6 +90,7 @@ const useAuth = () => {
 		try {
 			const { data } = await api.post("/auth/login", userData);
 			localStorage.setItem("token", JSON.stringify(data.token));
+			localStorage.setItem("parentId", JSON.stringify(data.user.parentId || data.user.id));
 			api.defaults.headers.Authorization = `Bearer ${data.token}`;
 			setUser(data.user);
 			setIsAuth(true);

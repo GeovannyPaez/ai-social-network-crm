@@ -32,7 +32,7 @@ const syncUnreadMessages = async (wbot: Session) => {
   }
 };
 
-export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
+export const initWbot = async (whatsapp: Whatsapp, channelToEmitSocket: string): Promise<Session> => {
   return new Promise((resolve, reject) => {
     try {
       const io = getIO();
@@ -43,16 +43,16 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
         sessionCfg = JSON.parse(whatsapp.session);
       }
 
-      const args:String = process.env.CHROME_ARGS || "";
+      const args: String = process.env.CHROME_ARGS || "";
 
       const wbot: Session = new Client({
         session: sessionCfg,
-        authStrategy: new LocalAuth({clientId: 'bd_'+whatsapp.id}),
+        authStrategy: new LocalAuth({ clientId: "bd_" + whatsapp.id }),
         puppeteer: {
           executablePath: process.env.CHROME_BIN || undefined,
           // @ts-ignore
           browserWSEndpoint: process.env.CHROME_WS || undefined,
-          args: args.split(' ')
+          args: args.split(" ")
         }
       });
 
@@ -69,13 +69,13 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
           sessions.push(wbot);
         }
 
-        io.emit("whatsappSession", {
+        io.to(channelToEmitSocket).emit("whatsappSession", {
           action: "update",
           session: whatsapp
         });
       });
 
-      wbot.on("authenticated", async session => {
+      wbot.on("authenticated", async () => {
         logger.info(`Session: ${sessionName} AUTHENTICATED`);
       });
 
@@ -94,7 +94,7 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
           retries: retry + 1
         });
 
-        io.emit("whatsappSession", {
+        io.to(channelToEmitSocket).emit("whatsappSession", {
           action: "update",
           session: whatsapp
         });
@@ -111,7 +111,7 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
           retries: 0
         });
 
-        io.emit("whatsappSession", {
+        io.to(channelToEmitSocket).emit("whatsappSession", {
           action: "update",
           session: whatsapp
         });
