@@ -9,6 +9,7 @@ import ListUsersService from "../services/UserServices/ListUsersService";
 import UpdateUserService from "../services/UserServices/UpdateUserService";
 import ShowUserService from "../services/UserServices/ShowUserService";
 import DeleteUserService from "../services/UserServices/DeleteUserService";
+import buildParentChannelString from "../helpers/BuildParentChannelString";
 
 type IndexQuery = {
   searchParam: string;
@@ -17,9 +18,9 @@ type IndexQuery = {
 
 export const index = async (req: Request, res: Response): Promise<Response> => {
   const { searchParam, pageNumber } = req.query as IndexQuery;
-
+  const { parentId } = req.user;
   const { users, count, hasMore } = await ListUsersService({
-    parentId: Number(req.user.id),
+    parentId,
     searchParam,
     pageNumber
   });
@@ -29,7 +30,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 
 export const store = async (req: Request, res: Response): Promise<Response> => {
   const { email, password, name, profile, queueIds, whatsappId } = req.body;
-
+  const { parentId } = req.user;
 
   // if (
   //   req.url === "/signup" &&
@@ -50,11 +51,12 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     profile,
     queueIds,
     whatsappId,
-    parentId: Number(req?.user?.id)
+    parentId
   });
 
+  const channelParentId = buildParentChannelString(parentId);
   const io = getIO();
-  io.emit("user", {
+  io.to(channelParentId).emit("user", {
     action: "create",
     user
   });
@@ -80,11 +82,13 @@ export const update = async (
 
   const { userId } = req.params;
   const userData = req.body;
-
+  const { parentId } = req.user;
   const user = await UpdateUserService({ userData, userId });
 
+  const channelParentId = buildParentChannelString(parentId);
+
   const io = getIO();
-  io.emit("user", {
+  io.to(channelParentId).emit("user", {
     action: "update",
     user
   });
@@ -97,15 +101,16 @@ export const remove = async (
   res: Response
 ): Promise<Response> => {
   const { userId } = req.params;
+  const { parentId } = req.user;
 
   if (req.user.profile !== "admin") {
     throw new AppError("ERR_NO_PERMISSION", 403);
   }
 
   await DeleteUserService(userId);
-
+  const channelParentId = buildParentChannelString(parentId);
   const io = getIO();
-  io.emit("user", {
+  io.to(channelParentId).emit("user", {
     action: "delete",
     userId
   });
