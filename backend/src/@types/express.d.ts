@@ -1,5 +1,5 @@
 declare namespace Express {
   export interface Request {
-    user: { id: number; profile: string, parentId: number };
+    user: { id: string; profile: string, parentId: number };
   }
 }

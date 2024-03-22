@@ -8,7 +8,7 @@ interface TokenPayload {
   id: string;
   username: string;
   profile: string;
-  parentId: string;
+  parentId: number;
   iat: number;
   exp: number;
 }
