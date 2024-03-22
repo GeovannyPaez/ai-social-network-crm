@@ -76,7 +76,6 @@ const useWhatsApps = () => {
 		const socket = openSocket();
 		socket.on("whatsapp", data => {
 			if (data.action === "update") {
-				console.log(data.whatsapp);
 				dispatch({ type: "UPDATE_WHATSAPPS", payload: data.whatsapp });
 			}
 		});

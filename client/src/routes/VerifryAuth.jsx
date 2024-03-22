@@ -5,8 +5,6 @@ import { AuthContext } from "../context/Auth/AuthContext";
 
 export default function VerifyAuth({ Component, isPrivate = false }) {
   const { isAuth, loading } = useContext(AuthContext);
-  console.log("isAuth", isAuth);
-  console.log(loading);
   if (loading) {
     return <BackdropLoading />;
   }
