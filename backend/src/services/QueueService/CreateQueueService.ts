@@ -1,11 +1,13 @@
 import * as Yup from "yup";
 import AppError from "../../errors/AppError";
 import Queue from "../../models/Queue";
+import { Op } from "sequelize";
 
 interface QueueData {
   name: string;
   color: string;
   greetingMessage?: string;
+  userParentId?: number;
 }
 
 const CreateQueueService = async (queueData: QueueData): Promise<Queue> => {
@@ -21,7 +23,9 @@ const CreateQueueService = async (queueData: QueueData): Promise<Queue> => {
         async value => {
           if (value) {
             const queueWithSameName = await Queue.findOne({
-              where: { name: value }
+              where: {
+                [Op.and]: [{ name: value }, { userParentId: queueData.userParentId || null }]
+              }
             });
 
             return !queueWithSameName;
@@ -44,7 +48,9 @@ const CreateQueueService = async (queueData: QueueData): Promise<Queue> => {
         async value => {
           if (value) {
             const queueWithSameColor = await Queue.findOne({
-              where: { color: value }
+              where: {
+                [Op.and]: [{ color: value }, { userParentId: queueData.userParentId || null }]
+              }
             });
             return !queueWithSameColor;
           }

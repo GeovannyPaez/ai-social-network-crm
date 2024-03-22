@@ -8,6 +8,7 @@ interface QueueData {
   name?: string;
   color?: string;
   greetingMessage?: string;
+  userParentId?: number;
 }
 
 const UpdateQueueService = async (
@@ -25,7 +26,7 @@ const UpdateQueueService = async (
         async value => {
           if (value) {
             const queueWithSameName = await Queue.findOne({
-              where: { name: value, id: { [Op.not]: queueId } }
+              where: { name: value, id: { [Op.not]: queueId }, userParentId: queueData.userParentId || null }
             });
 
             return !queueWithSameName;
@@ -48,7 +49,7 @@ const UpdateQueueService = async (
         async value => {
           if (value) {
             const queueWithSameColor = await Queue.findOne({
-              where: { color: value, id: { [Op.not]: queueId } }
+              where: { color: value, id: { [Op.not]: queueId }, userParentId: queueData.userParentId || null }
             });
             return !queueWithSameColor;
           }

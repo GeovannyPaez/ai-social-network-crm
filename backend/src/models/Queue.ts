@@ -26,12 +26,10 @@ class Queue extends Model<Queue> {
   id: number;
 
   @AllowNull(false)
-  @Unique
   @Column
   name: string;
 
   @AllowNull(false)
-  @Unique
   @Column
   color: string;
 

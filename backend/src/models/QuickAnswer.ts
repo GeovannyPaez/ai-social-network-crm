@@ -7,7 +7,8 @@ import {
   Model,
   PrimaryKey,
   AutoIncrement,
-  ForeignKey
+  ForeignKey,
+  BelongsTo
 } from "sequelize-typescript";
 import User from "./User";
 
@@ -27,6 +28,9 @@ class QuickAnswer extends Model<QuickAnswer> {
   @ForeignKey(() => User)
   @Column
   userParentId: number;
+
+  @BelongsTo(() => User)
+  user: User;
 
   @CreatedAt
   createdAt: Date;
