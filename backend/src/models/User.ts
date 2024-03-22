@@ -21,6 +21,7 @@ import Queue from "./Queue";
 import UserQueue from "./UserQueue";
 import Whatsapp from "./Whatsapp";
 import UserWhatsapp from "./UserWhatsapp"; // Importa el modelo de la tabla de unión
+import QuickAnswer from "./QuickAnswer";
 
 @Table
 class User extends Model<User> {
@@ -76,6 +77,12 @@ class User extends Model<User> {
 
   @HasMany(() => Ticket)
   tickets: Ticket[];
+
+  @HasMany(() => Queue)
+  onwerQueues: Queue[];
+
+  @HasMany(() => QuickAnswer)
+  quickAnswers: QuickAnswer[];
 
   @BelongsToMany(() => Queue, () => UserQueue)
   queues: Queue[];

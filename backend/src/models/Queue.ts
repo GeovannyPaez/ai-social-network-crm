@@ -8,7 +8,9 @@ import {
   AutoIncrement,
   AllowNull,
   Unique,
-  BelongsToMany
+  BelongsToMany,
+  ForeignKey,
+  BelongsTo
 } from "sequelize-typescript";
 import User from "./User";
 import UserQueue from "./UserQueue";
@@ -38,6 +40,13 @@ class Queue extends Model<Queue> {
 
   @CreatedAt
   createdAt: Date;
+
+  @ForeignKey(() => User)
+  @Column
+  userParentId: number;
+
+  @BelongsTo(() => User)
+  userParent: User;
 
   @UpdatedAt
   updatedAt: Date;
