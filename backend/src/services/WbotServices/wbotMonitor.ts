@@ -12,7 +12,8 @@ interface Session extends Client {
 
 const wbotMonitor = async (
   wbot: Session,
-  whatsapp: Whatsapp
+  whatsapp: Whatsapp,
+  channelToEmitSocket: string
 ): Promise<void> => {
   const io = getIO();
   const sessionName = whatsapp.name;
@@ -27,7 +28,7 @@ const wbotMonitor = async (
         logger.error(err);
       }
 
-      io.emit("whatsappSession", {
+      io.to(channelToEmitSocket).emit("whatsappSession", {
         action: "update",
         session: whatsapp
       });
@@ -46,7 +47,7 @@ const wbotMonitor = async (
         logger.error(err);
       }
 
-      io.emit("whatsappSession", {
+      io.to(channelToEmitSocket).emit("whatsappSession", {
         action: "update",
         session: whatsapp
       });
@@ -61,12 +62,12 @@ const wbotMonitor = async (
         logger.error(err);
       }
 
-      io.emit("whatsappSession", {
+      io.to(channelToEmitSocket).emit("whatsappSession", {
         action: "update",
         session: whatsapp
       });
 
-      setTimeout(() => StartWhatsAppSession(whatsapp), 2000);
+      setTimeout(() => StartWhatsAppSession(whatsapp, channelToEmitSocket), 2000);
     });
   } catch (err) {
     Sentry.captureException(err);

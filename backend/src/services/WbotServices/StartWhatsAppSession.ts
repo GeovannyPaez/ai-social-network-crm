@@ -19,7 +19,7 @@ export const StartWhatsAppSession = async (
   try {
     const wbot = await initWbot(whatsapp, channelToEmitSocket);
     wbotMessageListener(wbot);
-    wbotMonitor(wbot, whatsapp);
+    wbotMonitor(wbot, whatsapp, channelToEmitSocket);
   } catch (err) {
     logger.error(err);
   }
