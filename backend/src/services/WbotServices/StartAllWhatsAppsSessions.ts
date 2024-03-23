@@ -7,7 +7,7 @@ export const StartAllWhatsAppsSessions = async (): Promise<void> => {
   if (userWhatsapps.length > 0) {
     userWhatsapps.forEach(userWhatsapp => {
       const channelToEmitSocket = buildParentChannelString(userWhatsapp.userId);
-      StartWhatsAppSession(userWhatsapp.whatsapp, channelToEmitSocket);
+      StartWhatsAppSession({ whatsapp: userWhatsapp.whatsapp, channelToEmitSocket, userParentId: userWhatsapp.userId });
     });
   }
 };

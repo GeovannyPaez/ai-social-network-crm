@@ -46,7 +46,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     userId
   });
   const parentIdChannel = buildParentChannelString(req.user.parentId);
-  StartWhatsAppSession(whatsapp, parentIdChannel);
+  StartWhatsAppSession({ whatsapp, channelToEmitSocket: parentIdChannel, userParentId: req.user.parentId });
 
   const io = getIO();
   io.to(parentIdChannel).emit("whatsapp", {

@@ -10,11 +10,18 @@ interface Session extends Client {
   id?: number;
 }
 
-const wbotMonitor = async (
-  wbot: Session,
-  whatsapp: Whatsapp,
-  channelToEmitSocket: string
-): Promise<void> => {
+type WbotMonitorType = {
+  wbot: Session;
+  whatsapp: Whatsapp;
+  channelToEmitSocket: string;
+  userParentId?: number;
+}
+const wbotMonitor = async ({
+  wbot,
+  whatsapp,
+  channelToEmitSocket,
+  userParentId
+}: WbotMonitorType): Promise<void> => {
   const io = getIO();
   const sessionName = whatsapp.name;
 
@@ -67,7 +74,6 @@ const wbotMonitor = async (
         session: whatsapp
       });
 
-      setTimeout(() => StartWhatsAppSession(whatsapp, channelToEmitSocket), 2000);
     });
   } catch (err) {
     Sentry.captureException(err);

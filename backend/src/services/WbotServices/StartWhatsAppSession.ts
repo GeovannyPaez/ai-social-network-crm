@@ -5,10 +5,17 @@ import { getIO } from "../../libs/socket";
 import wbotMonitor from "./wbotMonitor";
 import { logger } from "../../utils/logger";
 
-export const StartWhatsAppSession = async (
-  whatsapp: Whatsapp,
-  channelToEmitSocket: string,
-): Promise<void> => {
+type StartWhatsAppSessionType = {
+  whatsapp: Whatsapp;
+  channelToEmitSocket: string;
+  userParentId?: number;
+}
+
+export const StartWhatsAppSession = async ({
+  whatsapp,
+  channelToEmitSocket,
+  userParentId
+}: StartWhatsAppSessionType): Promise<void> => {
   await whatsapp.update({ status: "OPENING" });
   const io = getIO();
   io.to(channelToEmitSocket).emit("whatsappSession", {
@@ -17,9 +24,9 @@ export const StartWhatsAppSession = async (
   });
 
   try {
-    const wbot = await initWbot(whatsapp, channelToEmitSocket);
-    wbotMessageListener(wbot);
-    wbotMonitor(wbot, whatsapp, channelToEmitSocket);
+    const wbot = await initWbot({ whatsapp, channelToEmitSocket, userParentId });
+    wbotMessageListener(wbot, userParentId);
+    wbotMonitor({ wbot, whatsapp, channelToEmitSocket, userParentId });
   } catch (err) {
     logger.error(err);
   }

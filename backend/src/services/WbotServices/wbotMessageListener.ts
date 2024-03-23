@@ -23,7 +23,7 @@ import ShowWhatsAppService from "../WhatsappService/ShowWhatsAppService";
 import { debounce } from "../../helpers/Debounce";
 import UpdateTicketService from "../TicketServices/UpdateTicketService";
 import CreateContactService from "../ContactServices/CreateContactService";
-import GetContactService from "../ContactServices/GetContactService";
+// import GetContactService from "../ContactServices/GetContactService";
 import formatBody from "../../helpers/Mustache";
 
 interface Session extends Client {
@@ -242,7 +242,8 @@ const isValidMsg = (msg: WbotMessage): boolean => {
 
 const handleMessage = async (
   msg: WbotMessage,
-  wbot: Session
+  wbot: Session,
+  userParentId?: number | null
 ): Promise<void> => {
   if (!isValidMsg(msg)) {
     return;
@@ -336,9 +337,10 @@ const handleMessage = async (
           }
         }
         for await (const ob of obj) {
-          const cont = await CreateContactService({
+          await CreateContactService({
             name: contact,
-            number: ob.number.replace(/\D/g, "")
+            number: ob.number.replace(/\D/g, ""),
+            userParentId
           });
         }
       } catch (error) {
@@ -443,13 +445,13 @@ const handleMsgAck = async (msg: WbotMessage, ack: MessageAck) => {
   }
 };
 
-const wbotMessageListener = (wbot: Session): void => {
+const wbotMessageListener = (wbot: Session, userParentId: number | null = null): void => {
   wbot.on("message_create", async msg => {
-    handleMessage(msg, wbot);
+    handleMessage(msg, wbot, userParentId);
   });
 
   wbot.on("media_uploaded", async msg => {
-    handleMessage(msg, wbot);
+    handleMessage(msg, wbot, userParentId);
   });
 
   wbot.on("message_ack", async (msg, ack) => {

@@ -9,7 +9,7 @@ const store = async (req: Request, res: Response): Promise<Response> => {
   const { whatsappId } = req.params;
   const whatsapp = await ShowWhatsAppService(whatsappId);
   const channelToEmitSocket = buildParentChannelString(req.user.parentId);
-  StartWhatsAppSession(whatsapp, channelToEmitSocket);
+  StartWhatsAppSession({ whatsapp, channelToEmitSocket, userParentId: req.user.parentId });
 
   return res.status(200).json({ message: "Starting session." });
 };
@@ -22,7 +22,7 @@ const update = async (req: Request, res: Response): Promise<Response> => {
     whatsappData: { session: "" }
   });
 
-  StartWhatsAppSession(whatsapp, channelToEmitSocket);
+  StartWhatsAppSession({ whatsapp, channelToEmitSocket, userParentId: req.user.parentId });
 
   return res.status(200).json({ message: "Starting session." });
 };

@@ -13,6 +13,8 @@ import CheckIsValidContact from "../services/WbotServices/CheckIsValidContact";
 import GetProfilePicUrl from "../services/WbotServices/GetProfilePicUrl";
 import AppError from "../errors/AppError";
 import GetContactService from "../services/ContactServices/GetContactService";
+import { build } from "factory-girl";
+import buildParentChannelString from "../helpers/BuildParentChannelString";
 
 type IndexQuery = {
   searchParam: string;
@@ -60,7 +62,7 @@ export const getContact = async (req: Request, res: Response): Promise<Response>
 export const store = async (req: Request, res: Response): Promise<Response> => {
   const newContact: ContactData = req.body;
   newContact.number = newContact.number.replace("-", "").replace(" ", "");
-
+  const { parentId } = req.user
   const schema = Yup.object().shape({
     name: Yup.string().required(),
     number: Yup.string()
@@ -75,8 +77,8 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
   }
 
   await CheckIsValidContact(newContact.number);
-  const validNumber : any = await CheckContactNumber(newContact.number)
-  
+  const validNumber: any = await CheckContactNumber(newContact.number)
+
   const profilePicUrl = await GetProfilePicUrl(validNumber);
 
   let name = newContact.name
@@ -89,11 +91,13 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     number,
     email,
     extraInfo,
-    profilePicUrl
+    profilePicUrl,
+    userParentId: parentId
   });
 
+  const channelUserParentId = buildParentChannelString(parentId)
   const io = getIO();
-  io.emit("contact", {
+  io.to(channelUserParentId).emit("contact", {
     action: "create",
     contact
   });

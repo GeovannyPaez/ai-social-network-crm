@@ -10,6 +10,7 @@ interface Request {
   name: string;
   number: string;
   email?: string;
+  userParentId?: number | null;
   profilePicUrl?: string;
   extraInfo?: ExtraInfo[];
 }
@@ -18,7 +19,8 @@ const CreateContactService = async ({
   name,
   number,
   email = "",
-  extraInfo = []
+  extraInfo = [],
+  userParentId = null
 }: Request): Promise<Contact> => {
   const numberExists = await Contact.findOne({
     where: { number }
@@ -33,7 +35,8 @@ const CreateContactService = async ({
       name,
       number,
       email,
-      extraInfo
+      extraInfo,
+      userParentId
     },
     {
       include: ["extraInfo"]

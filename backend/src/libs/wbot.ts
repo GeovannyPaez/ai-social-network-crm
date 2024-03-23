@@ -9,10 +9,14 @@ import { handleMessage } from "../services/WbotServices/wbotMessageListener";
 interface Session extends Client {
   id?: number;
 }
-
+type InitWbotType = {
+  whatsapp: Whatsapp;
+  channelToEmitSocket: string;
+  userParentId?: number;
+}
 const sessions: Session[] = [];
 
-const syncUnreadMessages = async (wbot: Session) => {
+const syncUnreadMessages = async (wbot: Session, userParentId: number | null = null) => {
   const chats = await wbot.getChats();
 
   /* eslint-disable no-restricted-syntax */
@@ -24,7 +28,7 @@ const syncUnreadMessages = async (wbot: Session) => {
       });
 
       for (const msg of unreadMessages) {
-        await handleMessage(msg, wbot);
+        await handleMessage(msg, wbot, userParentId);
       }
 
       await chat.sendSeen();
@@ -32,7 +36,11 @@ const syncUnreadMessages = async (wbot: Session) => {
   }
 };
 
-export const initWbot = async (whatsapp: Whatsapp, channelToEmitSocket: string): Promise<Session> => {
+export const initWbot = async ({
+  whatsapp,
+  channelToEmitSocket,
+  userParentId
+}: InitWbotType): Promise<Session> => {
   return new Promise((resolve, reject) => {
     try {
       const io = getIO();
@@ -123,7 +131,7 @@ export const initWbot = async (whatsapp: Whatsapp, channelToEmitSocket: string):
         }
 
         wbot.sendPresenceAvailable();
-        await syncUnreadMessages(wbot);
+        await syncUnreadMessages(wbot, userParentId);
 
         resolve(wbot);
       });

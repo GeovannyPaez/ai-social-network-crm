@@ -9,13 +9,14 @@ interface ExtraInfo {
 
 interface Request {
     name: string;
+    userParentId?: number | null;
     number: string;
     email?: string;
     profilePicUrl?: string;
     extraInfo?: ExtraInfo[];
 }
 
-const GetContactService = async ({ name, number }: Request): Promise<Contact> => {
+const GetContactService = async ({ name, number, userParentId }: Request): Promise<Contact> => {
     const numberExists = await Contact.findOne({
         where: { number }
     });
@@ -24,6 +25,7 @@ const GetContactService = async ({ name, number }: Request): Promise<Contact> =>
         const contact = await CreateContactService({
             name,
             number,
+            userParentId
         })
 
         if (contact == null)
