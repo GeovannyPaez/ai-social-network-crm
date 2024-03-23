@@ -9,10 +9,13 @@ import {
   AllowNull,
   Unique,
   Default,
-  HasMany
+  HasMany,
+  ForeignKey,
+  BelongsTo
 } from "sequelize-typescript";
 import ContactCustomField from "./ContactCustomField";
 import Ticket from "./Ticket";
+import User from "./User";
 
 @Table
 class Contact extends Model<Contact> {
@@ -37,6 +40,10 @@ class Contact extends Model<Contact> {
   @Column
   profilePicUrl: string;
 
+  @ForeignKey(() => User)
+  @Column
+  userParentId: number;
+
   @Default(false)
   @Column
   isGroup: boolean;
@@ -46,6 +53,9 @@ class Contact extends Model<Contact> {
 
   @UpdatedAt
   updatedAt: Date;
+
+  @BelongsTo(() => User)
+  userPatent: User;
 
   @HasMany(() => Ticket)
   tickets: Ticket[];
