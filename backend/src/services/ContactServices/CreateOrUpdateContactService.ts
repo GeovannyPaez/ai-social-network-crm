@@ -1,5 +1,7 @@
+import { build } from "factory-girl";
 import { getIO } from "../../libs/socket";
 import Contact from "../../models/Contact";
+import buildParentChannelString from "../../helpers/BuildParentChannelString";
 
 interface ExtraInfo {
   name: string;
@@ -11,6 +13,7 @@ interface Request {
   number: string;
   isGroup: boolean;
   email?: string;
+  userParentId?: number | null;
   profilePicUrl?: string;
   extraInfo?: ExtraInfo[];
 }
@@ -21,11 +24,13 @@ const CreateOrUpdateContactService = async ({
   profilePicUrl,
   isGroup,
   email = "",
-  extraInfo = []
+  extraInfo = [],
+  userParentId = null
 }: Request): Promise<Contact> => {
   const number = isGroup ? rawNumber : rawNumber.replace(/[^0-9]/g, "");
 
   const io = getIO();
+  const channelToEmitSocket = buildParentChannelString(userParentId || 0);
   let contact: Contact | null;
 
   contact = await Contact.findOne({ where: { number } });
@@ -33,7 +38,7 @@ const CreateOrUpdateContactService = async ({
   if (contact) {
     contact.update({ profilePicUrl });
 
-    io.emit("contact", {
+    io.to(channelToEmitSocket).emit("contact", {
       action: "update",
       contact
     });
@@ -44,10 +49,11 @@ const CreateOrUpdateContactService = async ({
       profilePicUrl,
       email,
       isGroup,
-      extraInfo
+      extraInfo,
+      userParentId
     });
 
-    io.emit("contact", {
+    io.to(channelToEmitSocket).emit("contact", {
       action: "create",
       contact
     });

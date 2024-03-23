@@ -31,7 +31,8 @@ interface ContactData {
 
 const createContact = async (
   whatsappId: number | undefined,
-  newContact: string
+  newContact: string,
+  userParentId: number
 ) => {
   await CheckIsValidContact(newContact);
 
@@ -45,19 +46,20 @@ const createContact = async (
     name: `${number}`,
     number,
     profilePicUrl,
-    isGroup: false
+    isGroup: false,
+    userParentId
   };
 
   const contact = await CreateOrUpdateContactService(contactData);
 
-  let whatsapp:Whatsapp | null;
+  let whatsapp: Whatsapp | null;
 
-  if(whatsappId === undefined) {
+  if (whatsappId === undefined) {
     whatsapp = await GetDefaultWhatsApp();
   } else {
     whatsapp = await Whatsapp.findByPk(whatsappId);
 
-    if(whatsapp === null) {
+    if (whatsapp === null) {
       throw new AppError(`whatsapp #${whatsappId} not found`);
     }
   }
@@ -80,7 +82,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
   const { whatsappId }: WhatsappData = req.body;
   const { body, quotedMsg }: MessageData = req.body;
   const medias = req.files as Express.Multer.File[];
-
+  const { parentId } = req.user;
   newContact.number = newContact.number.replace("-", "").replace(" ", "");
 
   const schema = Yup.object().shape({
@@ -95,7 +97,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
     throw new AppError(err.message);
   }
 
-  const contactAndTicket = await createContact(whatsappId, newContact.number);
+  const contactAndTicket = await createContact(whatsappId, newContact.number, parentId);
 
   if (medias) {
     await Promise.all(
