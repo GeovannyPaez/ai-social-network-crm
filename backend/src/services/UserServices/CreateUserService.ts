@@ -19,6 +19,7 @@ interface Response {
   name: string;
   id: number;
   profile: string;
+  parentId: number | null;
 }
 
 const CreateUserService = async ({

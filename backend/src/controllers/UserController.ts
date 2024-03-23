@@ -30,8 +30,6 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 
 export const store = async (req: Request, res: Response): Promise<Response> => {
   const { email, password, name, profile, queueIds, whatsappId } = req.body;
-  const { parentId } = req.user;
-
   // if (
   //   req.url === "/signup" &&
   //   (await CheckSettingsHelper("userCreation")) === "disabled"
@@ -51,10 +49,10 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     profile,
     queueIds,
     whatsappId,
-    parentId
+    parentId: Number(req.user?.id)
   });
 
-  const channelParentId = buildParentChannelString(parentId);
+  const channelParentId = buildParentChannelString(user.parentId || user.id);
   const io = getIO();
   io.to(channelParentId).emit("user", {
     action: "create",
