@@ -20,8 +20,8 @@ interface WhatsappData {
 }
 
 export const index = async (req: Request, res: Response): Promise<Response> => {
-  const userId = Number(req.user.id); // This line is missing in the original code
-  const whatsapps = await ListByUserParentWhatsappService(userId);
+  const userParentId = req.user.parentId; // This line is missing in the original code
+  const whatsapps = await ListByUserParentWhatsappService(userParentId);
 
   return res.status(200).json(whatsapps);
 };
@@ -35,7 +35,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     farewellMessage,
     queueIds
   }: WhatsappData = req.body;
-  const userId = Number(req.user.id); // This line is missing in the original code
+  const parentId = req.user.parentId
   const { whatsapp, oldDefaultWhatsapp } = await CreateWhatsAppService({
     name,
     status,
@@ -43,10 +43,10 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     greetingMessage,
     farewellMessage,
     queueIds,
-    userId
+    userId: parentId
   });
-  const parentIdChannel = buildParentChannelString(req.user.parentId);
-  StartWhatsAppSession({ whatsapp, channelToEmitSocket: parentIdChannel, userParentId: req.user.parentId });
+  const parentIdChannel = buildParentChannelString(parentId);
+  StartWhatsAppSession({ whatsapp, channelToEmitSocket: parentIdChannel, userParentId: parentId });
 
   const io = getIO();
   io.to(parentIdChannel).emit("whatsapp", {

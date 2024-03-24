@@ -54,16 +54,27 @@ const CreateWhatsAppService = async ({
     throw new AppError(err.message);
   }
 
-  const whatsappFound = await Whatsapp.findOne();
+  const whatsappFound = await UserWhatsapp.findOne({
+    where: {
+      userId
+    }
+  })
 
   isDefault = !whatsappFound;
 
   let oldDefaultWhatsapp: Whatsapp | null = null;
 
   if (isDefault) {
-    oldDefaultWhatsapp = await Whatsapp.findOne({
-      where: { isDefault: true }
-    });
+    oldDefaultWhatsapp = await UserWhatsapp.findOne({
+      where: { userId },
+      include: [
+        {
+          model: Whatsapp,
+          as: "whatsapp",
+          where: { isDefault: true }
+        }
+      ]
+    }).then(userWhatsapp => userWhatsapp?.whatsapp || null);
     if (oldDefaultWhatsapp) {
       await oldDefaultWhatsapp.update({ isDefault: false });
     }
@@ -80,6 +91,7 @@ const CreateWhatsAppService = async ({
   if (!user) {
     throw new AppError("ERR_USER_NOT_FOUND");
   }
+  const parentUserId = user.parentId ? user.parentId : user.id;
 
   const whatsapp = await Whatsapp.create(
     {
@@ -91,7 +103,6 @@ const CreateWhatsAppService = async ({
     },
     { include: ["queues"] }
   );
-  const parentUserId = user.parentId ? user.parentId : user.id;
   await UserWhatsapp.create({
     userId: parentUserId,
     whatsappId: whatsapp.id,
