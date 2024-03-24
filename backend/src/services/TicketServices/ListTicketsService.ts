@@ -17,7 +17,7 @@ interface Request {
   userId: string;
   withUnreadMessages?: string;
   queueIds: number[];
-  userParentId?: number;
+  userParentId: number | null;
 }
 
 interface Response {
@@ -49,7 +49,7 @@ const ListTicketsService = async ({
       as: "contact",
       attributes: ["id", "name", "number", "profilePicUrl", "userParentId"],
       where: {
-        userParentId: userParentId || null
+        userParentId
       }
     },
     {

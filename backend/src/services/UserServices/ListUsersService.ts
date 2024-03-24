@@ -36,7 +36,7 @@ const ListUsersService = async ({
   if (parentId !== undefined) {
     whereCondition = {
       ...whereCondition,
-      parentId: parentId
+      [Op.or]: [{ parentId }, { id: parentId }]
     };
   }
 
