@@ -249,7 +249,6 @@ const handleMessage = async (
   if (!isValidMsg(msg)) {
     return;
   }
-
   try {
     let msgContact: WbotContact;
     let groupContact: Contact | undefined;
@@ -289,7 +288,6 @@ const handleMessage = async (
     const unreadMessages = msg.fromMe ? 0 : chat.unreadCount;
 
     const contact = await verifyContact(msgContact, userParentId);
-
     if (
       unreadMessages === 0 &&
       whatsapp.farewellMessage &&
@@ -448,8 +446,6 @@ const handleMsgAck = async (msg: WbotMessage, ack: MessageAck) => {
 
 const wbotMessageListener = (wbot: Session, userParentId: number | null = null): void => {
   wbot.on("message_create", async msg => {
-    console.log("message_create");
-    console.log("userParentId", userParentId);
     handleMessage(msg, wbot, userParentId);
   });
 

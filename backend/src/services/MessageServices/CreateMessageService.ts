@@ -51,7 +51,8 @@ const CreateMessageService = async ({
   }
 
   const io = getIO();
-  const nitificationChannel = BuildNotificationParentChannel(message.contact.userParentId);
+
+  const nitificationChannel = BuildNotificationParentChannel(message.ticket.contact.userParentId);
   io.to(message.ticketId.toString())
     .to(message.ticket.status)
     .to(nitificationChannel)
