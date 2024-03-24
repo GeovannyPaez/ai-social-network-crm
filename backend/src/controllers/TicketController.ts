@@ -38,8 +38,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
     withUnreadMessages
   } = req.query as IndexQuery;
 
-  const userId = req.user.id;
-
+  const { parentId: userParentId, id: userId } = req.user;
   let queueIds: number[] = [];
 
   if (queueIdsStringified) {
@@ -54,7 +53,8 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
     showAll,
     userId,
     queueIds,
-    withUnreadMessages
+    withUnreadMessages,
+    userParentId
   });
 
   return res.status(200).json({ tickets, count, hasMore });
