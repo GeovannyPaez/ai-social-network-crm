@@ -33,7 +33,7 @@ const CreateOrUpdateContactService = async ({
   const channelToEmitSocket = buildParentChannelString(userParentId || 0);
   let contact: Contact | null;
 
-  contact = await Contact.findOne({ where: { number } });
+  contact = await Contact.findOne({ where: { number, userParentId } });
 
   if (contact) {
     contact.update({ profilePicUrl });

@@ -137,7 +137,7 @@ export const update = async (
 
   const { contactId } = req.params;
 
-  const contact = await UpdateContactService({ contactData, contactId });
+  const contact = await UpdateContactService({ contactData, contactId, userParentId: req.user.parentId });
   const channelParentId = buildParentChannelString(req.user.parentId);
   const io = getIO();
   io.to(channelParentId).emit("contact", {
