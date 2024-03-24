@@ -1,3 +1,4 @@
+import BuildNotificationParentChannel from "../../helpers/BuildNotificationParentChannel";
 import { getIO } from "../../libs/socket";
 import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
@@ -50,12 +51,10 @@ const CreateMessageService = async ({
   }
 
   const io = getIO();
-  console.log("message.ticketId.toString()", message.ticketId)
-  console.log("Message: ", message.body)
-  console.log("seding to notification")
+  const nitificationChannel = BuildNotificationParentChannel(message.contact.userParentId);
   io.to(message.ticketId.toString())
     .to(message.ticket.status)
-    .to("notification")
+    .to(nitificationChannel)
     .emit("appMessage", {
       action: "create",
       message,

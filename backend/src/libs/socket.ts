@@ -3,6 +3,7 @@ import { Server } from "http";
 import AppError from "../errors/AppError";
 import { logger } from "../utils/logger";
 import buildParentChannelString from "../helpers/BuildParentChannelString";
+import BuildNotificationParentChannel from "../helpers/BuildNotificationParentChannel";
 
 let io: SocketIO;
 
@@ -29,7 +30,8 @@ export const initIO = (httpServer: Server): SocketIO => {
 
     socket.on("joinNotification", () => {
       logger.info("A client joined notification channel");
-      socket.join("notification");
+      const notificationChannel = BuildNotificationParentChannel(socket.handshake.auth.parentId);
+      socket.join(notificationChannel);
     });
 
     socket.on("joinTickets", (status: string) => {

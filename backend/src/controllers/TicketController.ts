@@ -9,6 +9,7 @@ import UpdateTicketService from "../services/TicketServices/UpdateTicketService"
 import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage";
 import ShowWhatsAppService from "../services/WhatsappService/ShowWhatsAppService";
 import formatBody from "../helpers/Mustache";
+import BuildNotificationParentChannel from "../helpers/BuildNotificationParentChannel";
 
 type IndexQuery = {
   searchParam: string;
@@ -115,13 +116,14 @@ export const remove = async (
   res: Response
 ): Promise<Response> => {
   const { ticketId } = req.params;
+  const { parentId } = req.user;
 
   const ticket = await DeleteTicketService(ticketId);
-
+  const notificationChannel = BuildNotificationParentChannel(parentId);
   const io = getIO();
   io.to(ticket.status)
     .to(ticketId)
-    .to("notification")
+    .to(notificationChannel)
     .emit("ticket", {
       action: "delete",
       ticketId: +ticketId
