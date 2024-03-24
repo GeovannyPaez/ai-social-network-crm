@@ -13,7 +13,6 @@ import CheckIsValidContact from "../services/WbotServices/CheckIsValidContact";
 import GetProfilePicUrl from "../services/WbotServices/GetProfilePicUrl";
 import AppError from "../errors/AppError";
 import GetContactService from "../services/ContactServices/GetContactService";
-import { build } from "factory-girl";
 import buildParentChannelString from "../helpers/BuildParentChannelString";
 
 type IndexQuery = {
@@ -39,10 +38,11 @@ interface ContactData {
 
 export const index = async (req: Request, res: Response): Promise<Response> => {
   const { searchParam, pageNumber } = req.query as IndexQuery;
-
+  const { parentId } = req.user
   const { contacts, count, hasMore } = await ListContactsService({
     searchParam,
-    pageNumber
+    pageNumber,
+    userParentId: parentId
   });
 
   return res.json({ contacts, count, hasMore });
@@ -50,10 +50,10 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 
 export const getContact = async (req: Request, res: Response): Promise<Response> => {
   const { name, number } = req.body as IndexGetContactQuery;
-
   const contact = await GetContactService({
     name,
-    number
+    number,
+    userParentId: req.user.parentId
   });
 
   return res.status(200).json(contact);
@@ -138,9 +138,9 @@ export const update = async (
   const { contactId } = req.params;
 
   const contact = await UpdateContactService({ contactData, contactId });
-
+  const channelParentId = buildParentChannelString(req.user.parentId);
   const io = getIO();
-  io.emit("contact", {
+  io.to(channelParentId).emit("contact", {
     action: "update",
     contact
   });
@@ -155,9 +155,9 @@ export const remove = async (
   const { contactId } = req.params;
 
   await DeleteContactService(contactId);
-
+  const channelParentId = buildParentChannelString(req.user.parentId);
   const io = getIO();
-  io.emit("contact", {
+  io.to(channelParentId).emit("contact", {
     action: "delete",
     contactId
   });

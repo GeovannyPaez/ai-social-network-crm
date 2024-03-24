@@ -50,6 +50,9 @@ const CreateMessageService = async ({
   }
 
   const io = getIO();
+  console.log("message.ticketId.toString()", message.ticketId)
+  console.log("Message: ", message.body)
+  console.log("seding to notification")
   io.to(message.ticketId.toString())
     .to(message.ticket.status)
     .to("notification")

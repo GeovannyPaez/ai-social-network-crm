@@ -4,6 +4,7 @@ import Contact from "../../models/Contact";
 interface Request {
   searchParam?: string;
   pageNumber?: string;
+  userParentId?: number | null;
 }
 
 interface Response {
@@ -14,7 +15,8 @@ interface Response {
 
 const ListContactsService = async ({
   searchParam = "",
-  pageNumber = "1"
+  pageNumber = "1",
+  userParentId = null
 }: Request): Promise<Response> => {
   const whereCondition = {
     [Op.or]: [
@@ -26,7 +28,8 @@ const ListContactsService = async ({
         )
       },
       { number: { [Op.like]: `%${searchParam.toLowerCase().trim()}%` } }
-    ]
+    ],
+    userParentId
   };
   const limit = 20;
   const offset = limit * (+pageNumber - 1);

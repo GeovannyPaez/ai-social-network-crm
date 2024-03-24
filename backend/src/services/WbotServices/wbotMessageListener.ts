@@ -32,14 +32,15 @@ interface Session extends Client {
 
 const writeFileAsync = promisify(writeFile);
 
-const verifyContact = async (msgContact: WbotContact): Promise<Contact> => {
+const verifyContact = async (msgContact: WbotContact, userParentId: number | null): Promise<Contact> => {
   const profilePicUrl = await msgContact.getProfilePicUrl();
 
   const contactData = {
     name: msgContact.name || msgContact.pushname || msgContact.id.user,
     number: msgContact.id.user,
     profilePicUrl,
-    isGroup: msgContact.isGroup
+    isGroup: msgContact.isGroup,
+    userParentId
   };
 
   const contact = CreateOrUpdateContactService(contactData);
@@ -243,7 +244,7 @@ const isValidMsg = (msg: WbotMessage): boolean => {
 const handleMessage = async (
   msg: WbotMessage,
   wbot: Session,
-  userParentId?: number | null
+  userParentId: number | null
 ): Promise<void> => {
   if (!isValidMsg(msg)) {
     return;
@@ -281,13 +282,13 @@ const handleMessage = async (
         msgGroupContact = await wbot.getContactById(msg.from);
       }
 
-      groupContact = await verifyContact(msgGroupContact);
+      groupContact = await verifyContact(msgGroupContact, userParentId);
     }
     const whatsapp = await ShowWhatsAppService(wbot.id!);
 
     const unreadMessages = msg.fromMe ? 0 : chat.unreadCount;
 
-    const contact = await verifyContact(msgContact);
+    const contact = await verifyContact(msgContact, userParentId);
 
     if (
       unreadMessages === 0 &&
@@ -447,6 +448,8 @@ const handleMsgAck = async (msg: WbotMessage, ack: MessageAck) => {
 
 const wbotMessageListener = (wbot: Session, userParentId: number | null = null): void => {
   wbot.on("message_create", async msg => {
+    console.log("message_create");
+    console.log("userParentId", userParentId);
     handleMessage(msg, wbot, userParentId);
   });
 
