@@ -18,7 +18,7 @@
       { "argsIgnorePattern": "_" }
     ],
     "import/prefer-default-export": "off",
-    "no-console": "off",
+    "no-console": "error",
     "no-param-reassign": "off",
     "quotes": [
       1,
