@@ -16,7 +16,6 @@ module.exports = {
       number: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
       },
       profilePicUrl: {
         type: DataTypes.STRING
