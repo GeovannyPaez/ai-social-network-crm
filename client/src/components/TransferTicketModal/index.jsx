@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -33,7 +33,6 @@ const filterOptions = createFilterOptions({
 });
 
 const TransferTicketModal = ({ modalOpen, onClose, ticketid, ticketWhatsappId }) => {
-	const history = useNavigate();
 	const [options, setOptions] = useState([]);
 	const [queues, setQueues] = useState([]);
 	const [allQueues, setAllQueues] = useState([]);
@@ -115,7 +114,7 @@ const TransferTicketModal = ({ modalOpen, onClose, ticketid, ticketWhatsappId })
 			await api.put(`/tickets/${ticketid}`, data);
 
 			setLoading(false);
-			history.push(`/tickets`);
+			redirect(`/tickets`);
 		} catch (err) {
 			setLoading(false);
 			toastError(err);
@@ -169,7 +168,7 @@ const TransferTicketModal = ({ modalOpen, onClose, ticketid, ticketWhatsappId })
 							/>
 						)}
 					/>
-					<FormControl variant="outlined" sx={{width:"100%"}}>
+					<FormControl variant="outlined" sx={{ width: "100%" }}>
 						<InputLabel>{i18n.t("transferTicketModal.fieldQueueLabel")}</InputLabel>
 						<Select
 							value={selectedQueue}
@@ -186,7 +185,7 @@ const TransferTicketModal = ({ modalOpen, onClose, ticketid, ticketWhatsappId })
 						role={loggedInUser.profile}
 						perform="ticket-options:transferWhatsapp"
 						yes={() => (!loadingWhatsapps &&
-							<FormControl variant="outlined" sx={{width:"100%"}} style={{ marginTop: 20 }}>
+							<FormControl variant="outlined" sx={{ width: "100%" }} style={{ marginTop: 20 }}>
 								<InputLabel>{i18n.t("transferTicketModal.fieldConnectionLabel")}</InputLabel>
 								<Select
 									value={selectedWhatsapp}

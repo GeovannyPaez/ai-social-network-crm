@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import openSocket from "../../services/socket-io";
 
 import { toast } from "react-toastify";
@@ -9,7 +8,6 @@ import api from "../../services/api";
 import toastError from "../../errors/toastError";
 
 const useAuth = () => {
-	const history = useNavigate();
 	const [isAuth, setIsAuth] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState({});
@@ -95,7 +93,6 @@ const useAuth = () => {
 			setUser(data.user);
 			setIsAuth(true);
 			toast.success(i18n.t("auth.toasts.success"));
-			history.push("/tickets");
 			setLoading(false);
 		} catch (err) {
 			toastError(err);
@@ -113,7 +110,6 @@ const useAuth = () => {
 			localStorage.removeItem("token");
 			api.defaults.headers.Authorization = undefined;
 			setLoading(false);
-			history.push("/login");
 		} catch (err) {
 			toastError(err);
 			setLoading(false);

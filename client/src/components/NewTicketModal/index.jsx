@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -23,7 +23,6 @@ const filter = createFilterOptions({
 });
 
 const NewTicketModal = ({ modalOpen, onClose }) => {
-	const history = useNavigate();
 
 	const [options, setOptions] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -73,7 +72,7 @@ const NewTicketModal = ({ modalOpen, onClose }) => {
 				userId: user.id,
 				status: "open",
 			});
-			history.push(`/tickets/${ticket.id}`);
+			redirect(`/tickets/${ticket.id}`);
 		} catch (err) {
 			toastError(err);
 		}

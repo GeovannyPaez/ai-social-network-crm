@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, redirect } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import openSocket from "../../services/socket-io";
@@ -111,7 +111,6 @@ const TikerActionButtons = styled("div")({
 
 const Ticket = () => {
   const { ticketId } = useParams();
-  const history = useNavigate();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -136,7 +135,7 @@ const Ticket = () => {
       fetchTicket();
     }, 500);
     return () => clearTimeout(delayDebounceFn);
-  }, [ticketId, history]);
+  }, [ticketId]);
 
   useEffect(() => {
     const socket = openSocket();
@@ -150,7 +149,7 @@ const Ticket = () => {
 
       if (data.action === "delete") {
         toast.success("Ticket deleted sucessfully.");
-        history.push("/tickets");
+        redirect("/tickets");
       }
     });
 
@@ -168,7 +167,7 @@ const Ticket = () => {
     return () => {
       socket.disconnect();
     };
-  }, [ticketId, history]);
+  }, [ticketId]);
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true);

@@ -1,7 +1,6 @@
 import { useState, useEffect, useReducer, useContext } from "react";
 import openSocket from "../../services/socket-io";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -35,6 +34,7 @@ import { i18n } from "../../translate/i18n";
 import toastError from "../../errors/toastError";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { MainPaper } from "../../components/StyledComponents";
+import { redirect } from "react-router-dom";
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_CONTACTS") {
@@ -83,7 +83,6 @@ const reducer = (state, action) => {
 
 
 const Contacts = () => {
-  const history = useNavigate();
 
   const { user } = useContext(AuthContext);
 
@@ -163,7 +162,7 @@ const Contacts = () => {
         userId: user?.id,
         status: "open",
       });
-      history.push(`/tickets/${ticket.id}`);
+      redirect(`/tickets/${ticket.id}`);
     } catch (err) {
       toastError(err);
     }
@@ -190,7 +189,7 @@ const Contacts = () => {
   const handleimportContact = async () => {
     try {
       await api.post("/contacts/import");
-      history.go(0);
+      toast.success(i18n.t("contacts.toasts.imported"));
     } catch (err) {
       toastError(err);
     }

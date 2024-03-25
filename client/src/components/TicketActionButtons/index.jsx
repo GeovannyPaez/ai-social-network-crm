@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 import { IconButton } from "@mui/material";
 import { MoreVert, Replay } from "@mui/icons-material";
@@ -25,7 +25,6 @@ const AcctionsButtons = styled("div")(({ theme }) => ({
 }));
 
 const TicketActionButtons = ({ ticket }) => {
-	const history = useNavigate();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const ticketOptionsMenuOpen = Boolean(anchorEl);
@@ -49,9 +48,9 @@ const TicketActionButtons = ({ ticket }) => {
 
 			setLoading(false);
 			if (status === "open") {
-				history.push(`/tickets/${ticket.id}`);
+				redirect(`/tickets/${ticket.id}`);
 			} else {
-				history.push("/tickets");
+				redirect("/tickets");
 			}
 		} catch (err) {
 			setLoading(false);

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import toastError from "../../errors/toastError";
 import api from "../../services/api";
 
@@ -12,7 +12,6 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 import { Button, Divider, } from "@mui/material";
 
 const VcardPreview = ({ contact, numbers }) => {
-    const history = useNavigate();
     const { user } = useContext(AuthContext);
 
     const [selectedContact, setContact] = useState({
@@ -51,7 +50,7 @@ const VcardPreview = ({ contact, numbers }) => {
                 userId: user.id,
                 status: "open",
             });
-            history.push(`/tickets/${ticket.id}`);
+            redirect(`/tickets/${ticket.id}`);
         } catch (err) {
             toastError(err);
         }

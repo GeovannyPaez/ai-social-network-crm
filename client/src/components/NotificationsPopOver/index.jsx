@@ -1,13 +1,13 @@
-import {useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 
-import { useNavigate,useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import openSocket from "../../services/socket-io";
 import useSound from "use-sound";
 
 import Popover from "@mui/material/Popover";
 import IconButton from "@mui/material/IconButton";
-import { TabContainer,PopoverPaper } from "../StyledComponents";
+import { TabContainer, PopoverPaper } from "../StyledComponents";
 
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -23,12 +23,11 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 
 const NotificationsPopOver = () => {
 
-	const history = useNavigate();
 	const location = useLocation();
 
 	const { user } = useContext(AuthContext);
 	const ticketIdUrl = location.pathname.split("/")[2];
-	
+
 	const ticketIdRef = useRef(ticketIdUrl);
 	const anchorEl = useRef();
 	const [isOpen, setIsOpen] = useState(false);
@@ -190,8 +189,8 @@ const NotificationsPopOver = () => {
 					vertical: "bottom",
 					horizontal: "right",
 				}}
-				sx={{maxWidth: 400}}
-				
+				sx={{ maxWidth: 400 }}
+
 				transformOrigin={{
 					vertical: "top",
 					horizontal: "right",
