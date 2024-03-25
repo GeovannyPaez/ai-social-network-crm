@@ -327,7 +327,7 @@ const Contacts = () => {
                   </TableCell>
                 </TableRow>
               ))}
-              {loading && <TableRowSkeleton avatar columns={3} />}
+              {loading && <TableRowSkeleton rows={3} avatar columns={3} />}
             </>
           </TableBody>
         </Table>
