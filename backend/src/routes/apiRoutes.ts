@@ -3,12 +3,12 @@ import multer from "multer";
 import uploadConfig from "../config/upload";
 
 import * as ApiController from "../controllers/ApiController";
-import isAuthApi from "../middleware/isAuthApi";
+import isAuth from "../middleware/isAuth";
 
 const upload = multer(uploadConfig);
 
 const ApiRoutes = express.Router();
 
-ApiRoutes.post("/send", isAuthApi, upload.array("medias"), ApiController.index);
+ApiRoutes.post("/send", isAuth, upload.array("medias"), ApiController.index);
 
 export default ApiRoutes;
