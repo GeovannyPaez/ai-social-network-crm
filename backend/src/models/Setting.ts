@@ -4,17 +4,25 @@ import {
   CreatedAt,
   UpdatedAt,
   Model,
-  PrimaryKey
+  PrimaryKey,
+  AutoIncrement,
+  ForeignKey
 } from "sequelize-typescript";
+import User from "./User";
 
 @Table
 class Setting extends Model<Setting> {
   @PrimaryKey
+  @AutoIncrement
   @Column
-  key: string;
+  id: number;
 
   @Column
-  value: string;
+  openaiApiKey: string;
+
+  @ForeignKey(() => User)
+  @Column
+  userParentId: number;
 
   @CreatedAt
   createdAt: Date;
