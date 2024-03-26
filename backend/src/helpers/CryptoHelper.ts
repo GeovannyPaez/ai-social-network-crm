@@ -4,10 +4,11 @@ const cryptoConfig = require("../config/crypto");
 
 class CryptoHelper {
 
+    private static instance: CryptoHelper;
     private algorithm: string;
     private secretKey: string;
 
-    constructor() {
+    private constructor() {
         this.algorithm = cryptoConfig.algorithm;
         this.secretKey = crypto
             .createHash("sha256")
@@ -15,15 +16,22 @@ class CryptoHelper {
             .digest("hex")
             .substring(0, 32);
     }
+    // Singleton
+    static getInstance(): CryptoHelper {
+        if (!CryptoHelper.instance) {
+            CryptoHelper.instance = new CryptoHelper();
+        }
+        return CryptoHelper.instance;
+    }
 
-    encrypt(text: string): string {
+    public encrypt(text: string): string {
         const iv = crypto.randomBytes(16);
         const cipher = crypto.createCipheriv(this.algorithm, this.secretKey, iv);
         const encrypt = Buffer.concat([cipher.update(text, "utf-8"), cipher.final()]);
         return `${iv.toString("hex")}:${encrypt.toString("hex")}`;
     }
 
-    decrypt(hash: string): string {
+    public decrypt(hash: string): string {
         const [ivText, encryptText] = hash.split(":");
         const iv = Buffer.from(ivText, "hex");
         const encrypt = Buffer.from(encryptText, "hex");
@@ -32,6 +40,6 @@ class CryptoHelper {
         return decrypt.toString("utf-8");
     }
 }
-const cryptoHelper = new CryptoHelper();
+;
 
-export default cryptoHelper;
+export default CryptoHelper.getInstance();
