@@ -1,26 +1,17 @@
-import AppError from "../../errors/AppError";
-import Setting from "../../models/Setting";
+// W
+//   value
+// }: Request): Promise<Setting | undefined> => {
+//   const setting = await Setting.findOne({
+//     where: { key }
+//   });
 
-interface Request {
-  key: string;
-  value: string;
-}
+//   if (!setting) {
+//     throw new AppError("ERR_NO_SETTING_FOUND", 404);
+//   }
 
-const UpdateSettingService = async ({
-  key,
-  value
-}: Request): Promise<Setting | undefined> => {
-  const setting = await Setting.findOne({
-    where: { key }
-  });
+//   await setting.update({ value });
 
-  if (!setting) {
-    throw new AppError("ERR_NO_SETTING_FOUND", 404);
-  }
+//   return setting;
+// };
 
-  await setting.update({ value });
-
-  return setting;
-};
-
-export default UpdateSettingService;
+// export default UpdateSettingService;
