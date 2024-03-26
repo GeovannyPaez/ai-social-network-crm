@@ -25,8 +25,8 @@ class Assistant extends Model<Assistant> {
     @Column
     instructions: string;
 
-    @Column
     @Default(false)
+    @Column
     isActivated: boolean;
 
     @Column
