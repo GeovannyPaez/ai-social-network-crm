@@ -3,14 +3,23 @@ import { QueryInterface, DataTypes } from "sequelize";
 module.exports = {
   up: (queryInterface: QueryInterface) => {
     return queryInterface.createTable("Settings", {
-      key: {
-        type: DataTypes.STRING,
+      id: {
+        type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false
       },
-      value: {
-        type: DataTypes.TEXT,
-        allowNull: false
+      openaiApiKey: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      userParentId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: "Users",
+          key: "id"
+        }
       },
       createdAt: {
         type: DataTypes.DATE,
