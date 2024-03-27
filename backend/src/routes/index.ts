@@ -12,6 +12,7 @@ import queueRoutes from "./queueRoutes";
 import quickAnswerRoutes from "./quickAnswerRoutes";
 import assistanRoutes from "./assistantRoutes";
 import apiRoutes from "./apiRoutes";
+import aiModelRouter from "./aiModelRoutes";
 
 const routes = Router();
 
@@ -26,6 +27,7 @@ routes.use(whatsappSessionRoutes);
 routes.use(queueRoutes);
 routes.use(quickAnswerRoutes);
 routes.use(assistanRoutes)
+routes.use(aiModelRouter)
 routes.use("/api/messages", apiRoutes);
 
 export default routes;
