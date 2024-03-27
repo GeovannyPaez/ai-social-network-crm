@@ -12,6 +12,7 @@ import UserQueue from "../models/UserQueue";
 import QuickAnswer from "../models/QuickAnswer";
 import UserWhatsapp from "../models/UserWhatsapp";
 import Assistant from "../models/Assistant";
+import AiModel from "../models/AiModel";
 // eslint-disable-next-line
 const dbConfig = require("../config/database");
 // import dbConfig from "../config/database";
@@ -30,7 +31,8 @@ const models = [
   UserQueue,
   QuickAnswer,
   UserWhatsapp,
-  Assistant,
+  AiModel,
+  Assistant
 ];
 
 sequelize.addModels(models);
