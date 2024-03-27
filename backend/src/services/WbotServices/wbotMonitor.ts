@@ -6,6 +6,7 @@ import Whatsapp from "../../models/Whatsapp";
 import { logger } from "../../utils/logger";
 import { StartWhatsAppSession } from "./StartWhatsAppSession";
 
+
 interface Session extends Client {
   id?: number;
 }
@@ -32,6 +33,7 @@ const wbotMonitor = async ({
         await whatsapp.update({ status: newState });
       } catch (err) {
         Sentry.captureException(err);
+        // @ts-ignore
         logger.error(err);
       }
 
@@ -51,6 +53,7 @@ const wbotMonitor = async ({
         await whatsapp.update({ battery, plugged });
       } catch (err) {
         Sentry.captureException(err);
+        // @ts-ignore
         logger.error(err);
       }
 
@@ -66,6 +69,7 @@ const wbotMonitor = async ({
         await whatsapp.update({ status: "OPENING", session: "" });
       } catch (err) {
         Sentry.captureException(err);
+        // @ts-ignore
         logger.error(err);
       }
 
@@ -74,9 +78,12 @@ const wbotMonitor = async ({
         session: whatsapp
       });
 
+      setTimeout(() => StartWhatsAppSession({ whatsapp, channelToEmitSocket, userParentId }), 2000);
+
     });
   } catch (err) {
     Sentry.captureException(err);
+    // @ts-ignore 
     logger.error(err);
   }
 };

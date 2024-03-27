@@ -49,6 +49,7 @@ const UpdateWhatsAppService = async ({
   try {
     await schema.validate({ name, status, isDefault });
   } catch (err) {
+    // @ts-ignore
     throw new AppError(err.message);
   }
 

@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import AppError from "../../errors/AppError";
 import { SerializeUser } from "../../helpers/SerializeUser";
 import User from "../../models/User";
+import CreateSettingService from "../SettingServices/CreateSettingService";
 
 interface Request {
   email: string;
@@ -53,7 +54,8 @@ const CreateUserService = async ({
   try {
     await schema.validate({ email, password, name });
   } catch (err) {
-    throw new AppError(err.message);
+    // @ts-ignore
+    throw new AppError(err.message, 409);
   }
 
   const user = await User.create(
@@ -68,6 +70,9 @@ const CreateUserService = async ({
     { include: ["queues", "whatsapp"] }
   );
 
+  if (!parentId) {
+    await CreateSettingService({ userParentId: user.id })
+  }
   await user.$set("queues", queueIds);
 
   await user.reload();

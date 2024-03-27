@@ -88,7 +88,8 @@ export const initWbot = async ({
       });
 
       wbot.on("auth_failure", async msg => {
-        console.error(
+
+        logger.error(
           `Session: ${sessionName} AUTHENTICATION FAILURE! Reason: ${msg}`
         );
 
@@ -136,6 +137,7 @@ export const initWbot = async ({
         resolve(wbot);
       });
     } catch (err) {
+      // @ts-ignore
       logger.error(err);
     }
   });
@@ -158,6 +160,7 @@ export const removeWbot = (whatsappId: number): void => {
       sessions.splice(sessionIndex, 1);
     }
   } catch (err) {
+    // @ts-ignore
     logger.error(err);
   }
 };

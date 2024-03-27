@@ -28,6 +28,7 @@ export const StartWhatsAppSession = async ({
     wbotMessageListener(wbot, userParentId);
     wbotMonitor({ wbot, whatsapp, channelToEmitSocket, userParentId });
   } catch (err) {
+    // @ts-ignore
     logger.error(err);
   }
 };

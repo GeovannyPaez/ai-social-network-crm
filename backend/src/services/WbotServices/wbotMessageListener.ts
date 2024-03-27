@@ -25,6 +25,9 @@ import UpdateTicketService from "../TicketServices/UpdateTicketService";
 import CreateContactService from "../ContactServices/CreateContactService";
 // import GetContactService from "../ContactServices/GetContactService";
 import formatBody from "../../helpers/Mustache";
+import ShowSettingsService from "../SettingServices/ShowSettingsService";
+import ShowAssistantService from "../AssistantService/ShowAssistantService";
+import { handleAiMessage } from "../../helpers/HandleAiMessage";
 
 interface Session extends Client {
   id?: number;
@@ -33,6 +36,7 @@ interface Session extends Client {
 const writeFileAsync = promisify(writeFile);
 
 const verifyContact = async (msgContact: WbotContact, userParentId: number | null): Promise<Contact> => {
+
   const profilePicUrl = await msgContact.getProfilePicUrl();
 
   const contactData = {
@@ -63,7 +67,6 @@ const verifyQuotedMessage = async (
 
   return quotedMsg;
 };
-
 
 // generate random id string for file names, function got from: https://stackoverflow.com/a/1349426/1851801
 function makeRandomId(length: number) {
@@ -302,6 +305,8 @@ const handleMessage = async (
       groupContact
     );
 
+
+
     if (msg.hasMedia) {
       await verifyMediaMessage(msg, ticket, contact);
     } else {
@@ -343,10 +348,23 @@ const handleMessage = async (
           });
         }
       } catch (error) {
-        console.log(error);
+        // eslint-disable-next-line no-console
+        // @ts-ignore
+        logger.error(error);
       }
     }
 
+    if (!msg.fromMe && msg.type === "chat" && userParentId) {
+      const settings = await ShowSettingsService(userParentId);
+      const assistant = await ShowAssistantService(userParentId);
+      if (settings?.openaiApiKey && assistant?.isActivated) {
+        await handleAiMessage({
+          ticket,
+          settings,
+          assistant
+        })
+      }
+    }
     /* if (msg.type === "multi_vcard") {
       try {
         const array = msg.vCards.toString().split("\n");
@@ -444,10 +462,14 @@ const handleMsgAck = async (msg: WbotMessage, ack: MessageAck) => {
   }
 };
 
+
+
 const wbotMessageListener = (wbot: Session, userParentId: number | null = null): void => {
   wbot.on("message_create", async msg => {
     handleMessage(msg, wbot, userParentId);
   });
+
+
 
   wbot.on("media_uploaded", async msg => {
     handleMessage(msg, wbot, userParentId);
