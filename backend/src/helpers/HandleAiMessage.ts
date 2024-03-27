@@ -8,6 +8,7 @@ import { logger } from "../utils/logger"
 import GetAiResponse from "./GetAiResponse"
 import { ResponseOpenAiChatCompletions } from "./ResponseOpenaiChatCompletions"
 import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions"
+import ShowAiModelService from "../services/AiModelServices/ShowAiModelService"
 // import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage"
 
 type handleAiMessageType = {
@@ -40,10 +41,12 @@ export const handleAiMessage = async ({
             role: "system",
             content: assistant.instructions
         })
+        const model = await ShowAiModelService(assistant.modelId);
+        if (!model) return;
         const aiResponder = new ResponseOpenAiChatCompletions(settings.openaiApiKey || "", {
             messages: openiaMessages,
             maxTokens: assistant.maxTokens,
-            model: assistant.model,
+            model: model.name
         })
         const aiResponse = await GetAiResponse(aiResponder)
         if (!aiResponse.message) {
