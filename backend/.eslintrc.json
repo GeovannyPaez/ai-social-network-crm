@@ -19,14 +19,7 @@
     ],
     "import/prefer-default-export": "off",
     "no-console": "error",
-    "no-param-reassign": "off",
-    "quotes": [
-      1,
-      "double",
-      {
-        "avoidEscape": true
-      }
-    ]
+    "no-param-reassign": "off"
   },
   "settings": {
     "import/resolver": {
