@@ -1,19 +1,9 @@
+import { UpdateAssistantData } from "../../@types/assistant";
 import AppError from "../../errors/AppError";
 import Assistant from "../../models/Assistant";
 
-type Request = {
-    id: number;
-    userParentId: number;
-    name: string;
-    instructions: string;
-    isActivated?: boolean;
-    model: string;
-    type: string;
-    idAssistant?: string;
-    maxTokens: number;
-}
 
-const UpateAssistantService = async (data: Request) => {
+const UpdateAssistanService = async (data: UpdateAssistantData) => {
     const assistant = await Assistant.findOne({
         where: {
             userParentId: data.userParentId,
@@ -26,4 +16,4 @@ const UpateAssistantService = async (data: Request) => {
     return await assistant.update(data)
 }
 
-export default UpateAssistantService;
+export default UpdateAssistanService;

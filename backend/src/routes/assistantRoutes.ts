@@ -7,11 +7,11 @@ assistantRouter.get("/assistants", isAuth, index);
 
 assistantRouter.post("/assistants", isAuth, store);
 
-assistantRouter.delete("/assistants/:assistantId", isAuth, remove);
+assistantRouter.delete("/assistants/:id", isAuth, remove);
 
-assistantRouter.get("/assistants/:assistantId", isAuth, show);
+assistantRouter.get("/assistants/:id", isAuth, show);
 
-assistantRouter.put("/assistants/:assistantId", isAuth, update);
+assistantRouter.put("/assistants/:id", isAuth, update);
 
 
 export default assistantRouter;
