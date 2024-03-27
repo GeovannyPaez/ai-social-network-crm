@@ -14,6 +14,7 @@ import Users from "../pages/Users";
 import Contacts from "../pages/Contacts";
 import QuickAnswers from "../pages/QuickAnswers";
 import Queues from "../pages/Queues";
+import Asistant from "../pages/Assistant";
 import { AuthProvider } from "../context/Auth/AuthContext";
 
 import VerifryAuth from "./VerifryAuth";
@@ -24,22 +25,24 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-      <WhatsAppsProvider>
-        <RoutesProvider>
-          <Route path="/login" element={<VerifryAuth Component={Login}/>} />
-          <Route path="/signup" element={<VerifryAuth Component={Signup}/>} />
-              <Route element={<LoggedInLayout />}>
-                <Route path="/" element={<VerifryAuth isPrivate Component={Dashboard}/>} />
-                <Route path="/connections" element={<VerifryAuth isPrivate Component={Connections}/>} />
-                <Route path="/contacts" element={<VerifryAuth isPrivate Component={Contacts}/>} />
-                <Route path="/quickAnswers" element={<VerifryAuth isPrivate Component={QuickAnswers}/>} />
-                <Route path="/users" element={<VerifryAuth isPrivate Component={Users}/>} />
-                <Route path="/queues" element={<VerifryAuth isPrivate Component={Queues}/>} />
-                <Route path="/settings" element={<VerifryAuth isPrivate Component={Settings}/>} />
-                <Route path="/tickets/:ticketId?" element={<VerifryAuth isPrivate Component={Tickets}/>} />
-              </Route>
-        </RoutesProvider>
-        <ToastContainer autoClose={3000} />
+        <WhatsAppsProvider>
+          <RoutesProvider>
+            <Route path="/login" element={<VerifryAuth Component={Login} />} />
+            <Route path="/signup" element={<VerifryAuth Component={Signup} />} />
+            <Route element={<LoggedInLayout />}>
+              <Route path="/" element={<VerifryAuth isPrivate Component={Dashboard} />} />
+              <Route path="/connections" element={<VerifryAuth isPrivate Component={Connections} />} />
+              <Route path="/contacts" element={<VerifryAuth isPrivate Component={Contacts} />} />
+              <Route path="/quickAnswers" element={<VerifryAuth isPrivate Component={QuickAnswers} />} />
+              <Route path="/users" element={<VerifryAuth isPrivate Component={Users} />} />
+              <Route path="/queues" element={<VerifryAuth isPrivate Component={Queues} />} />
+              <Route path="/settings" element={<VerifryAuth isPrivate Component={Settings} />} />
+              <Route path="/tickets/:ticketId?" element={<VerifryAuth isPrivate Component={Tickets} />} />
+              <Route path="/assistant" element={<VerifryAuth isPrivate Component={Asistant} />} />
+              <Route path="*" element={<div>404</div>} />
+            </Route>
+          </RoutesProvider>
+          <ToastContainer autoClose={3000} />
         </WhatsAppsProvider>
       </AuthProvider>
     </BrowserRouter>

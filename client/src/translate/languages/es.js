@@ -288,6 +288,7 @@ const messages = {
           connections: "Conexiones",
           tickets: "Tickets",
           contacts: "Contactos",
+          assistant: "Asistente AI",
           quickAnswers: "Respuestas rápidas",
           queues: "Filas",
           administration: "Administración",
@@ -429,6 +430,9 @@ const messages = {
           title: "¿Borrar mensaje?",
           message: "Esta acción no puede ser revertida.",
         },
+      },
+      assistant: {
+        title: "Asistente AI",
       },
       backendErrors: {
         ERR_NO_OTHER_WHATSAPP:

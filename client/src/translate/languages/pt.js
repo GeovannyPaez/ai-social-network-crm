@@ -286,6 +286,7 @@ const messages = {
           connections: "Conexões",
           tickets: "Tickets",
           contacts: "Contatos",
+          assistant: "Assistente",
           quickAnswers: "Respostas Rápidas",
           queues: "Filas",
           administration: "Administração",

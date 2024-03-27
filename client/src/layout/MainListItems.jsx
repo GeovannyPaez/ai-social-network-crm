@@ -1,4 +1,4 @@
-import  { useContext, useEffect, useState,useMemo,forwardRef } from "react";
+import { useContext, useEffect, useState, useMemo, forwardRef } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   ListItem,
@@ -9,6 +9,7 @@ import {
   Badge,
 } from "@mui/material";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -27,24 +28,24 @@ function ListItemLink(props) {
 
   const renderLink = useMemo(
     () =>
-    // eslint-disable-next-line react/display-name
-    forwardRef((itemProps, ref) => (
+      // eslint-disable-next-line react/display-name
+      forwardRef((itemProps, ref) => (
         <RouterLink to={to} ref={ref} {...itemProps} />
       )),
     [to]
   );
 
   return (
-  
-      <ListItem button component={renderLink} className={className}>
-        {icon && <ListItemIcon>{icon}</ListItemIcon>}
-        <ListItemText primary={primary} />
-      </ListItem>
+
+    <ListItem button component={renderLink} className={className}>
+      {icon && <ListItemIcon>{icon}</ListItemIcon>}
+      <ListItemText primary={primary} />
+    </ListItem>
   );
 }
 
 const MainListItems = ({ drawerClose }) => {
-  
+
   const { whatsApps } = useContext(WhatsAppsContext);
   const { user } = useContext(AuthContext);
   const [connectionWarning, setConnectionWarning] = useState(false);
@@ -93,7 +94,6 @@ const MainListItems = ({ drawerClose }) => {
           primary={i18n.t("mainDrawer.listItems.tickets")}
           icon={<WhatsAppIcon color="secondary" />}
         />
-
         <ListItemLink
           to="/contacts"
           primary={i18n.t("mainDrawer.listItems.contacts")}
@@ -103,7 +103,7 @@ const MainListItems = ({ drawerClose }) => {
           to="/quickAnswers"
           primary={i18n.t("mainDrawer.listItems.quickAnswers")}
           icon={<QuestionAnswerOutlinedIcon color="secondary" />}
-          
+
         />
         <Can
           role={user.profile}
@@ -123,6 +123,11 @@ const MainListItems = ({ drawerClose }) => {
                 to="/queues"
                 primary={i18n.t("mainDrawer.listItems.queues")}
                 icon={<AccountTreeOutlinedIcon color="secondary" />}
+              />
+              <ListItemLink
+                to="/assistant"
+                primary={i18n.t("mainDrawer.listItems.assistant")}
+                icon={<SmartToyIcon color="secondary" />}
               />
               <ListItemLink
                 to="/settings"
