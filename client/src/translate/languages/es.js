@@ -186,8 +186,8 @@ const messages = {
       },
       queueModal: {
         title: {
-          add: "Agregar cola",
-          edit: "Editar cola",
+          add: "Agregar departamento",
+          edit: "Editar departamento",
         },
         form: {
           name: "Nombre",
@@ -228,7 +228,7 @@ const messages = {
         },
       },
       ticketsQueueSelect: {
-        placeholder: "Filas",
+        placeholder: "Departamentos",
       },
       tickets: {
         toasts: {
@@ -252,9 +252,9 @@ const messages = {
       transferTicketModal: {
         title: "Transferir Ticket",
         fieldLabel: "Escriba para buscar usuarios",
-        fieldQueueLabel: "Transferir a la cola",
+        fieldQueueLabel: "Transferir al departamento",
         fieldConnectionLabel: "Transferir to conexión",
-        fieldQueuePlaceholder: "Seleccione una cola",
+        fieldQueuePlaceholder: "Seleccione un departamento",
         fieldConnectionPlaceholder: "Seleccione una conexión",
         noOptions: "No se encontraron usuarios con ese nombre",
         buttons: {
@@ -263,7 +263,7 @@ const messages = {
         },
       },
       ticketsList: {
-        pendingHeader: "Cola",
+        pendingHeader: "Cola de espera",
         assignedHeader: "Trabajando en",
         noTicketsTitle: "¡Nada acá!",
         connectionTitle: "Conexión que se está utilizando actualmente.",
@@ -290,7 +290,7 @@ const messages = {
           contacts: "Contactos",
           assistant: "Asistente AI",
           quickAnswers: "Respuestas rápidas",
-          queues: "Filas",
+          queues: "Departamentos",
           administration: "Administración",
           users: "Usuarios",
           settings: "Configuración",
@@ -306,24 +306,24 @@ const messages = {
         noTickets: "Sin notificaciones.",
       },
       queues: {
-        title: "Filas",
+        title: "Departamentos",
         table: {
           name: "Nombre",
           color: "Color",
           greeting: "Mensaje de saludo",
-          actions: "Comportamiento",
+          actions: "Acciones",
         },
         buttons: {
-          add: "Agregar cola",
+          add: "Agregar Departamento",
         },
         confirmationModal: {
           deleteTitle: "Eliminar",
           deleteMessage:
-            "¿Estás seguro? ¡Esta acción no se puede revertir! Los tickets en esa cola seguirán existiendo, pero ya no tendrán ninguna cola asignada.",
+            "¿Estás seguro? ¡Esta acción no se puede revertir! Los tickets en este departamento seguirán existiendo, pero ya no tendrán ningun deparatemento asignada.",
         },
       },
       queueSelect: {
-        inputLabel: "Filas",
+        inputLabel: "Departamentos",
       },
       quickAnswers: {
         title: "Respuestas rápidas",
@@ -363,7 +363,7 @@ const messages = {
         confirmationModal: {
           deleteTitle: "Borrar",
           deleteMessage:
-            "Toda la información del usuario se perderá. Los tickets abiertos de los usuarios se moverán a la cola.",
+            "Toda la información del usuario se perderá. Los tickets abiertos de los usuarios se moverán al departamento.",
         },
       },
       settings: {
@@ -469,7 +469,7 @@ const messages = {
         ERR_QUEUE_COLOR_ALREADY_EXISTS:
           "Este color ya está en uso, elija otro.",
         ERR_WAPP_GREETING_REQUIRED:
-          "El mensaje de saludo es obligatorio cuando hay más de una cola.",
+          "El mensaje de saludo es obligatorio cuando hay más de un departamento.",
       },
     },
   },
