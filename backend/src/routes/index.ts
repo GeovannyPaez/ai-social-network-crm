@@ -13,6 +13,7 @@ import quickAnswerRoutes from "./quickAnswerRoutes";
 import assistanRoutes from "./assistantRoutes";
 import apiRoutes from "./apiRoutes";
 import aiModelRouter from "./aiModelRoutes";
+import aiReponseRoutes from "./aiResponseRoutes";
 
 const routes = Router();
 
@@ -28,6 +29,7 @@ routes.use(queueRoutes);
 routes.use(quickAnswerRoutes);
 routes.use(assistanRoutes)
 routes.use(aiModelRouter)
+routes.use(aiReponseRoutes)
 routes.use("/api/messages", apiRoutes);
 
 export default routes;
