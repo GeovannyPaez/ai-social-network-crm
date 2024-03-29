@@ -9,7 +9,7 @@ import manualDocuement from "../../assets/manual.pdf"
 // import api from "../../services/api.js";
 import { i18n } from "../../translate/i18n.js";
 // import toastError from "../../errors/toastError.js";
-import { Button } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { PaperSettings, RootSettings } from "../../components/StyledComponents/index.jsx";
 
 const Settings = () => {
@@ -68,7 +68,7 @@ const Settings = () => {
 
 	return (
 		<RootSettings>
-			<Container maxWidth="sm">
+			<Container maxWidth="md">
 				<Typography variant="h4" color="textPrimary" gutterBottom>
 					{i18n.t("settings.title")}
 				</Typography>
@@ -109,16 +109,30 @@ const Settings = () => {
 						value={settings && settings.length > 0 && getSettingValue("userApiToken")}
 					/>
 				</Paper> */}
-				<PaperSettings style={{ justifyContent: "space-between" }}>
-					<a download href={manualDocuement}>
-						<Button variant="contained" color="secondary">
-							Descargar Manual
-						</Button>
-
-					</a>
-					<a rel="noreferrer" target="_blank" href={"https://api.whatsapp.com/send/?phone=%2B573158227811&text&type=phone_number&app_absent=0"}>
-						<Button variant="contained" color="primary">Soporte</Button>
-					</a>
+				<PaperSettings>
+					<TextField
+						margin="dense"
+						variant="outlined"
+						id="openAiKey"
+						name="userApiToken"
+						fullWidth
+						label={i18n.t("settings.settings.openApiKey.label")}
+					/>
+					<Button variant="contained" color="primary">
+						{i18n.t("settings.settings.openApiKey.button.save")}
+					</Button>
+				</PaperSettings>
+				<PaperSettings sx={{ justifyContent: "space-between" }}>
+					<Box sx={{ display: "flex", justifyContent: "space-evenly", width: "80%", margin: "0  auto" }}>
+						<a download href={manualDocuement}>
+							<Button variant="contained" color="secondary">
+								Descargar Manual
+							</Button>
+						</a>
+						<a rel="noreferrer" target="_blank" href={"https://api.whatsapp.com/send/?phone=%2B573158227811&text&type=phone_number&app_absent=0"}>
+							<Button variant="contained" color="primary">Soporte</Button>
+						</a>
+					</Box>
 				</PaperSettings>
 			</Container>
 		</RootSettings>
