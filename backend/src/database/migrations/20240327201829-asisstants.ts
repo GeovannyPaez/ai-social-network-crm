@@ -13,6 +13,10 @@ module.exports = {
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            openaiApiKey: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
             instructions: {
                 type: DataTypes.STRING,
                 allowNull: true // Opcional, según tus requisitos

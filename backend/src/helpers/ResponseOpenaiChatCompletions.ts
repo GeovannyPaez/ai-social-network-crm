@@ -1,6 +1,7 @@
+import OpenAI from "openai";
 import { getOpenAI } from "../libs/openai";
 import { AiResponseCreator, AiResponse } from "./AiResponse";
-import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
+import { ChatCompletion, ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
 
 type OpenAiChatCompletions = {
     model: ChatCompletionCreateParamsBase["model"];
@@ -20,35 +21,56 @@ export class ResponseOpenAiChatCompletions extends AiResponseCreator {
     }
 
     public async createResponse(): Promise<AiResponse> {
-        const openai = getOpenAI(this.openaiKey);
+        try {
+            const openai = getOpenAI(this.openaiKey);
+            const response = await this.getChatCompletions(openai);
+            const { message, tokensExpended } = this.extractResponseData(response);
+            return { message, tokensExpended, action: "chat_completions" };
+        } catch (error) {
+            this.handlerOpenAIError(error);
+            return { message: "", tokensExpended: 0, action: "chat_completions" };
+        }
+    }
 
-        const response = await openai.chat.completions.create({
+    private async getChatCompletions(openai: OpenAI) {
+        return openai.chat.completions.create({
             model: this.openAiChatCompletions.model,
-            messages: [
-                {
-                    role: "system",
-                    content: this.openAiChatCompletions.instructions
-                },
-                ...this.openAiChatCompletions.messages
-            ],
+            messages: this.joinStructionsWithMessages(),
             max_tokens: this.openAiChatCompletions.maxTokens,
-        })
-        const message = response.choices[0].message.content;
-        const tokensExpended = response.usage?.total_tokens
-        const action = "chat_completions";
-        return { message, tokensExpended, action }
+        });
+    }
+
+    private extractResponseData(response: ChatCompletion): { message: string, tokensExpended: number } {
+        const message = response.choices[0].message.content || "";
+        const tokensExpended = response.usage?.total_tokens || 0;
+        return { message, tokensExpended };
     }
 
     public async getStreamingResponse() {
-        const openai = getOpenAI(this.openaiKey);
+        try {
+            const openai = getOpenAI(this.openaiKey);
+            return await this.getStreamingChatCompletions(openai);
+        } catch (error) {
+            this.handlerOpenAIError(error);
+        }
+    }
 
-        const response = await openai.chat.completions.create({
+    private async getStreamingChatCompletions(openai: OpenAI) {
+        return openai.chat.completions.create({
             model: this.openAiChatCompletions.model,
-            messages: this.openAiChatCompletions.messages,
+            messages: this.joinStructionsWithMessages(),
             max_tokens: this.openAiChatCompletions.maxTokens,
             stream: true
-        })
-
-        return response
+        });
     }
-}   
+
+    private joinStructionsWithMessages(): ChatCompletionCreateParamsBase["messages"] {
+        return [
+            {
+                role: "system",
+                content: this.openAiChatCompletions.instructions
+            },
+            ...this.openAiChatCompletions.messages
+        ];
+    }
+}

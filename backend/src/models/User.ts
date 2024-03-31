@@ -13,7 +13,8 @@ import {
   HasMany,
   BelongsToMany,
   ForeignKey,
-  BelongsTo
+  BelongsTo,
+  HasOne
 } from "sequelize-typescript";
 import { hash, compare } from "bcryptjs";
 import Ticket from "./Ticket";
@@ -24,6 +25,7 @@ import UserWhatsapp from "./UserWhatsapp"; // Importa el modelo de la tabla de u
 import QuickAnswer from "./QuickAnswer";
 import Contact from "./Contact";
 import Assistant from "./Assistant";
+import Setting from "./Setting";
 
 @Table
 class User extends Model<User> {
@@ -94,6 +96,9 @@ class User extends Model<User> {
 
   @HasMany(() => Assistant)
   assistants: Assistant[];
+
+  @HasOne(() => Setting)
+  settings: Setting;
 
   @BeforeUpdate
   @BeforeCreate

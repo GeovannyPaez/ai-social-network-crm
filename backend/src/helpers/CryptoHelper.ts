@@ -31,13 +31,17 @@ class CryptoHelper {
         return `${iv.toString("hex")}:${encrypt.toString("hex")}`;
     }
 
-    public decrypt(hash: string): string {
+    public decrypt(hash: string, lengthLastWords: number | null = null): string {
         const [ivText, encryptText] = hash.split(":");
         const iv = Buffer.from(ivText, "hex");
         const encrypt = Buffer.from(encryptText, "hex");
         const decipher = crypto.createDecipheriv(this.algorithm, this.secretKey, iv);
         const decrypt = Buffer.concat([decipher.update(encrypt), decipher.final()]);
-        return decrypt.toString("utf-8");
+        const text = decrypt.toString("utf-8");
+        if (lengthLastWords) {
+            return "..." + text.slice(-lengthLastWords);
+        }
+        return text;
     }
 }
 ;

@@ -1,15 +1,10 @@
-// import { useState, useEffect } from "react";
-// import openSocket from "../../services/socket-io.js";
+
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-// import Select from "@mui/material/Select";
-// import { toast } from "react-toastify";
 import manualDocuement from "../../assets/manual.pdf"
-// import api from "../../services/api.js";
 import { i18n } from "../../translate/i18n.js";
-// import toastError from "../../errors/toastError.js";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { PaperSettings, RootSettings } from "../../components/StyledComponents/index.jsx";
 
 const Settings = () => {
@@ -109,7 +104,7 @@ const Settings = () => {
 						value={settings && settings.length > 0 && getSettingValue("userApiToken")}
 					/>
 				</Paper> */}
-				<PaperSettings>
+				{/* <PaperSettings>
 					<TextField
 						margin="dense"
 						variant="outlined"
@@ -121,7 +116,7 @@ const Settings = () => {
 					<Button variant="contained" color="primary">
 						{i18n.t("settings.settings.openApiKey.button.save")}
 					</Button>
-				</PaperSettings>
+				</PaperSettings> */}
 				<PaperSettings sx={{ justifyContent: "space-between" }}>
 					<Box sx={{ display: "flex", justifyContent: "space-evenly", width: "80%", margin: "0  auto" }}>
 						<a download href={manualDocuement}>

@@ -2,10 +2,11 @@ export type AsisstanCreateData = {
     userParentId: number;
     name: string;
     instructions: string;
-    isActivate?: boolean;
+    isActivated?: boolean;
     modelId: number;
     maxTokens?: number;
     idAssistant?: string;
+    openaiApiKey: string;
     userParentId: number;
     type: AssistantType;
 }
@@ -13,11 +14,12 @@ export type AsisstanCreateData = {
 export type UpdateAssistantData = {
     name?: string;
     instructions?: string;
-    isActivate?: boolean;
+    isActivated?: boolean;
     modeId?: number;
     type?: AssistantType;
     idAssistant?: string;
     maxTokens?: number;
+    openaiApiKey?: string;
     userParentId: number;
     id: number;
 }

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Box, IconButton, Stack, TextField, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { toast } from 'react-toastify';
 import { getAiRespose } from '../../services/asistanService';
+import toastError from '../../errors/toastError';
 
 async function* streamReader(response) {
     const stream = response.body;
@@ -37,18 +37,19 @@ export default function AssistantChatTest() {
         try {
             const response = await getAiRespose(updatedMessages)
             if (!response.ok || !response.body) {
-                return toast.error('Error al enviar el mensaje');
+                const res = await response.json();
+                return toastError(res);
             }
             for await (const chunk of streamReader(response)) {
                 renderMessageToAssistant(chunk, updatedMessages);
             }
         } catch (error) {
-            toast.error('Error al enviar el mensaje');
+            toastError(error);
         }
     };
 
     return (
-        <Stack sx={{ width: '60%' }}>
+        <Stack sx={{ width: '60%', padding: 1 }}>
             <Typography textAlign="center" variant="h5" color="textPrimary" gutterBottom>
                 Test Chat
             </Typography>
@@ -82,7 +83,10 @@ export default function AssistantChatTest() {
                         <IconButton color="secondary" onClick={() => setMessages([])}>
                             <RestartAltIcon />
                         </IconButton>
-                        <IconButton color="primary" onClick={handleSubmit}>
+                        <IconButton
+                            color="primary"
+                            disabled={inputMessage.trim() === ''}
+                            onClick={handleSubmit}>
                             <SendIcon />
                         </IconButton>
                     </Stack>

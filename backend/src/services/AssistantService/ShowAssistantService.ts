@@ -4,7 +4,8 @@ async function ShowAssistantService(userParentId: number) {
     const asssitant = await Assistant.findOne({
         where: {
             userParentId
-        }
+        },
+        include: ["model"]
     })
     return asssitant
 }

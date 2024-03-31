@@ -25,7 +25,6 @@ import UpdateTicketService from "../TicketServices/UpdateTicketService";
 import CreateContactService from "../ContactServices/CreateContactService";
 // import GetContactService from "../ContactServices/GetContactService";
 import formatBody from "../../helpers/Mustache";
-import ShowSettingsService from "../SettingServices/ShowSettingsService";
 import ShowAssistantService from "../AssistantService/ShowAssistantService";
 import { handleAiMessage } from "../../helpers/HandleAiMessage";
 
@@ -353,17 +352,14 @@ const handleMessage = async (
         logger.error(error);
       }
     }
-
     if (!msg.fromMe && msg.type === "chat" && userParentId) {
-      const settings = await ShowSettingsService(userParentId);
       const assistant = await ShowAssistantService(userParentId);
-      if (settings?.openaiApiKey && assistant?.isActivated) {
-        await handleAiMessage({
-          ticket,
-          settings,
-          assistant
-        })
-      }
+
+      if (!assistant || !assistant?.isActivated) return;
+      await handleAiMessage({
+        ticket,
+        assistant
+      })
     }
     /* if (msg.type === "multi_vcard") {
       try {

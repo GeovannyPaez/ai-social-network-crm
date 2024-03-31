@@ -21,6 +21,9 @@ class Assistant extends Model<Assistant> {
     id: number;
 
     @Column
+    openaiApiKey: string;
+
+    @Column
     name: string;
 
     @Column
@@ -29,7 +32,6 @@ class Assistant extends Model<Assistant> {
     @Default(false)
     @Column
     isActivated: boolean;
-
 
     @Column // assistant or chat_completions
     type: string;

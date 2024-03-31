@@ -487,6 +487,8 @@ const messages = {
         "Este color ya está en uso, elija otro.",
       ERR_WAPP_GREETING_REQUIRED:
         "El mensaje de saludo es obligatorio cuando hay más de un departamento.",
+      ERR_OPENAI_API_INVALID: "Clave de API de OpenAI no válida.",
+      ERR_ASSISTANT_NOT_FOUND: "Por favor, guarde la configuración del asistente AI."
     },
   },
 };

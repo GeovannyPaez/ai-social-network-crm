@@ -1,5 +1,4 @@
 import { RequestHandler } from "express";
-import ListAssistantsService from "../services/AssistantService/ListAssistantsService";
 import * as yup from "yup";
 import AppError from "../errors/AppError";
 import { AsisstanCreateData, UpdateAssistantData } from "../@types/assistant";
@@ -7,10 +6,13 @@ import CreateAssistantService from "../services/AssistantService/CreateAssistant
 import DeleteAssistantService from "../services/AssistantService/DeleteAssistantSerivce";
 import ShowAssistantService from "../services/AssistantService/ShowAssistantService";
 import UpdateAssistanService from "../services/AssistantService/UpdateAssistantService";
-
+import CryptoHelper from "../helpers/CryptoHelper";
 export const index: RequestHandler = async (req, res) => {
-    const assistants = await ListAssistantsService(req.user.parentId)
-    return res.json(assistants)
+    const assistant = await ShowAssistantService(req.user.parentId)
+    if (assistant) {
+        assistant.openaiApiKey = CryptoHelper.decrypt(assistant.openaiApiKey);
+    }
+    return res.json(assistant)
 }
 
 export const store: RequestHandler = async (req, res) => {
@@ -19,10 +21,11 @@ export const store: RequestHandler = async (req, res) => {
     const schema = yup.object().shape({
         name: yup.string().required(),
         instructions: yup.string().required(),
-        isActivate: yup.boolean(),
+        isActivated: yup.boolean(),
         modelId: yup.number().required(),
         maxTokens: yup.number().required(),
         idAssistant: yup.string(),
+        openaiApiKey: yup.string().required(),
         type: yup.string().required().oneOf(["chat_completions", "assistant"])
     })
 
@@ -34,6 +37,7 @@ export const store: RequestHandler = async (req, res) => {
         }
     }
     const assistant = await CreateAssistantService(assistantData)
+    assistant.openaiApiKey = CryptoHelper.decrypt(assistant.openaiApiKey);
     return res.status(201).json(assistant)
 }
 export const remove: RequestHandler = async (req, res) => {
@@ -41,22 +45,18 @@ export const remove: RequestHandler = async (req, res) => {
     await DeleteAssistantService(id)
     return res.status(204).send()
 }
-export const show: RequestHandler = async (req, res) => {
-    const { id } = req.params
-    const assistant = await ShowAssistantService(Number(id))
-    return res.json(assistant)
-}
+
 export const update: RequestHandler = async (req, res) => {
     const { id } = req.params
     const assistantData = req.body as UpdateAssistantData
     const schema = yup.object().shape({
         name: yup.string(),
         instructions: yup.string(),
-        isActivate: yup.boolean(),
+        isActivated: yup.boolean(),
         type: yup.string().oneOf(["chat_completions", "assistant"]),
-        model: yup.string(),
         maxTokens: yup.number(),
         idAssistant: yup.string(),
+        modelId: yup.number(),
         userParentId: yup.number()
     })
 
@@ -67,6 +67,10 @@ export const update: RequestHandler = async (req, res) => {
             throw new AppError(error.message)
         }
     }
+
     const assistant = await UpdateAssistanService({ ...assistantData, id: Number(id), userParentId: req.user.parentId })
+    if (assistant.openaiApiKey) {
+        assistant.openaiApiKey = CryptoHelper.decrypt(assistant.openaiApiKey);
+    }
     return res.status(201).json(assistant)
 }

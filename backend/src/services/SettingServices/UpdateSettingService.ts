@@ -2,7 +2,6 @@ import AppError from "../../errors/AppError";
 import Setting from "../../models/Setting";
 
 type Request = {
-    openaiKey?: string;
     userParentId: number;
 }
 
