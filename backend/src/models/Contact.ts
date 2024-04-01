@@ -40,6 +40,10 @@ class Contact extends Model<Contact> {
   @Column
   profilePicUrl: string;
 
+  @Default(false)
+  @Column
+  isAssistantActive: boolean;
+
   @ForeignKey(() => User)
   @Column
   userParentId: number;
@@ -55,7 +59,7 @@ class Contact extends Model<Contact> {
   updatedAt: Date;
 
   @BelongsTo(() => User)
-  userPatent: User;
+  userParent: User;
 
   @HasMany(() => Ticket)
   tickets: Ticket[];
