@@ -370,8 +370,10 @@ const messages = {
         header: {
           title: "Asistente AI",
           switch: {
-            isActivated: "desactivar",
-            isDesactivated: "activar",
+            active: "Activar asistente AI",
+            desactive: "Desactivar asistente AI",
+            isDesactivatedForAllTickets: "Activar para responder a todos los contactos",
+            isActivatedForAllTickets: "Desactivar para responder a solo los contactos activados",
           },
           save: "Guardar cambios"
         }

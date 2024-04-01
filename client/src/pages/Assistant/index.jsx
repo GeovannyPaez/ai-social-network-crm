@@ -1,4 +1,4 @@
-import { Divider, FormControlLabel, Switch, } from "@mui/material";
+import { Divider } from "@mui/material";
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
@@ -8,10 +8,9 @@ import { MainPaper } from "../../components/StyledComponents";
 import AssistanChatTest from "../../components/AssistantChatTest";
 import AssistantConfiguration from "../../components/AssistantConfiuguration";
 import { useEffect, useState } from "react";
-import { getAssistant, updateAssistant } from "../../services/asistanService";
+import { getAssistant } from "../../services/asistanService";
 import { getModels } from "../../services/models";
-import toastError from "../../errors/toastError";
-import { toast } from "react-toastify";
+import AssistantActivationMenu from "../../components/AssistantActivationModal";
 const initialState = {
     name: "",
     instructions: "",
@@ -33,34 +32,23 @@ export default function AssistantPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const hanldeUpdateAssistant = (newAssistant) => {
-        setAssistant(newAssistant);
+        setAssistant({ ...assistant, ...newAssistant });
     }
     const onChangeKeyFromAsisstant = (key, value) => {
         setAssistant({ ...assistant, [key]: value });
     }
-    const handleActiveAssistant = async (e) => {
-        try {
-            const value = e.target.checked;
-            await updateAssistant({ isActivated: value, id: assistant.id });
-            onChangeKeyFromAsisstant("isActivated", value);
-            toast.success(i18n.t("assistant.header.switch.success"));
-        } catch (error) {
-            toastError(error);
-        }
-    }
+
     return (
         <MainContainer>
             <MainHeader>
                 <Title>{i18n.t("assistant.header.title")}</Title>
                 <MainHeaderButtonsWrapper>
-                    <FormControlLabel
-                        label={i18n.t("assistant.header.switch.isDesactivated")}
-                        control={<Switch
-                            disabled={!assistant.id}
-                            checked={assistant.isActivated}
-                            onChange={handleActiveAssistant}
-                            color="primary"
-                        />}
+                    <AssistantActivationMenu
+                        assistantId={assistant.id}
+                        isActivated={assistant.isActivated}
+                        isActivatedForAllTickets={assistant.isActivatedForAllTickets}
+                        onChangeKeyFromAsisstant={onChangeKeyFromAsisstant}
+                        handleUpdateAssistant={hanldeUpdateAssistant}
                     />
                 </MainHeaderButtonsWrapper>
             </MainHeader>
