@@ -360,6 +360,49 @@ const messages = {
             "All user data will be lost. Users' open tickets will be moved to queue.",
         },
       },
+      assistant: {
+        header: {
+          title: "Assistant",
+          activationModal: {
+            actionButton: "Activate",
+            submitButton: "Save",
+            cancelButton: "Cancel",
+            description: "Activate the AI assistant to respond to your contacts.",
+            title: "Activate AI Assistant",
+            success: "AI assistant activated successfully!",
+          },
+          switch: {
+            active: "AI Assistant is active",
+            desactive: "AI Assistant is inactive",
+            isDesactivatedForAllTickets: "Activate to respond to all tickets",
+            isActivatedForAllTickets: "Deactivate to stop responding to all tickets",
+          },
+          save: "Save",
+        },
+        test: {
+          title: "Assistant Test",
+          inputPlaceholder: "Type a message to test the assistant",
+          message: {
+            user: "User",
+            assistant: "Assistant",
+          }
+        },
+        configuration: {
+          title: "Assistant Configuration",
+          form: {
+            name: "Name",
+            openaiApiKey: "OpenAI API Key",
+            instructions: "Instructions",
+            maxTokens: "Máx Tokens",
+            model: "Model",
+            saveButton: "Save",
+            select: {
+              optionDescription: "Context Window Size",
+            },
+            success: "Assistant configuration saved successfully.",
+          }
+        },
+      },
       settings: {
         success: "Settings saved successfully.",
         title: "Settings",

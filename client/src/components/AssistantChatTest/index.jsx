@@ -4,6 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { getAiRespose } from '../../services/asistanService';
 import toastError from '../../errors/toastError';
+import { i18n } from '../../translate/i18n';
 
 async function* streamReader(response) {
     const stream = response.body;
@@ -51,7 +52,7 @@ export default function AssistantChatTest() {
     return (
         <Stack sx={{ width: '60%', padding: 1 }}>
             <Typography textAlign="center" variant="h5" color="textPrimary" gutterBottom>
-                Test Chat
+                {i18n.t('assistant.test.title')}
             </Typography>
             <Box sx={{ position: 'relative', height: 'calc(100vh - 250px)' }}>
                 <Stack spacing={2} sx={{ overflowY: 'scroll', maxHeight: 'calc(100vh - 320px)', padding: 2 }}>
@@ -63,7 +64,7 @@ export default function AssistantChatTest() {
                                 multiline
                                 sx={{ width: '50%', margin: 1 }}
                                 focused
-                                label={message.role === 'user' ? 'Tú' : 'Asistente'}
+                                label={message.role === 'user' ? i18n.t("assistant.test.message.user") : i18n.t("assistant.test.message.assistant")}
                                 readOnly
                             />
                         </Box>
@@ -74,7 +75,7 @@ export default function AssistantChatTest() {
                         <TextField
                             value={inputMessage}
                             onChange={(e) => setInputMessage(e.target.value)}
-                            placeholder="Escribe un mensaje"
+                            placeholder={i18n.t('assistant.test.inputPlaceholder')}
                             fullWidth
                             multiline
                             minRows={1}

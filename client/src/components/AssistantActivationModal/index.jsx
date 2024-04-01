@@ -22,7 +22,7 @@ export default function AssistantActivationModal({ assistantId, isActivated, isA
         setIsLoading(true);
         try {
             await updateAssistant({ isActivated, isActivatedForAllTickets, id: assistantId });
-            toast.success(i18n.t("assistant.header.toast.success"))
+            toast.success(i18n.t("assistant.header.activationModal.success"))
         } catch (error) {
             toastError(error);
             handleUpdateAssistant({ isActivated: false, isActivatedForAllTickets: false });
@@ -50,7 +50,7 @@ export default function AssistantActivationModal({ assistantId, isActivated, isA
     return (
         <React.Fragment>
             <Button color="primary" variant="contained" onClick={handleClickOpen}>
-                Activar Assistente
+                {i18n.t("assistant.header.activationModal.actionButton")}
             </Button>
             <Dialog
                 open={open}
@@ -60,10 +60,10 @@ export default function AssistantActivationModal({ assistantId, isActivated, isA
                     onSubmit
                 }}
             >
-                <DialogTitle>Activacion</DialogTitle>
+                <DialogTitle>{i18n.t("assistant.header.activationModal.title")}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Para activar el asistente, cambie el estado a activado de cada uno de los activadores.
+                        {i18n.t("assistant.header.activationModal.description")}
                     </DialogContentText>
                     <FormControlLabel
                         sx={{ display: "block" }}
@@ -91,14 +91,16 @@ export default function AssistantActivationModal({ assistantId, isActivated, isA
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="outlined" color="secondary" onClick={handleClose}>Cancel</Button>
+                    <Button variant="outlined" color="secondary" onClick={handleClose}>
+                        {i18n.t("assistant.header.activationModal.cancelButton")}
+                    </Button>
                     <LoadingButton
                         type="submit"
                         variant="contained"
                         color="primary"
                         loading={isLoading}
                     >
-                        Save
+                        {i18n.t("assistant.header.activationModal.submitButton")}
                     </LoadingButton>
                 </DialogActions>
             </Dialog>

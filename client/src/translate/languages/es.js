@@ -369,6 +369,14 @@ const messages = {
       assistant: {
         header: {
           title: "Asistente AI",
+          activationModal: {
+            actionButton: "Activar",
+            submitButton: "Guardar cambios",
+            cancelButton: "Cancelar",
+            description: "Para activar el asistente, cambie el estado a activado de cada uno de los  que necesite.",
+            title: "Activación",
+            success: "¡Cambios guardados satisfactoriamente!",
+          },
           switch: {
             active: "Activar asistente AI",
             desactive: "Desactivar asistente AI",
@@ -376,7 +384,30 @@ const messages = {
             isActivatedForAllTickets: "Desactivar para responder a solo los contactos activados",
           },
           save: "Guardar cambios"
-        }
+        },
+        test: {
+          title: "Prueba de chat con el asistente AI",
+          inputPlaceholder: "Escribe un mensaje...",
+          message: {
+            user: "Tú",
+            assistant: "Asistente",
+          }
+        },
+        configuration: {
+          title: "Configuración",
+          form: {
+            name: "Nombre",
+            openaiApiKey: "OpenAI API Key",
+            instructions: "Instrucciones",
+            maxTokens: "Máximo de tokens",
+            model: "Modelo AI",
+            saveButton: "Guardar cambios",
+            select: {
+              optionDescription: "Tokens de contexto",
+            },
+            success: "Configuración guardada satisfactoriamente.",
+          }
+        },
       },
       settings: {
         success: "Configuración guardada satisfactoriamente.",
@@ -399,99 +430,99 @@ const messages = {
           },
         }
       },
-    },
-    messagesList: {
-      header: {
-        assignedTo: "Asignado a:",
-        buttons: {
-          return: "Devolver",
-          resolve: "Resolver",
-          reopen: "Reabrir",
-          accept: "Aceptar",
+      messagesList: {
+        header: {
+          assignedTo: "Asignado a:",
+          buttons: {
+            return: "Devolver",
+            resolve: "Resolver",
+            reopen: "Reabrir",
+            accept: "Aceptar",
+          },
         },
       },
-    },
-    messagesInput: {
-      placeholderOpen: "Escriba un mensaje o presione '' / '' para usar las respuestas rápidas registradas",
-      placeholderClosed:
-        "Vuelva a abrir o acepte este ticket para enviar un mensaje.",
-      signMessage: "Firmar",
-    },
-    contactDrawer: {
-      header: "Detalles del contacto",
-      buttons: {
-        edit: "Editar contacto",
+      messagesInput: {
+        placeholderOpen: "Escriba un mensaje o presione '' / '' para usar las respuestas rápidas registradas",
+        placeholderClosed:
+          "Vuelva a abrir o acepte este ticket para enviar un mensaje.",
+        signMessage: "Firmar",
       },
-      extraInfo: "Otra información",
-    },
-    ticketOptionsMenu: {
-      delete: "Borrar",
-      transfer: "Transferir",
-      confirmationModal: {
-        title: "¿Borrar ticket #",
-        titleFrom: "del contacto ",
-        message:
-          "¡Atención! Todos los mensajes Todos los mensajes relacionados con el ticket se perderán.",
+      contactDrawer: {
+        header: "Detalles del contacto",
+        buttons: {
+          edit: "Editar contacto",
+        },
+        extraInfo: "Otra información",
       },
-      buttons: {
+      ticketOptionsMenu: {
         delete: "Borrar",
-        cancel: "Cancelar",
+        transfer: "Transferir",
+        confirmationModal: {
+          title: "¿Borrar ticket #",
+          titleFrom: "del contacto ",
+          message:
+            "¡Atención! Todos los mensajes Todos los mensajes relacionados con el ticket se perderán.",
+        },
+        buttons: {
+          delete: "Borrar",
+          cancel: "Cancelar",
+        },
       },
-    },
-    confirmationModal: {
-      buttons: {
-        confirm: "Ok",
-        cancel: "Cancelar",
-      },
-    },
-    messageOptionsMenu: {
-      delete: "Borrar",
-      reply: "Responder",
       confirmationModal: {
-        title: "¿Borrar mensaje?",
-        message: "Esta acción no puede ser revertida.",
+        buttons: {
+          confirm: "Ok",
+          cancel: "Cancelar",
+        },
       },
-    },
+      messageOptionsMenu: {
+        delete: "Borrar",
+        reply: "Responder",
+        confirmationModal: {
+          title: "¿Borrar mensaje?",
+          message: "Esta acción no puede ser revertida.",
+        },
+      },
 
-    backendErrors: {
-      ERR_NO_OTHER_WHATSAPP:
-        "Debe haber al menos una conexión de WhatsApp predeterminada.",
-      ERR_NO_DEF_WAPP_FOUND:
-        "No se encontró WhatsApp predeterminado. Verifique la página de conexiones.",
-      ERR_WAPP_NOT_INITIALIZED:
-        "Esta sesión de WhatsApp no ​​está inicializada. Verifique la página de conexiones.",
-      ERR_WAPP_CHECK_CONTACT:
-        "No se pudo verificar el contacto de WhatsApp. Verifique la página de conexiones.",
-      ERR_WAPP_INVALID_CONTACT: "Este no es un número de whatsapp válido.",
-      ERR_WAPP_DOWNLOAD_MEDIA:
-        "No se pudieron descargar los medios de WhatsApp. Verifique la página de conexiones.",
-      ERR_INVALID_CREDENTIALS: "Error de autenticación. Vuelva a intentarlo.",
-      ERR_SENDING_WAPP_MSG:
-        "Error al enviar el mensaje de WhatsApp. Verifique la página de conexiones.",
-      ERR_DELETE_WAPP_MSG: "No se pudo borrar el mensaje de WhatsApp.",
-      ERR_OTHER_OPEN_TICKET: "Ya hay un ticket abierto para este contacto.",
-      ERR_SESSION_EXPIRED: "Sesión caducada. Inicie sesión.",
-      ERR_USER_CREATION_DISABLED:
-        "La creación de usuarios fue deshabilitada por el administrador.",
-      ERR_NO_PERMISSION: "No tienes permiso para acceder a este recurso.",
-      ERR_DUPLICATED_CONTACT: "Ya existe un contacto con este número.",
-      ERR_NO_SETTING_FOUND:
-        "No se encontró ninguna configuración con este ID.",
-      ERR_NO_CONTACT_FOUND: "No se encontró ningún contacto con este ID.",
-      ERR_NO_TICKET_FOUND: "No se encontró ningún ticket con este ID.",
-      ERR_NO_USER_FOUND: "No se encontró ningún usuario con este ID.",
-      ERR_NO_WAPP_FOUND: "No se encontró WhatsApp con este ID.",
-      ERR_CREATING_MESSAGE: "Error al crear el mensaje en la base de datos.",
-      ERR_CREATING_TICKET: "Error al crear el ticket en la base de datos.",
-      ERR_FETCH_WAPP_MSG:
-        "Error al obtener el mensaje en WhtasApp, tal vez sea demasiado antiguo.",
-      ERR_QUEUE_COLOR_ALREADY_EXISTS:
-        "Este color ya está en uso, elija otro.",
-      ERR_WAPP_GREETING_REQUIRED:
-        "El mensaje de saludo es obligatorio cuando hay más de un departamento.",
-      ERR_OPENAI_API_INVALID: "Clave de API de OpenAI no válida.",
-      ERR_ASSISTANT_NOT_FOUND: "Por favor, guarde la configuración del asistente AI."
-    },
+      backendErrors: {
+        ERR_NO_OTHER_WHATSAPP:
+          "Debe haber al menos una conexión de WhatsApp predeterminada.",
+        ERR_NO_DEF_WAPP_FOUND:
+          "No se encontró WhatsApp predeterminado. Verifique la página de conexiones.",
+        ERR_WAPP_NOT_INITIALIZED:
+          "Esta sesión de WhatsApp no ​​está inicializada. Verifique la página de conexiones.",
+        ERR_WAPP_CHECK_CONTACT:
+          "No se pudo verificar el contacto de WhatsApp. Verifique la página de conexiones.",
+        ERR_WAPP_INVALID_CONTACT: "Este no es un número de whatsapp válido.",
+        ERR_WAPP_DOWNLOAD_MEDIA:
+          "No se pudieron descargar los medios de WhatsApp. Verifique la página de conexiones.",
+        ERR_INVALID_CREDENTIALS: "Error de autenticación. Vuelva a intentarlo.",
+        ERR_SENDING_WAPP_MSG:
+          "Error al enviar el mensaje de WhatsApp. Verifique la página de conexiones.",
+        ERR_DELETE_WAPP_MSG: "No se pudo borrar el mensaje de WhatsApp.",
+        ERR_OTHER_OPEN_TICKET: "Ya hay un ticket abierto para este contacto.",
+        ERR_SESSION_EXPIRED: "Sesión caducada. Inicie sesión.",
+        ERR_USER_CREATION_DISABLED:
+          "La creación de usuarios fue deshabilitada por el administrador.",
+        ERR_NO_PERMISSION: "No tienes permiso para acceder a este recurso.",
+        ERR_DUPLICATED_CONTACT: "Ya existe un contacto con este número.",
+        ERR_NO_SETTING_FOUND:
+          "No se encontró ninguna configuración con este ID.",
+        ERR_NO_CONTACT_FOUND: "No se encontró ningún contacto con este ID.",
+        ERR_NO_TICKET_FOUND: "No se encontró ningún ticket con este ID.",
+        ERR_NO_USER_FOUND: "No se encontró ningún usuario con este ID.",
+        ERR_NO_WAPP_FOUND: "No se encontró WhatsApp con este ID.",
+        ERR_CREATING_MESSAGE: "Error al crear el mensaje en la base de datos.",
+        ERR_CREATING_TICKET: "Error al crear el ticket en la base de datos.",
+        ERR_FETCH_WAPP_MSG:
+          "Error al obtener el mensaje en WhtasApp, tal vez sea demasiado antiguo.",
+        ERR_QUEUE_COLOR_ALREADY_EXISTS:
+          "Este color ya está en uso, elija otro.",
+        ERR_WAPP_GREETING_REQUIRED:
+          "El mensaje de saludo es obligatorio cuando hay más de un departamento.",
+        ERR_OPENAI_API_INVALID: "Clave de API de OpenAI no válida.",
+        ERR_ASSISTANT_NOT_FOUND: "Por favor, guarde la configuración del asistente AI."
+      },
+    }
   },
 };
 

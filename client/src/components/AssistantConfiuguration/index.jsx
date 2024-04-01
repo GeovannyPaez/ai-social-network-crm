@@ -7,6 +7,7 @@ import { createAssistant, updateAssistant } from "../../services/asistanService"
 import { toast } from "react-toastify";
 import { useState } from "react";
 import toastError from "../../errors/toastError";
+import { i18n } from "../../translate/i18n";
 
 const MAX = 4096;
 const MIN = 100;
@@ -34,7 +35,7 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
             const getResponseApi = assistant?.id ? updateAssistant : createAssistant;
             const newData = await getResponseApi(data);
             handleUpdateAssistant(newData);
-            toast.success("Asistente actualizado correctamente");
+            toast.success(i18n.t("assistant.configuration.form.success"));
         } catch (error) {
             toastError(error);
         }
@@ -50,12 +51,12 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
         <form onSubmit={handleSubmit} style={{ width: "40%" }}>
             <Stack spacing={3} sx={{ width: "100%", padding: 1 }}>
                 <Typography variant="h5" textAlign={"center"} color="textPrimary">
-                    Configuración
+                    {i18n.t("assistant.configuration.title")}
                 </Typography>
                 <TextField
                     name="name"
                     required
-                    label="Nombre"
+                    label={i18n.t("assistant.configuration.form.name")}
                     value={assistant?.name || ""}
                     onChange={handleChange}
 
@@ -64,13 +65,14 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
                     <InputLabel
 
                         htmlFor="openaiApiKey"
-                    >Openai Api Key</InputLabel>
+                    >
+                        {i18n.t("assistant.configuration.form.openaiApiKey")}
+                    </InputLabel>
                     <OutlinedInput
                         id="openaiApiKey"
                         name="openaiApiKey"
                         required
                         type={isVisible ? "text" : "password"}
-                        label="OpenAI API Key"
                         value={assistant?.openaiApiKey || ""}
                         onChange={handleChange}
                         endAdornment={
@@ -88,7 +90,7 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
                 <TextField
                     name="instructions"
                     required
-                    label="Instrucciones"
+                    label={i18n.t("assistant.configuration.form.instructions")}
                     multiline
                     minRows={4}
                     maxRows={5}
@@ -96,7 +98,9 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
                     onChange={handleChange}
                 />
                 <FormControl fullWidth>
-                    <InputLabel id="model-select-label">Model</InputLabel>
+                    <InputLabel id="model-select-label">
+                        {i18n.t("assistant.configuration.form.model")}
+                    </InputLabel>
                     <Select
                         variant="filled"
                         name="modelId"
@@ -106,14 +110,16 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
                     >
                         {initialModels.map((model) => (
                             <MenuItem key={model.id} value={model.id}>
-                                {`${model.name} - ${model.contextWindow} tokens de contexto`}
+                                {`${model.name} - ${model.contextWindow} ${i18n.t("assistant.configuration.form.select.optionDescription")}`}
                             </MenuItem>
                         ))}
                     </Select>
                 </FormControl>
                 <MaxTokensSlider maxTokens={assistant.maxTokens} setMaxTokens={setMaxtTokens} />
                 <Stack alignItems={"center"}>
-                    <LoadingButton variant="contained" type="submit">Guardar</LoadingButton>
+                    <LoadingButton variant="contained" type="submit">
+                        {i18n.t("assistant.configuration.form.saveButton")}
+                    </LoadingButton>
                 </Stack>
             </Stack>
         </form>
@@ -128,7 +134,9 @@ function MaxTokensSlider({ setMaxTokens, maxTokens }) {
 
     return (
         <Box>
-            <Typography id="max-tokens-slider">Máximo de tokens</Typography>
+            <Typography id="max-tokens-slider">
+                {i18n.t("assistant.configuration.form.maxTokens")}
+            </Typography>
             <Slider
                 marks={marks}
                 step={10}
