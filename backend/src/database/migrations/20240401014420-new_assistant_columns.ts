@@ -2,13 +2,13 @@ import { QueryInterface, DataTypes } from "sequelize";
 
 module.exports = {
     up: async (queryInterface: QueryInterface) => {
-        await queryInterface.addColumn("Contacts", "isAssistantActive", {
+        await queryInterface.addColumn("Assistants", "isActivatedForAllTickets", {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
         });
     },
     down: async (queryInterface: QueryInterface) => {
-        await queryInterface.removeColumn("Contacts", "isAssistantActive");
+        await queryInterface.removeColumn("Assistants", "isActivatedForAllTickets");
     }
 };

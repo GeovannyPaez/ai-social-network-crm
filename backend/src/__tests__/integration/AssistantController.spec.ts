@@ -31,10 +31,11 @@ describe('AssistantController', () => {
         const assistanData: AsisstanCreateData = {
             name: faker.name.findName(),
             instructions: faker.lorem.sentence(),
-            isActivate: true,
+            isActivated: true,
             userParentId: 0,
             modelId: 1,
             maxTokens: 50,
+            openaiApiKey: faker.random.alphaNumeric(20),
             type: "chat_completions"
         }
 
