@@ -356,6 +356,9 @@ const handleMessage = async (
       const assistant = await ShowAssistantService(userParentId);
 
       if (!assistant || !assistant?.isActivated) return;
+
+      if (!contact.isAssistantActive && !assistant.isActivatedForAllTickets) return
+
       await handleAiMessage({
         ticket,
         assistant
