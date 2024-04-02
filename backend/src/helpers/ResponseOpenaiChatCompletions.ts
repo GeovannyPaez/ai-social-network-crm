@@ -2,10 +2,12 @@ import OpenAI from "openai";
 import { getOpenAI } from "../libs/openai";
 import { AiResponseCreator, AiResponse } from "./AiResponse";
 import { ChatCompletion, ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
+import { CountMessagesTokens, MessageOpenAI } from "./TokenizerHelper";
+import { logger } from "../utils/logger";
 
 type OpenAiChatCompletions = {
     model: ChatCompletionCreateParamsBase["model"];
-    maxTokens: ChatCompletionCreateParamsBase["max_tokens"];
+    maxTokens: number;
     messages: ChatCompletionCreateParamsBase["messages"];
     instructions: string
 };
@@ -65,12 +67,19 @@ export class ResponseOpenAiChatCompletions extends AiResponseCreator {
     }
 
     private joinStructionsWithMessages(): ChatCompletionCreateParamsBase["messages"] {
-        return [
+        const messages = [
             {
                 role: "system",
                 content: this.openAiChatCompletions.instructions
             },
             ...this.openAiChatCompletions.messages
-        ];
+        ]
+        const tokens = CountMessagesTokens(messages as MessageOpenAI[]);
+        logger.info(`Tokens sends: ${tokens}`);
+        if (tokens > 5000) {
+            messages.slice(-10)
+        }
+        return messages as ChatCompletionCreateParamsBase["messages"];
     }
+
 }

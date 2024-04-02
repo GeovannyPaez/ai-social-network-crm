@@ -5,12 +5,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { FormControlLabel, Switch } from '@mui/material';
+import { Box, FormControlLabel, IconButton, Switch, Tooltip } from '@mui/material';
 import { i18n } from '../../translate/i18n';
 import { updateAssistant } from '../../services/asistanService';
 import toastError from '../../errors/toastError';
 import { toast } from 'react-toastify';
 import LoadingButton from '@mui/lab/LoadingButton';
+import HelpIcon from '@mui/icons-material/Help';
 
 
 export default function AssistantActivationModal({ assistantId, isActivated, isActivatedForAllTickets, handleUpdateAssistant, onChangeKeyFromAsisstant }) {
@@ -65,19 +66,26 @@ export default function AssistantActivationModal({ assistantId, isActivated, isA
                     <DialogContentText>
                         {i18n.t("assistant.header.activationModal.description")}
                     </DialogContentText>
-                    <FormControlLabel
-                        sx={{ display: "block" }}
-                        name='isActivated'
-                        label={labelIsActivated}
-                        control={<Switch
-                            disabled={!assistantId}
+                    <Box>
+                        <FormControlLabel
                             name='isActivated'
-                            id="isActivated"
-                            onChange={handleChange}
-                            checked={isActivated}
-                            color="primary"
-                        />}
-                    />
+                            label={labelIsActivated}
+
+                            control={<Switch
+                                disabled={!assistantId}
+                                name='isActivated'
+                                id="isActivated"
+                                onChange={handleChange}
+                                checked={isActivated}
+                                color="primary"
+                            />}
+                        />
+                        <Tooltip title={i18n.t("assistant.header.switch.activeTooltip")}>
+                            <IconButton>
+                                <HelpIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
                     <FormControlLabel
                         name='isActivatedForAllTickets'
                         label={labelIsActivatedForAllTickets}

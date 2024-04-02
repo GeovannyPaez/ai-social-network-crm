@@ -116,7 +116,6 @@ const Ticket = () => {
   const [loading, setLoading] = useState(true);
   const [contact, setContact] = useState({});
   const [ticket, setTicket] = useState({});
-
   useEffect(() => {
     setLoading(true);
     const delayDebounceFn = setTimeout(() => {

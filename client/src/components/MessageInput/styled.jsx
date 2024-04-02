@@ -118,7 +118,7 @@ export const UploadInput = styled("input")({
 export const MessageInputWrapper = styled("div")({
   padding: 6,
   marginRight: 7,
-  backgroundColor: "#a1a1a1",
+  backgroundColor: "gray",
   display: "flex",
   borderRadius: 20,
   flex: 1,
