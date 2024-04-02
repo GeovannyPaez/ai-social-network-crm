@@ -40,8 +40,13 @@ export default function AssistantChatTest() {
     };
 
     return (
-        <Stack sx={{ width: '60%', padding: 1 }}>
-            <Typography textAlign="center" variant="h5" color="textPrimary" gutterBottom>
+        <Stack sx={{ width: { lg: "60%", sm: "100%" } }}>
+            <Typography sx={{
+                display: {
+                    xs: "none",
+                    lg: "block"
+                }
+            }} textAlign="center" variant="h5" color="textPrimary" gutterBottom>
                 {i18n.t('assistant.test.title')}
             </Typography>
             <Box sx={{ position: 'relative', height: 'calc(100vh - 250px)' }}>

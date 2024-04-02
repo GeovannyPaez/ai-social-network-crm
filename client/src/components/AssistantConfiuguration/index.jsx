@@ -48,81 +48,94 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
         onChangeKeyFromAsisstant(name, value);
     };
     return (
-        <form onSubmit={handleSubmit} style={{ width: "40%" }}>
-            <Stack spacing={3} sx={{ width: "100%", padding: 1 }}>
-                <Typography variant="h5" textAlign={"center"} color="textPrimary">
-                    {i18n.t("assistant.configuration.title")}
-                </Typography>
-                <TextField
-                    name="name"
-                    required
-                    label={i18n.t("assistant.configuration.form.name")}
-                    value={assistant?.name || ""}
-                    onChange={handleChange}
-
-                />
-                <FormControl variant="outlined">
-                    <InputLabel
-
-                        htmlFor="openaiApiKey"
-                    >
-                        {i18n.t("assistant.configuration.form.openaiApiKey")}
-                    </InputLabel>
-                    <OutlinedInput
-                        id="openaiApiKey"
-                        name="openaiApiKey"
+        <Box sx={{
+            width: {
+                lg: "40%",
+                sm: "100%"
+            }
+        }}>
+            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+                <Stack spacing={3} sx={{ width: "100%", padding: { xs: 0, md: 1 } }}>
+                    <Typography
+                        sx={{
+                            display: {
+                                xs: "none",
+                                lg: "block"
+                            }
+                        }}
+                        variant="h5" textAlign={"center"} color="textPrimary">
+                        {i18n.t("assistant.configuration.title")}
+                    </Typography>
+                    <TextField
+                        name="name"
                         required
-                        type={isVisible ? "text" : "password"}
-                        value={assistant?.openaiApiKey || ""}
+                        label={i18n.t("assistant.configuration.form.name")}
+                        value={assistant?.name || ""}
                         onChange={handleChange}
-                        endAdornment={
-                            <InputAdornment
-                                position="end">
-                                <IconButton
-                                    onClick={() => setIsVisible(!isVisible)}
-                                >
-                                    {isVisible ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
+
                     />
-                </FormControl>
-                <TextField
-                    name="instructions"
-                    required
-                    label={i18n.t("assistant.configuration.form.instructions")}
-                    multiline
-                    minRows={4}
-                    maxRows={5}
-                    value={assistant?.instructions || ""}
-                    onChange={handleChange}
-                />
-                <FormControl fullWidth>
-                    <InputLabel id="model-select-label">
-                        {i18n.t("assistant.configuration.form.model")}
-                    </InputLabel>
-                    <Select
-                        variant="filled"
-                        name="modelId"
-                        value={defaultModelId}
+                    <FormControl variant="outlined">
+                        <InputLabel
+                            htmlFor="openaiApiKey"
+                        >
+                            {i18n.t("assistant.configuration.form.openaiApiKey")}
+                        </InputLabel>
+                        <OutlinedInput
+                            id="openaiApiKey"
+                            name="openaiApiKey"
+                            required
+                            type={isVisible ? "text" : "password"}
+                            value={assistant?.openaiApiKey || ""}
+                            onChange={handleChange}
+                            endAdornment={
+                                <InputAdornment
+                                    position="end">
+                                    <IconButton
+                                        onClick={() => setIsVisible(!isVisible)}
+                                    >
+                                        {isVisible ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                    </FormControl>
+                    <TextField
+                        name="instructions"
+                        required
+                        label={i18n.t("assistant.configuration.form.instructions")}
+                        multiline
+                        minRows={4}
+                        maxRows={5}
+                        value={assistant?.instructions || ""}
                         onChange={handleChange}
-                        labelId="model-select-label"
-                    >
-                        {initialModels.map((model) => (
-                            <MenuItem key={model.id} value={model.id}>
-                                {`${model.name} - ${model.contextWindow} ${i18n.t("assistant.configuration.form.select.optionDescription")}`}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <MaxTokensSlider maxTokens={assistant.maxTokens} setMaxTokens={setMaxtTokens} />
-                <Stack alignItems={"center"}>
-                    <LoadingButton variant="contained" type="submit">
-                        {i18n.t("assistant.configuration.form.saveButton")}
-                    </LoadingButton>
+                    />
+                    <FormControl fullWidth>
+                        <InputLabel id="model-select-label">
+                            {i18n.t("assistant.configuration.form.model")}
+                        </InputLabel>
+                        <Select
+                            variant="filled"
+                            name="modelId"
+                            value={defaultModelId}
+                            onChange={handleChange}
+                            labelId="model-select-label"
+                        >
+                            {initialModels.map((model) => (
+                                <MenuItem key={model.id} value={model.id}>
+                                    {`${model.name} - ${model.contextWindow} ${i18n.t("assistant.configuration.form.select.optionDescription")}`}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <MaxTokensSlider maxTokens={assistant.maxTokens} setMaxTokens={setMaxtTokens} />
+                    <Stack alignItems={"center"}>
+                        <LoadingButton variant="contained" type="submit">
+                            {i18n.t("assistant.configuration.form.saveButton")}
+                        </LoadingButton>
+                    </Stack>
                 </Stack>
-            </Stack>
-        </form>
+            </form>
+        </Box>
     );
 }
 
