@@ -1,10 +1,14 @@
 import { getBackendUrl } from "../config";
 import api from "./api";
 
-export function getAiRespose(messages, { ticketId = null }) {
+export function getAiRespose(messages, { ticketId = undefined } = {}) {
     const tokenAuth = localStorage.getItem("token");
     const token = tokenAuth.slice(1, -1);
-    const url = `${getBackendUrl()}aiResponse?ticketId=${ticketId}`
+    const url = `${getBackendUrl()}aiResponse`
+
+    if (ticketId) {
+        url + `?tiketId=${ticketId}`
+    }
     return fetch(url, {
         method: 'POST',
         headers: {
