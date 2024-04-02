@@ -393,6 +393,7 @@ const messages = {
         placeholderClosed:
           "Reabra ou aceite esse ticket para enviar uma mensagem.",
         signMessage: "Assinar",
+        assistantTooltip: "Resposta do assistente",
       },
       contactDrawer: {
         header: "Dados do contato",

@@ -379,6 +379,7 @@ const messages = {
           },
           switch: {
             active: "Activar asistente AI",
+            activeTooltip: "Se activara, y solo respondera a los contactos activados en la sección de contactos",
             desactive: "Desactivar asistente AI",
             isDesactivatedForAllTickets: "Activar para responder a todos los contactos",
             isActivatedForAllTickets: "Desactivar para responder a solo los contactos activados",
@@ -446,6 +447,7 @@ const messages = {
         placeholderClosed:
           "Vuelva a abrir o acepte este ticket para enviar un mensaje.",
         signMessage: "Firmar",
+        assistantTooltip: "Respuesta del asistente",
       },
       contactDrawer: {
         header: "Detalles del contacto",

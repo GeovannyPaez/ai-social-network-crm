@@ -374,6 +374,7 @@ const messages = {
           switch: {
             active: "AI Assistant is active",
             desactive: "AI Assistant is inactive",
+            activeTooltip: "it will respond only to contacts actives in contacts page",
             isDesactivatedForAllTickets: "Activate to respond to all tickets",
             isActivatedForAllTickets: "Deactivate to stop responding to all tickets",
           },
@@ -431,6 +432,7 @@ const messages = {
         placeholderOpen: "Type a message or press ''/'' to use the registered quick responses",
         placeholderClosed: "Reopen or accept this ticket to send a message.",
         signMessage: "Sign",
+        assistantTooltip: "AI Assistant",
       },
       contactDrawer: {
         header: "Contact details",
