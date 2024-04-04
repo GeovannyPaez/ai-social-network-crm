@@ -487,7 +487,7 @@ const MessageInput = ({ ticketStatus }) => {
                 }
               }}
             />
-            {typeBar ? (
+            {typeBar && (
               <MessageQuickAnswersWrapper >
                 {quickAnswers.map((value, index) => {
                   return (
@@ -502,8 +502,6 @@ const MessageInput = ({ ticketStatus }) => {
                   );
                 })}
               </MessageQuickAnswersWrapper>
-            ) : (
-              <div></div>
             )}
           </MessageInputWrapper>
           {inputMessage ? (

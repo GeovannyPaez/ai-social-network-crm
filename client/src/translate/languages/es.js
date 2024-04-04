@@ -443,7 +443,7 @@ const messages = {
         },
       },
       messagesInput: {
-        placeholderOpen: "Escriba un mensaje o presione '' / '' para usar las respuestas rápidas registradas",
+        placeholderOpen: "Presione / para respuestas rapidas",
         placeholderClosed:
           "Vuelva a abrir o acepte este ticket para enviar un mensaje.",
         signMessage: "Firmar",

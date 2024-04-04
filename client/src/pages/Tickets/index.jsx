@@ -37,7 +37,6 @@ const WelcomeMsg = styled(Paper)({
 
 const Chat = () => {
   const { ticketId } = useParams();
-
   return (
     <ChatContainer>
       <ChatPaper>
@@ -46,6 +45,12 @@ const Chat = () => {
             item
             xs={12}
             md={4}
+            sx={{
+              display: {
+                md: "block",
+                xs: ticketId ? "none" : "block"
+              }
+            }}
           >
             <TicketsManager />
           </Grid>
