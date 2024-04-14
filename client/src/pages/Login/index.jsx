@@ -48,9 +48,12 @@ const Login = () => {
   };
 
   return (
-    <MainContainer maxWidth="xs">
+    <MainContainer maxWidth="xs" sx={{ justifyContent: "center", height: '100vh' }}>
       <CssBaseline />
-      <Logo />
+      <Logo style={{
+        width: '80px',
+        height: '80px',
+      }} />
       <Typography component="h1" style={{ marginTop: theme.spacing(3) }} variant="h5">
         {i18n.t("login.title")}
       </Typography>
