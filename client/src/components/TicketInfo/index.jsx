@@ -7,10 +7,12 @@ const TicketInfo = ({ contact, ticket, onClick }) => {
 	return (
 		<CardHeader
 			onClick={onClick}
-			style={{ cursor: "pointer" }}
+			sx={{
+				cursor: "pointer"
+			}}
 			titleTypographyProps={{ noWrap: true }}
 			subheaderTypographyProps={{ noWrap: true }}
-			avatar={<Avatar src={contact.profilePicUrl} alt="contact_image" />}
+			avatar={< Avatar src={contact.profilePicUrl} alt="contact_image" />}
 			title={`${contact.name} #${ticket.id}`}
 			subheader={
 				ticket.user &&

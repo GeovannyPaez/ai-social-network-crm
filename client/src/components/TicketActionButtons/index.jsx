@@ -80,14 +80,14 @@ const TicketActionButtons = ({ ticket }) => {
 	}
 	return (
 		<AcctionsButtons>
-			{ticket.status === "closed" && (
+			{(ticket.status === "closed") && (
 				<ButtonWithSpinner
 					loading={loading}
 					startIcon={<Replay />}
 					size="small"
 					onClick={() => handleUpdateTicketStatus("open", user?.id)}
 				>
-					{i18n.t("messagesList.header.buttons.reopen")}
+					{!isMovileScreen && i18n.t("messagesList.header.buttons.reopen")}
 				</ButtonWithSpinner>
 			)}
 			{ticket.status === "open" && (
@@ -132,7 +132,7 @@ const TicketActionButtons = ({ ticket }) => {
 					size="small"
 					variant="contained"
 					color="primary"
-					onClick={e => handleUpdateTicketStatus(e, "open", user?.id)}
+					onClick={() => handleUpdateTicketStatus("open", user?.id)}
 				>
 					{i18n.t("messagesList.header.buttons.accept")}
 				</ButtonWithSpinner>

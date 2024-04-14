@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import openSocket from "../../services/socket-io";
 
 
-import { Paper, styled } from "@mui/material";
+import { Box, Paper, styled } from "@mui/material";
 
 import ContactDrawer from "../ContactDrawer";
 import MessageInput from "../MessageInput";
@@ -25,12 +25,10 @@ const RootContainer = styled("div")({
   position: "relative",
   overflow: "hidden",
 });
-const TicketInfoContainer = styled("div")({
+const TicketInfoContainer = styled(Box)({
   maxWidth: "50%",
-  // width: "30%",
-  // flexBasis: "50%",
-  // backgroundColor: "red",
-
+  display: "flex",
+  alignContent: "center",
 });
 const MainWrapper = styled(Paper)(({ drawerOpen, theme }) => ({
   flex: 1,
@@ -132,7 +130,9 @@ const Ticket = () => {
         drawerOpen={drawerOpen}
       >
         <TicketHeader loading={loading}>
-          <TicketInfoContainer>
+          <TicketInfoContainer
+            sx={{ overflowX: { xs: "scroll", sm: "hidden" }, maxWidth: { xs: "180px", sm: "50%" } }}
+          >
             <TicketInfo
               contact={contact}
               ticket={ticket}

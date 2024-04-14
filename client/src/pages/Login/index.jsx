@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import InputAdornment from "@mui/material/InputAdornment";
+import { Link } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { CssBaseline } from "@mui/material";
 
@@ -107,14 +108,15 @@ const Login = () => {
         </Button>
         <Grid container justifyContent="center">
           <Grid item>
-            <RouterLink
+            <Link
               href="#"
               variant="body2"
+              // style={{ color: theme.palette.text.primary }}
               component={RouterLink}
               to="/signup"
             >
               {i18n.t("login.buttons.register")}
-            </RouterLink>
+            </Link>
           </Grid>
         </Grid>
       </StyledForm>

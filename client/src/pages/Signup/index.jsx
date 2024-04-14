@@ -15,23 +15,28 @@ import {
 	IconButton,
 	Link,
 } from '@mui/material';
-import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { i18n } from "../../translate/i18n";
 
 import { styled } from "@mui/system";
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
 import Logo from "../../components/Logo/index.jsx";
+import { useTheme } from "@emotion/react";
+import Footer from "../../components/Footer/index.jsx";
 
 const MainContainer = styled(Container)({
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "center",
+	height: '100vh',
+	justifyContent: "center",
 	marginTop: (theme) => theme.spacing(8),
 });
 
 const SignUp = () => {
 	const history = useNavigate();
+	const theme = useTheme();
 
 	const initialState = { name: "", email: "", password: "" };
 	const [showPassword, setShowPassword] = useState(false);
@@ -59,80 +64,84 @@ const SignUp = () => {
 	return (
 		<MainContainer component="main" maxWidth="xs">
 			<CssBaseline />
-			<div>
-				<Logo />
-				<Typography component="h1" style={{ marginTop: 20 }} variant="h5">
-					{i18n.t("signup.title")}
-				</Typography>
-				<Formik
-					initialValues={user}
-					enableReinitialize={true}
-					validationSchema={UserSchema}
-					onSubmit={(values, actions) => {
-						setTimeout(() => {
-							handleSignUp(values);
-							actions.setSubmitting(false);
-						}, 400);
-					}}
-				>
-					{({ touched, errors, isSubmitting }) => (
-						<Form>
-							<Grid container spacing={2}>
-								<Grid item xs={12}>
-									<Field
-										as={TextField}
-										autoComplete="name"
-										name="name"
-										error={touched.name && Boolean(errors.name)}
-										helperText={touched.name && errors.name}
-										variant="outlined"
-										fullWidth
-										id="name"
-										label={i18n.t("signup.form.name")}
-										autoFocus
-									/>
-								</Grid>
+			<Logo style={{
+				width: '80px',
+				height: '80px',
 
-								<Grid item xs={12}>
-									<Field
-										as={TextField}
-										variant="outlined"
-										fullWidth
-										id="email"
-										label={i18n.t("signup.form.email")}
-										name="email"
-										error={touched.email && Boolean(errors.email)}
-										helperText={touched.email && errors.email}
-										autoComplete="email"
-									/>
-								</Grid>
-								<Grid item xs={12}>
-									<Field
-										as={TextField}
-										variant="outlined"
-										fullWidth
-										name="password"
-										id="password"
-										autoComplete="current-password"
-										error={touched.password && Boolean(errors.password)}
-										helperText={touched.password && errors.password}
-										label={i18n.t("signup.form.password")}
-										type={showPassword ? 'text' : 'password'}
-										InputProps={{
-											endAdornment: (
-												<InputAdornment position="end">
-													<IconButton
-														aria-label="toggle password visibility"
-														onClick={() => setShowPassword((e) => !e)}
-													>
-														{showPassword ? <VisibilityOff /> : <Visibility />}
-													</IconButton>
-												</InputAdornment>
-											)
-										}}
-									/>
-								</Grid>
+			}} />
+			<Typography component="h1" style={{ marginTop: theme.spacing(3), marginBottom: theme.spacing(3) }} variant="h5">
+				{i18n.t("signup.title")}
+			</Typography>
+			<Formik
+				initialValues={user}
+				enableReinitialize={true}
+				validationSchema={UserSchema}
+				onSubmit={(values, actions) => {
+					setTimeout(() => {
+						handleSignUp(values);
+						actions.setSubmitting(false);
+					}, 400);
+				}}
+			>
+				{({ touched, errors }) => (
+					<Form>
+						<Grid container spacing={3}>
+							<Grid item xs={12}>
+								<Field
+									as={TextField}
+									autoComplete="name"
+									name="name"
+									error={touched.name && Boolean(errors.name)}
+									helperText={touched.name && errors.name}
+									variant="outlined"
+									fullWidth
+									id="name"
+									label={i18n.t("signup.form.name")}
+									autoFocus
+								/>
 							</Grid>
+
+							<Grid item xs={12}>
+								<Field
+									as={TextField}
+									variant="outlined"
+									fullWidth
+									id="email"
+									label={i18n.t("signup.form.email")}
+									name="email"
+									error={touched.email && Boolean(errors.email)}
+									helperText={touched.email && errors.email}
+									autoComplete="email"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<Field
+									as={TextField}
+									variant="outlined"
+									fullWidth
+									name="password"
+									id="password"
+									autoComplete="current-password"
+									error={touched.password && Boolean(errors.password)}
+									helperText={touched.password && errors.password}
+									label={i18n.t("signup.form.password")}
+									type={showPassword ? 'text' : 'password'}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">
+												<IconButton
+													aria-label="toggle password visibility"
+													onClick={() => setShowPassword((e) => !e)}
+												>
+													{showPassword ? <VisibilityOff /> : <Visibility />}
+												</IconButton>
+											</InputAdornment>
+										)
+									}}
+								/>
+							</Grid>
+						</Grid>
+						<Grid item marginTop={3} marginBottom={3} xs={12}>
 							<Button
 								type="submit"
 								fullWidth
@@ -141,23 +150,24 @@ const SignUp = () => {
 							>
 								{i18n.t("signup.buttons.submit")}
 							</Button>
-							<Grid container justifyContent="flex-end">
-								<Grid item>
-									<Link
-										href="#"
-										variant="body2"
-										component={RouterLink}
-										to="/login"
-									>
-										{i18n.t("signup.buttons.login")}
-									</Link>
-								</Grid>
+						</Grid>
+						<Grid container justifyContent="center">
+							<Grid item>
+								<Link
+									href="#"
+									variant="body2"
+									component={RouterLink}
+									to="/login"
+								>
+									{i18n.t("signup.buttons.login")}
+								</Link>
 							</Grid>
-						</Form>
-					)}
-				</Formik>
-			</div>
+						</Grid>
+					</Form>
+				)}
+			</Formik>
 			<Box mt={5}>{/* <Copyright /> */}</Box>
+			<Footer />
 		</MainContainer>
 	);
 };
