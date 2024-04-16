@@ -6,9 +6,9 @@ const MainHeaderButtonsWrapper = ({ children }) => {
 };
 
 const CustomMainHeaderButtonsWrapper = styled(Box)(({ theme }) => ({
-  flex: "none",
   display: "flex",
   justifyContent: "space-evenly",
+  flexWrap: "wrap",
   gap: "1rem",
   // marginLeft: "auto",
   "& > *": {

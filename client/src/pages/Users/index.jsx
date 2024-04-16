@@ -77,7 +77,7 @@ const reducer = (state, action) => {
 
 
 const Users = () => {
- 
+
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(false);
@@ -200,6 +200,7 @@ const Users = () => {
           <TextField
             placeholder={i18n.t("contacts.searchPlaceholder")}
             type="search"
+            size="small"
             value={searchParam}
             onChange={handleSearch}
             InputProps={{
@@ -219,7 +220,7 @@ const Users = () => {
           </Button>
         </MainHeaderButtonsWrapper>
       </MainHeader>
-      <MainPaper       
+      <MainPaper
         variant="outlined"
         onScroll={handleScroll}
       >

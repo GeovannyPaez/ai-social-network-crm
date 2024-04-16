@@ -238,6 +238,7 @@ const Contacts = () => {
         <Title>{i18n.t("contacts.title")}</Title>
         <MainHeaderButtonsWrapper>
           <TextField
+            size="small"
             placeholder={i18n.t("contacts.searchPlaceholder")}
             type="search"
             value={searchParam}

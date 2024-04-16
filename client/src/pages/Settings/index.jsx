@@ -118,14 +118,14 @@ const Settings = () => {
 					</Button>
 				</PaperSettings> */}
 				<PaperSettings sx={{ justifyContent: "space-between" }}>
-					<Box sx={{ display: "flex", justifyContent: "space-evenly", width: "80%", margin: "0  auto" }}>
+					<Box sx={{ display: "flex", justifyContent: "space-evenly", width: { xs: "100%", md: "80%" }, margin: "0  auto" }}>
 						<a download href={manualDocuement}>
-							<Button variant="contained" color="secondary">
-								Descargar Manual
+							<Button variant="contained" size="small" color="secondary">
+								Manual
 							</Button>
 						</a>
 						<a rel="noreferrer" target="_blank" href={"https://api.whatsapp.com/send/?phone=%2B573158227811&text&type=phone_number&app_absent=0"}>
-							<Button variant="contained" color="primary">Soporte</Button>
+							<Button size="small" variant="contained" color="primary">Soporte</Button>
 						</a>
 					</Box>
 				</PaperSettings>

@@ -136,8 +136,8 @@ const messages = {
             "¿Quieres importar todos los contactos desde tu teléfono?",
         },
         buttons: {
-          import: "Importar Contactos",
-          add: "Agregar Contacto",
+          import: "Importar",
+          add: "Agregar",
         },
         table: {
           name: "Nombre",
@@ -314,7 +314,7 @@ const messages = {
           actions: "Acciones",
         },
         buttons: {
-          add: "Agregar Departamento",
+          add: "Agregar",
         },
         confirmationModal: {
           deleteTitle: "Eliminar",
@@ -333,7 +333,7 @@ const messages = {
           actions: "Acciones",
         },
         buttons: {
-          add: "Agregar respuesta rápida",
+          add: "Agregar",
         },
         toasts: {
           deleted: "Respuesta rápida eliminada correctamente",
@@ -355,7 +355,7 @@ const messages = {
           actions: "Acciones",
         },
         buttons: {
-          add: "Agregar usuario",
+          add: "Agregar",
         },
         toasts: {
           deleted: "Usuario borrado satisfactoriamente.",
