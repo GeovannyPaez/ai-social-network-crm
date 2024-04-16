@@ -65,7 +65,7 @@ const messages = {
           disconnectMessage: "Estás seguro? Deberá volver a leer el código QR",
         },
         buttons: {
-          add: "Agrega WhatsApp",
+          add: "Agregar",
           disconnect: "Desconectar",
           tryAgain: "Inténtalo de nuevo",
           qrcode: "QR CODE",
