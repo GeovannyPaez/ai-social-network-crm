@@ -9,7 +9,6 @@ import AssistanChatTest from "../../components/AssistantChatTest";
 import AssistantConfiguration from "../../components/AssistantConfiuguration";
 import { useEffect, useState } from "react";
 import { getAssistant } from "../../services/asistanService";
-import { getModels } from "../../services/models";
 import AssistantActivationMenu from "../../components/AssistantActivationModal";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -18,13 +17,11 @@ import TabPanel from '@mui/lab/TabPanel';
 const initialState = {
     name: "",
     instructions: "",
-    modelId: 1,
     maxTokens: 100,
     isActivated: false,
 };
 
 export default function AssistantPage() {
-    const [models, setModels] = useState([]);
     const [assistant, setAssistant] = useState(initialState);
     const [showTabs, setShowTabs] = useState(false); // Estado para controlar si se muestran los tabs o el contenido completo
     const [tabValue, setValue] = useState("1");
@@ -36,8 +33,6 @@ export default function AssistantPage() {
     useEffect(() => {
         async function fetchData() {
             const asssitant = await getAssistant();
-            const models = await getModels();
-            setModels(models);
             if (asssitant) setAssistant(asssitant);
         }
         fetchData();
@@ -96,7 +91,6 @@ export default function AssistantPage() {
                                         onChangeKeyFromAsisstant={onChangeKeyFromAsisstant}
                                         assistant={assistant || initialState}
                                         handleUpdateAssistant={hanldeUpdateAssistant}
-                                        models={models}
                                     />
                                 </TabPanel>
                                 <TabPanel value="2">
@@ -111,7 +105,6 @@ export default function AssistantPage() {
                             onChangeKeyFromAsisstant={onChangeKeyFromAsisstant}
                             assistant={assistant || initialState}
                             handleUpdateAssistant={hanldeUpdateAssistant}
-                            models={models}
                         />
                         <Divider orientation="vertical" />
                         <AssistanChatTest />

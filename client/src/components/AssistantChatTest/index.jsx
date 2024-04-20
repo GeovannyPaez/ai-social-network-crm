@@ -49,8 +49,8 @@ export default function AssistantChatTest() {
             }} textAlign="center" variant="h5" color="textPrimary" gutterBottom>
                 {i18n.t('assistant.test.title')}
             </Typography>
-            <Box sx={{ position: 'relative', height: { sx: 'calc(100vh - 260px)', md: "100vh" } }}>
-                <Stack spacing={2} sx={{ overflowY: 'scroll', height: 'calc(100vh - 230px)', padding: 2 }}>
+            <Box sx={{ position: 'relative', height: { xs: 'calc(100vh - 260px)', md: "100vh" } }}>
+                <Stack spacing={2} sx={{ overflowY: 'scroll', height: 'calc(100vh - 300px)', padding: 2 }}>
                     {messages.map((message, index) => (
                         <Box key={index} sx={{ display: 'flex', justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start' }}>
                             <TextField

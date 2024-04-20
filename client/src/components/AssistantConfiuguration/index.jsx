@@ -1,33 +1,22 @@
-import { Box, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, Slider, Stack, TextField, Typography } from "@mui/material";
+import { Box, Stack, TextField, Typography } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import { createAssistant, updateAssistant } from "../../services/asistanService";
 import { toast } from "react-toastify";
-import { useState } from "react";
 import toastError from "../../errors/toastError";
 import { i18n } from "../../translate/i18n";
 
-const MAX = 4096;
-const MIN = 100;
-const marks = [
-    { value: MIN, label: '' },
-    { value: MAX, label: '' },
-];
-
-const InitialModels = [{
-    name: "gtp-3.5-turbo",
-    id: 1,
-    contextWindow: 4096
-}
-]
+// const MAX = 4096;
+// const MIN = 100;
+// const marks = [
+//     { value: MIN, label: '' },
+//     { value: MAX, label: '' },
+// ];
 
 
-export default function AssistantConfiguration({ assistant, handleUpdateAssistant, models, onChangeKeyFromAsisstant }) {
-    const initialModels = models.length ? models : InitialModels;
-    const defaultModelId = assistant?.modelId || initialModels[0].id;
-    const [isVisible, setIsVisible] = useState(false);
+
+
+export default function AssistantConfiguration({ assistant, handleUpdateAssistant, onChangeKeyFromAsisstant }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -40,9 +29,7 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
             toastError(error);
         }
     };
-    const setMaxtTokens = (value) => {
-        onChangeKeyFromAsisstant("maxTokens", value);
-    }
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         onChangeKeyFromAsisstant(name, value);
@@ -74,31 +61,7 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
                         onChange={handleChange}
 
                     />
-                    <FormControl variant="outlined">
-                        <InputLabel
-                            htmlFor="openaiApiKey"
-                        >
-                            {i18n.t("assistant.configuration.form.openaiApiKey")}
-                        </InputLabel>
-                        <OutlinedInput
-                            id="openaiApiKey"
-                            name="openaiApiKey"
-                            required
-                            type={isVisible ? "text" : "password"}
-                            value={assistant?.openaiApiKey || ""}
-                            onChange={handleChange}
-                            endAdornment={
-                                <InputAdornment
-                                    position="end">
-                                    <IconButton
-                                        onClick={() => setIsVisible(!isVisible)}
-                                    >
-                                        {isVisible ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
+
                     <TextField
                         name="instructions"
                         required
@@ -109,7 +72,7 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
                         value={assistant?.instructions || ""}
                         onChange={handleChange}
                     />
-                    <FormControl fullWidth>
+                    {/* <FormControl fullWidth>
                         <InputLabel id="model-select-label">
                             {i18n.t("assistant.configuration.form.model")}
                         </InputLabel>
@@ -126,8 +89,8 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
                                 </MenuItem>
                             ))}
                         </Select>
-                    </FormControl>
-                    <MaxTokensSlider maxTokens={assistant.maxTokens} setMaxTokens={setMaxtTokens} />
+                    </FormControl> */}
+                    {/* <MaxTokensSlider maxTokens={assistant.maxTokens} setMaxTokens={setMaxtTokens} /> */}
                     <Stack alignItems={"center"}>
                         <LoadingButton variant="contained" type="submit">
                             {i18n.t("assistant.configuration.form.saveButton")}
@@ -139,43 +102,43 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
     );
 }
 
-function MaxTokensSlider({ setMaxTokens, maxTokens }) {
+// function MaxTokensSlider({ setMaxTokens, maxTokens }) {
 
-    const handleChageMaxTokens = (_, newValue) => {
-        setMaxTokens(newValue);
-    };
+//     const handleChageMaxTokens = (_, newValue) => {
+//         setMaxTokens(newValue);
+//     };
 
-    return (
-        <Box>
-            <Typography id="max-tokens-slider">
-                {i18n.t("assistant.configuration.form.maxTokens")}
-            </Typography>
-            <Slider
-                marks={marks}
-                step={10}
-                aria-labelledby="max-tokens-slider"
-                valueLabelDisplay="auto"
-                min={MIN}
-                max={MAX}
-                value={maxTokens}
-                onChange={handleChageMaxTokens}
-            />
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography
-                    variant="body2"
-                    onClick={() => setMaxTokens(MIN)}
-                    sx={{ cursor: "pointer" }}
-                >
-                    {MIN} min
-                </Typography>
-                <Typography
-                    variant="body2"
-                    onClick={() => setMaxTokens(MAX)}
-                    sx={{ cursor: "pointer" }}
-                >
-                    {MAX} max
-                </Typography>
-            </Box>
-        </Box>
-    );
-}
+//     return (
+//         <Box>
+//             <Typography id="max-tokens-slider">
+//                 {i18n.t("assistant.configuration.form.maxTokens")}
+//             </Typography>
+//             <Slider
+//                 marks={marks}
+//                 step={10}
+//                 aria-labelledby="max-tokens-slider"
+//                 valueLabelDisplay="auto"
+//                 min={MIN}
+//                 max={MAX}
+//                 value={maxTokens}
+//                 onChange={handleChageMaxTokens}
+//             />
+//             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+//                 <Typography
+//                     variant="body2"
+//                     onClick={() => setMaxTokens(MIN)}
+//                     sx={{ cursor: "pointer" }}
+//                 >
+//                     {MIN} min
+//                 </Typography>
+//                 <Typography
+//                     variant="body2"
+//                     onClick={() => setMaxTokens(MAX)}
+//                     sx={{ cursor: "pointer" }}
+//                 >
+//                     {MAX} max
+//                 </Typography>
+//             </Box>
+//         </Box>
+//     );
+// }
