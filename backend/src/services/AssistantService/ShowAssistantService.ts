@@ -5,7 +5,6 @@ async function ShowAssistantService(userParentId: number) {
         where: {
             userParentId
         },
-        include: ["model"]
     })
     return asssitant
 }

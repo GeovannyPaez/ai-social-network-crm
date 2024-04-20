@@ -3,7 +3,6 @@ import * as yup from "yup";
 import { ResponseOpenAiChatCompletions } from "../helpers/ResponseOpenaiChatCompletions";
 import AppError from "../errors/AppError";
 import ShowAssistantService from "../services/AssistantService/ShowAssistantService";
-import CryptoHelper from "../helpers/CryptoHelper";
 import ListMessagesService from "../services/MessageServices/ListMessagesService";
 import MapMessagesToAiMessages from "../helpers/MapMessagesToAIMessages";
 import { MessageOpenAI } from "../helpers/TokenizerHelper";
@@ -45,9 +44,8 @@ export const getAiResponseController: RequestHandler = async (req, res) => {
         throw new AppError("ERR_ASSISTANT_NOT_FOUND", 404)
     }
 
-    const openaiApiKey = CryptoHelper.decrypt(assistant.openaiApiKey);
-    const openAiChatCompletions = new ResponseOpenAiChatCompletions(openaiApiKey, {
-        model: assistant.model.name,
+    const openAiChatCompletions = new ResponseOpenAiChatCompletions({
+        model: "gpt-3.5-turbo",
         messages,
         maxTokens: assistant.maxTokens || 1000,
         instructions: assistant.instructions

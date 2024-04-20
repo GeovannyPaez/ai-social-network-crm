@@ -13,18 +13,16 @@ type OpenAiChatCompletions = {
 };
 
 export class ResponseOpenAiChatCompletions extends AiResponseCreator {
-    private openaiKey: string;
     private openAiChatCompletions: OpenAiChatCompletions;
 
-    constructor(openaiKey: string, openAiChatCompletions: OpenAiChatCompletions) {
+    constructor(openAiChatCompletions: OpenAiChatCompletions) {
         super();
-        this.openaiKey = openaiKey;
         this.openAiChatCompletions = openAiChatCompletions;
     }
 
     public async createResponse(): Promise<AiResponse> {
         try {
-            const openai = getOpenAI(this.openaiKey);
+            const openai = getOpenAI();
             const response = await this.getChatCompletions(openai);
             const { message, tokensExpended } = this.extractResponseData(response);
             return { message, tokensExpended, action: "chat_completions" };
@@ -50,7 +48,7 @@ export class ResponseOpenAiChatCompletions extends AiResponseCreator {
 
     public async getStreamingResponse() {
         try {
-            const openai = getOpenAI(this.openaiKey);
+            const openai = getOpenAI();
             return await this.getStreamingChatCompletions(openai);
         } catch (error) {
             this.handlerOpenAIError(error);

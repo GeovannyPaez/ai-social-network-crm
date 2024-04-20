@@ -13,10 +13,6 @@ module.exports = {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            openaiApiKey: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
             instructions: {
                 type: DataTypes.STRING,
                 allowNull: true // Opcional, según tus requisitos
@@ -25,14 +21,6 @@ module.exports = {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false,
                 allowNull: false
-            },
-            modelId: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                references: {
-                    model: "AiModels",
-                    key: "id"
-                }
             },
             type: {
                 type: DataTypes.STRING,

@@ -7,7 +7,6 @@ import { logger } from "../utils/logger"
 import GetAiResponse from "./GetAiResponse"
 import { ResponseOpenAiChatCompletions } from "./ResponseOpenaiChatCompletions"
 import { MessageOpenAI } from "./TokenizerHelper"
-import CryptoHelper from "./CryptoHelper"
 
 type handleAiMessageType = {
     ticket: Ticket
@@ -34,15 +33,10 @@ export const handleAiMessage = async ({
             }
         })
 
-        const model = assistant.model;
-
-        if (!model) return;
-
-        const openaiApiKey = CryptoHelper.decrypt(assistant.openaiApiKey);
-        const aiResponder = new ResponseOpenAiChatCompletions(openaiApiKey || "", {
+        const aiResponder = new ResponseOpenAiChatCompletions({
             messages: openiaMessages,
             maxTokens: assistant.maxTokens,
-            model: model.name,
+            model: "gpt-3.5-turbo",
             instructions: assistant.instructions
         })
 

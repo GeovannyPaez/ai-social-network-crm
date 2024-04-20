@@ -11,7 +11,6 @@ import {
     Default,
 } from "sequelize-typescript";
 import User from "./User";
-import AiModel from "./AiModel";
 
 @Table
 class Assistant extends Model<Assistant> {
@@ -19,9 +18,6 @@ class Assistant extends Model<Assistant> {
     @AutoIncrement
     @Column
     id: number;
-
-    @Column
-    openaiApiKey: string;
 
     @Column
     name: string;
@@ -51,10 +47,6 @@ class Assistant extends Model<Assistant> {
     @Column
     userParentId: number;
 
-    @ForeignKey(() => AiModel)
-    @Column
-    modelId: number;
-
     @CreatedAt
     createdAt: Date;
 
@@ -64,8 +56,6 @@ class Assistant extends Model<Assistant> {
     @BelongsTo(() => User)
     user: User;
 
-    @BelongsTo(() => AiModel)
-    model: AiModel;
 
 }
 

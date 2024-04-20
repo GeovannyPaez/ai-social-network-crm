@@ -6,12 +6,8 @@ import CreateAssistantService from "../services/AssistantService/CreateAssistant
 import DeleteAssistantService from "../services/AssistantService/DeleteAssistantSerivce";
 import ShowAssistantService from "../services/AssistantService/ShowAssistantService";
 import UpdateAssistanService from "../services/AssistantService/UpdateAssistantService";
-import CryptoHelper from "../helpers/CryptoHelper";
 export const index: RequestHandler = async (req, res) => {
     const assistant = await ShowAssistantService(req.user.parentId)
-    if (assistant) {
-        assistant.openaiApiKey = CryptoHelper.decrypt(assistant.openaiApiKey);
-    }
     return res.json(assistant)
 }
 
@@ -22,10 +18,8 @@ export const store: RequestHandler = async (req, res) => {
         name: yup.string().required(),
         instructions: yup.string().required(),
         isActivated: yup.boolean(),
-        modelId: yup.number().required(),
         maxTokens: yup.number().required(),
         idAssistant: yup.string(),
-        openaiApiKey: yup.string().required(),
         type: yup.string().required().oneOf(["chat_completions", "assistant"])
     })
 
@@ -37,7 +31,6 @@ export const store: RequestHandler = async (req, res) => {
         }
     }
     const assistant = await CreateAssistantService(assistantData)
-    assistant.openaiApiKey = CryptoHelper.decrypt(assistant.openaiApiKey);
     return res.status(201).json(assistant)
 }
 export const remove: RequestHandler = async (req, res) => {
@@ -56,7 +49,6 @@ export const update: RequestHandler = async (req, res) => {
         type: yup.string().oneOf(["chat_completions", "assistant"]),
         maxTokens: yup.number(),
         idAssistant: yup.string(),
-        modelId: yup.number(),
         userParentId: yup.number()
     })
 
@@ -69,8 +61,5 @@ export const update: RequestHandler = async (req, res) => {
     }
 
     const assistant = await UpdateAssistanService({ ...assistantData, id: Number(id), userParentId: req.user.parentId })
-    if (assistant.openaiApiKey) {
-        assistant.openaiApiKey = CryptoHelper.decrypt(assistant.openaiApiKey);
-    }
     return res.status(201).json(assistant)
 }

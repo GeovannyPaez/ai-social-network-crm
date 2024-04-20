@@ -1,5 +1,4 @@
-import { AutoIncrement, Column, CreatedAt, HasMany, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import Assistant from "./Assistant";
+import { AutoIncrement, Column, CreatedAt, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 
 @Table
 class AiModel extends Model<AiModel> {
@@ -20,8 +19,6 @@ class AiModel extends Model<AiModel> {
     @UpdatedAt
     updatedAt: Date;
 
-    @HasMany(() => Assistant)
-    assistants: Assistant[];
 }
 
 export default AiModel

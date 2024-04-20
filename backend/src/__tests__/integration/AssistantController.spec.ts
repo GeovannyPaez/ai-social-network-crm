@@ -33,9 +33,7 @@ describe('AssistantController', () => {
             instructions: faker.lorem.sentence(),
             isActivated: true,
             userParentId: 0,
-            modelId: 1,
             maxTokens: 50,
-            openaiApiKey: faker.random.alphaNumeric(20),
             type: "chat_completions"
         }
 
