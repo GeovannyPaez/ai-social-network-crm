@@ -72,7 +72,7 @@ export default function AssistantPage() {
                     />
                 </MainHeaderButtonsWrapper>
             </MainHeader>
-            <MainPaper sx={{ display: "flex", maxHeight: "100%", marginBottom: 10, overflow: "hidden" }}>
+            <MainPaper sx={{ display: "flex", height: "100vh", maxHeight: "100%", overflow: "hidden" }}>
                 {showTabs ? (
                     <>
                         <Box sx={{ width: '100%', typography: 'body1' }}>

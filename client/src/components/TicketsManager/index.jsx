@@ -28,6 +28,7 @@ const TicketsWrapper = styled(Paper)({
   height: '100%',
   flexDirection: 'column',
   overflow: 'hidden',
+
   borderTopRightRadius: 0,
   borderBottomRightRadius: 0,
 });
@@ -160,6 +161,8 @@ const TicketsManager = () => {
       />
       <TabsHeader elevation={0} square >
         <Tabs
+
+          sx={{ overflow: { xs: "scroll", sm: "hidden" } }}
           value={tab}
           onChange={handleChangeTab}
           variant="fullWidth"
@@ -180,7 +183,7 @@ const TicketsManager = () => {
             label={i18n.t("tickets.tabs.closed.title")}
 
           />
-          <Tab
+          <TabStyled
             value={"search"}
             icon={<SearchIcon />}
             label={i18n.t("tickets.tabs.search.title")}
