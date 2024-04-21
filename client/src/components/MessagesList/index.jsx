@@ -361,8 +361,12 @@ const MessagesList = ({ ticketId, isGroup }) => {
   };
 
   const renderMessages = () => {
+
     if (messagesList.length > 0) {
       const viewMessagesList = messagesList.map((message, index) => {
+        const isMediaMessage = (message.mediaUrl || message.mediaType === "location" || message.mediaType === "vcard"
+          //|| message.mediaType === "multi_vcard" 
+        )
         if (!message.fromMe) {
           return (
             <React.Fragment key={message.id}>
@@ -375,12 +379,10 @@ const MessagesList = ({ ticketId, isGroup }) => {
                     {message.contact?.name}
                   </MessageContactName>
                 )}
-                {(message.mediaUrl || message.mediaType === "location" || message.mediaType === "vcard"
-                  //|| message.mediaType === "multi_vcard" 
-                ) && checkMessageMedia(message)}
+                {isMediaMessage && checkMessageMedia(message)}
                 <TextContentItem>
                   {message.quotedMsg && renderQuotedMessage(message)}
-                  <MarkdownWrapper>{message.body}</MarkdownWrapper>
+                  <MarkdownWrapper>{!isMediaMessage && message.body}</MarkdownWrapper>
                   <TimeStamp>
                     {format(parseISO(message.createdAt), "HH:mm")}
                   </TimeStamp>
@@ -404,9 +406,7 @@ const MessagesList = ({ ticketId, isGroup }) => {
                 >
                   <ExpandMore />
                 </MessageActionButton> */}
-                {(message.mediaUrl || message.mediaType === "location" || message.mediaType === "vcard"
-                  //|| message.mediaType === "multi_vcard" 
-                ) && checkMessageMedia(message)}
+                {isMediaMessage && checkMessageMedia(message)}
                 <TextContentItem
                   isDeleted={message.isDeleted}
                 >
@@ -417,7 +417,7 @@ const MessagesList = ({ ticketId, isGroup }) => {
                     />
                   )}
                   {message.quotedMsg && renderQuotedMessage(message)}
-                  <MarkdownWrapper>{message.body}</MarkdownWrapper>
+                  <MarkdownWrapper>{!isMediaMessage && message.body}</MarkdownWrapper>
                   <TimeStamp>
                     {format(parseISO(message.createdAt), "HH:mm")}
                     {renderMessageAck(message)}
