@@ -42,6 +42,7 @@ export default function AssistantChatTest() {
     return (
         <Stack sx={{ width: { lg: "60%", sm: "100%" } }}>
             <Typography sx={{
+                marginTop: 1,
                 display: {
                     xs: "none",
                     lg: "block"
