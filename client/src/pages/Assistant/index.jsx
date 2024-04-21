@@ -67,49 +67,53 @@ export default function AssistantPage() {
                     />
                 </MainHeaderButtonsWrapper>
             </MainHeader>
-            <MainPaper sx={{ display: "flex", height: "100vh", maxHeight: "100%", overflow: "hidden" }}>
-                {showTabs ? (
-                    <>
-                        <Box sx={{ width: '100%', typography: 'body1' }}>
-                            <TabContext value={tabValue}>
-                                <TabList
-                                    sx={{
-                                        '& > :first-child': {
+            <MainPaper sx={{
+                display: "flex", maxHeight: "100% ", overflow: "hidden", padding: 0
+            }}>
+                {
+                    showTabs ? (
+                        <>
+                            <Box sx={{ width: '100%', typography: 'body1' }}>
+                                <TabContext value={tabValue}>
+                                    <TabList
+                                        sx={{
                                             '& > :first-child': {
-                                                justifyContent: "space-around"
+                                                '& > :first-child': {
+                                                    justifyContent: "space-around"
+                                                }
                                             }
-                                        }
-                                    }}
-                                    onChange={handleChangeTab}
-                                    aria-label="Menu mobile assistant"
-                                >
-                                    <Tab label="Configuración" value="1" />
-                                    <Tab label="Prueba" value="2" />
-                                </TabList>
-                                <TabPanel value="1">
-                                    <AssistantConfiguration
-                                        onChangeKeyFromAsisstant={onChangeKeyFromAsisstant}
-                                        assistant={assistant || initialState}
-                                        handleUpdateAssistant={hanldeUpdateAssistant}
-                                    />
-                                </TabPanel>
-                                <TabPanel value="2">
-                                    <AssistanChatTest />
-                                </TabPanel>
-                            </TabContext>
-                        </Box>
-                    </>
-                ) : (
-                    <>
-                        <AssistantConfiguration
-                            onChangeKeyFromAsisstant={onChangeKeyFromAsisstant}
-                            assistant={assistant || initialState}
-                            handleUpdateAssistant={hanldeUpdateAssistant}
-                        />
-                        <Divider orientation="vertical" />
-                        <AssistanChatTest />
-                    </>
-                )}
+                                        }}
+                                        onChange={handleChangeTab}
+                                        aria-label="Menu mobile assistant"
+                                    >
+                                        <Tab label="Configuración" value="1" />
+                                        <Tab label="Prueba" value="2" />
+                                    </TabList>
+                                    <TabPanel sx={{ padding: 0 }} value="1">
+                                        <AssistantConfiguration
+                                            onChangeKeyFromAsisstant={onChangeKeyFromAsisstant}
+                                            assistant={assistant || initialState}
+                                            handleUpdateAssistant={hanldeUpdateAssistant}
+                                        />
+                                    </TabPanel>
+                                    <TabPanel value="2">
+                                        <AssistanChatTest />
+                                    </TabPanel>
+                                </TabContext>
+                            </Box>
+                        </>
+                    ) : (
+                        <>
+                            <AssistantConfiguration
+                                onChangeKeyFromAsisstant={onChangeKeyFromAsisstant}
+                                assistant={assistant || initialState}
+                                handleUpdateAssistant={hanldeUpdateAssistant}
+                            />
+                            <Divider orientation="vertical" />
+                            <AssistanChatTest />
+                        </>
+                    )
+                }
             </MainPaper >
         </MainContainer >
     );

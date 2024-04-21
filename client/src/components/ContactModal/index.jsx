@@ -22,6 +22,7 @@ import { i18n } from "../../translate/i18n";
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
 import { InputsWrapper } from "../StyledComponents";
+import { FormControl, FormControlLabel, Switch } from "@mui/material";
 
 const Root = styled("div")({
 	display: "flex",
@@ -55,11 +56,14 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 		name: "",
 		number: "",
 		email: "",
+		isAssistantActive: true
 	};
 
 	const [contact, setContact] = useState(initialState);
 
-
+	const toogleAssistant = () => {
+		setContact({ ...contact, isAssistantActive: !contact.isAssistantActive });
+	}
 	useEffect(() => {
 		const fetchContact = async () => {
 			if (initialValues) {
@@ -103,15 +107,26 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 			toastError(err);
 		}
 	};
-
 	return (
 		<Root>
 			<Dialog open={open} onClose={handleClose} maxWidth="lg" scroll="paper">
-				<DialogTitle id="form-dialog-title">
+				<DialogTitle sx={{ display: "flex", justifyContent: "space-around" }} id="form-dialog-title">
 					{contactId
 						? `${i18n.t("contactModal.title.edit")}`
 						: `${i18n.t("contactModal.title.add")}`}
+					{contactId && (<FormControl>
+						<FormControlLabel
+							labelPlacement="bottom"
+							label={i18n.t("contactModal.title.isAssistantActive")}
+							onChange={toogleAssistant}
+							checked={contact.isAssistantActive}
+							control={
+								<Switch />
+							}
+						/>
+					</FormControl>)}
 				</DialogTitle>
+
 				<Formik
 					initialValues={contact}
 					enableReinitialize={true}

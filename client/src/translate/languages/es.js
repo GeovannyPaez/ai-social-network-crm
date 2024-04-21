@@ -143,6 +143,7 @@ const messages = {
           name: "Nombre",
           whatsapp: "WhatsApp",
           email: "Correo Electrónico",
+          isAssistantActive: "Asistente IA",
           actions: "Acciones",
         },
       },
@@ -150,6 +151,7 @@ const messages = {
         title: {
           add: "Agregar contacto",
           edit: "Editar contacto",
+          isAssistantActive: "Asistente IA",
         },
         form: {
           mainInfo: "Detalles del contacto",
