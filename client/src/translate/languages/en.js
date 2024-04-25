@@ -398,6 +398,7 @@ const messages = {
             instructions: "Instructions",
             maxTokens: "Máx Tokens",
             model: "Model",
+            tokens: "Tokens",
             saveButton: "Save",
             select: {
               optionDescription: "Context Window Size",

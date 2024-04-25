@@ -5,6 +5,8 @@ import { createAssistant, updateAssistant } from "../../services/asistanService"
 import { toast } from "react-toastify";
 import toastError from "../../errors/toastError";
 import { i18n } from "../../translate/i18n";
+import { useState } from "react";
+import { countTokens } from "../../services/ticktoken";
 
 // const MAX = 4096;
 // const MIN = 100;
@@ -17,6 +19,9 @@ import { i18n } from "../../translate/i18n";
 
 
 export default function AssistantConfiguration({ assistant, handleUpdateAssistant, onChangeKeyFromAsisstant }) {
+    const initialsTokensInstructions = countTokens(assistant.instructions);
+    const [tokensInstructions, setTokensInstructions] = useState(initialsTokensInstructions);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -32,6 +37,10 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        if (name === "instructions") {
+            const tokens = countTokens(value);
+            setTokensInstructions(tokens);
+        }
         onChangeKeyFromAsisstant(name, value);
     };
     return (
@@ -62,16 +71,21 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
 
                     />
 
-                    <TextField
-                        name="instructions"
-                        required
-                        label={i18n.t("assistant.configuration.form.instructions")}
-                        multiline
-                        minRows={4}
-                        maxRows={5}
-                        value={assistant?.instructions || ""}
-                        onChange={handleChange}
-                    />
+                    <Stack gap={1} direction={"column"}>
+                        <TextField
+                            name="instructions"
+                            required
+                            label={i18n.t("assistant.configuration.form.instructions")}
+                            multiline
+                            minRows={4}
+                            maxRows={5}
+                            value={assistant?.instructions || ""}
+                            onChange={handleChange}
+                        />
+                        <Typography variant="p" color="textSecondary">{
+                            `${i18n.t("assistant.configuration.form.tokens")}: ${tokensInstructions} / 4096`
+                        }</Typography>
+                    </Stack>
                     {/* <FormControl fullWidth>
                         <InputLabel id="model-select-label">
                             {i18n.t("assistant.configuration.form.model")}
@@ -92,7 +106,9 @@ export default function AssistantConfiguration({ assistant, handleUpdateAssistan
                     </FormControl> */}
                     {/* <MaxTokensSlider maxTokens={assistant.maxTokens} setMaxTokens={setMaxtTokens} /> */}
                     <Stack alignItems={"center"}>
-                        <LoadingButton variant="contained" type="submit">
+                        <LoadingButton variant="contained" type="submit"
+                            disabled={assistant?.name === "" || assistant?.instructions === "" || tokensInstructions > 4096}
+                        >
                             {i18n.t("assistant.configuration.form.saveButton")}
                         </LoadingButton>
                     </Stack>

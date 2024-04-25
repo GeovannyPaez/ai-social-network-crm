@@ -404,6 +404,7 @@ const messages = {
             instructions: "Instrucciones",
             maxTokens: "Máximo de tokens",
             model: "Modelo AI",
+            tokens: "Tokens utilizados:",
             saveButton: "Guardar cambios",
             select: {
               optionDescription: "Tokens de contexto",
