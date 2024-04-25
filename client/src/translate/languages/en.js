@@ -139,6 +139,7 @@ const messages = {
           name: "Name",
           whatsapp: "WhatsApp",
           email: "Email",
+          isAssistantActive: "AI Assistant",
           actions: "Actions",
         },
       },
@@ -146,6 +147,7 @@ const messages = {
         title: {
           add: "Add contact",
           edit: "Edit contact",
+          isAssistantActive: "AI Assistant",
         },
         form: {
           mainInfo: "Contact details",
@@ -283,6 +285,7 @@ const messages = {
           connections: "Connections",
           tickets: "Tickets",
           contacts: "Contacts",
+          assistant: "Assistant",
           quickAnswers: "Quick Answers",
           queues: "Queues",
           administration: "Administration",
@@ -359,6 +362,51 @@ const messages = {
             "All user data will be lost. Users' open tickets will be moved to queue.",
         },
       },
+      assistant: {
+        header: {
+          title: "Assistant",
+          activationModal: {
+            actionButton: "Activate",
+            submitButton: "Save",
+            cancelButton: "Cancel",
+            description: "Activate the AI assistant to respond to your contacts.",
+            title: "Activate AI Assistant",
+            success: "AI assistant activated successfully!",
+          },
+          switch: {
+            active: "AI Assistant is active",
+            desactive: "AI Assistant is inactive",
+            activeTooltip: "it will respond only to contacts actives in contacts page",
+            isDesactivatedForAllTickets: "Activate to respond to all tickets",
+            isActivatedForAllTickets: "Deactivate to stop responding to all tickets",
+          },
+          save: "Save",
+        },
+        test: {
+          title: "Assistant Test",
+          inputPlaceholder: "Type a message to test the assistant",
+          message: {
+            user: "User",
+            assistant: "Assistant",
+          }
+        },
+        configuration: {
+          title: "Assistant Configuration",
+          form: {
+            name: "Name",
+            openaiApiKey: "OpenAI API Key",
+            instructions: "Instructions",
+            maxTokens: "Máx Tokens",
+            model: "Model",
+            tokens: "Tokens",
+            saveButton: "Save",
+            select: {
+              optionDescription: "Context Window Size",
+            },
+            success: "Assistant configuration saved successfully.",
+          }
+        },
+      },
       settings: {
         success: "Settings saved successfully.",
         title: "Settings",
@@ -387,6 +435,7 @@ const messages = {
         placeholderOpen: "Type a message or press ''/'' to use the registered quick responses",
         placeholderClosed: "Reopen or accept this ticket to send a message.",
         signMessage: "Sign",
+        assistantTooltip: "AI Assistant",
       },
       contactDrawer: {
         header: "Contact details",
@@ -458,6 +507,8 @@ const messages = {
           "This color is already in use, pick another one.",
         ERR_WAPP_GREETING_REQUIRED:
           "Greeting message is required if there is more than one queue.",
+        ERR_OPENAI_API_INVALID: "Invalid OpenAI API Key",
+        ERR_ASSISTANT_NOT_FOUND: "Please create an assistant first",
       },
     },
   },

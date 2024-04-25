@@ -1,17 +1,20 @@
-// W
-//   value
-// }: Request): Promise<Setting | undefined> => {
-//   const setting = await Setting.findOne({
-//     where: { key }
-//   });
+import AppError from "../../errors/AppError";
+import Setting from "../../models/Setting";
 
-//   if (!setting) {
-//     throw new AppError("ERR_NO_SETTING_FOUND", 404);
-//   }
+type Request = {
+    userParentId: number;
+}
 
-//   await setting.update({ value });
+const UpdaterSettingService = async (data: Request) => {
+    const setting = await Setting.findOne({
+        where: {
+            userParentId: data.userParentId
+        }
+    })
+    if (!setting) {
+        throw new AppError("ERR_SETTING_NOT_FOUND", 404)
+    }
+    return await setting.update(data)
+}
 
-//   return setting;
-// };
-
-// export default UpdateSettingService;
+export default UpdaterSettingService;

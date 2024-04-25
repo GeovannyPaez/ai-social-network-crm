@@ -9,17 +9,15 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      openaiApiKey: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
       userParentId: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
           model: "Users",
           key: "id"
-        }
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
       },
       createdAt: {
         type: DataTypes.DATE,

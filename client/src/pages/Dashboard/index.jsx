@@ -36,11 +36,13 @@ const Dashboard = () => {
 	return (
 		<div>
 			<Container maxWidth="lg" sx={{ paddingTop: 4, paddingBottom: 4 }}>
-				<Grid container spacing={3}>
+				<Grid container justifyContent={"center"} spacing={3}>
 					{["open", "pending", "closed"].map((status, index) => (
-						<Grid item key={index} xs={4}>
+						<Grid item key={index} xs={6} sm={4}>
 							<CustomFixedHeightPaper sx={{ overflow: "hidden" }}>
-								<Typography component="h3" variant="h6" color="secondary" paragraph>
+								<Typography component="h3" variant="h6" sx={{
+									fontSize: { xs: "1.1rem", sm: "1.4rem" }
+								}} color="secondary" paragraph>
 									{i18n.t(`dashboard.messages.${status === "open" ? "inAttendance" : status === "pending" ? "waiting" : "closed"}.title`)}
 								</Typography>
 								<Grid item>

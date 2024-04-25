@@ -1,0 +1,160 @@
+import { Box, Stack, TextField, Typography } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
+
+import { createAssistant, updateAssistant } from "../../services/asistanService";
+import { toast } from "react-toastify";
+import toastError from "../../errors/toastError";
+import { i18n } from "../../translate/i18n";
+import { useState } from "react";
+import { countTokens } from "../../services/ticktoken";
+
+// const MAX = 4096;
+// const MIN = 100;
+// const marks = [
+//     { value: MIN, label: '' },
+//     { value: MAX, label: '' },
+// ];
+
+
+
+
+export default function AssistantConfiguration({ assistant, handleUpdateAssistant, onChangeKeyFromAsisstant }) {
+    const initialsTokensInstructions = countTokens(assistant.instructions);
+    const [tokensInstructions, setTokensInstructions] = useState(initialsTokensInstructions);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const data = { ...assistant, id: assistant?.id, type: "chat_completions" };
+            const getResponseApi = assistant?.id ? updateAssistant : createAssistant;
+            const newData = await getResponseApi(data);
+            handleUpdateAssistant(newData);
+            toast.success(i18n.t("assistant.configuration.form.success"));
+        } catch (error) {
+            toastError(error);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name === "instructions") {
+            const tokens = countTokens(value);
+            setTokensInstructions(tokens);
+        }
+        onChangeKeyFromAsisstant(name, value);
+    };
+    return (
+        <Box sx={{
+            width: {
+                lg: "40%",
+                sm: "100%"
+            }
+        }}>
+            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+                <Stack spacing={3} sx={{ width: "100%", padding: { xs: 0, md: 1 } }}>
+                    <Typography
+                        sx={{
+                            display: {
+                                xs: "none",
+                                lg: "block"
+                            }
+                        }}
+                        variant="h5" textAlign={"center"} color="textPrimary">
+                        {i18n.t("assistant.configuration.title")}
+                    </Typography>
+                    <TextField
+                        name="name"
+                        required
+                        label={i18n.t("assistant.configuration.form.name")}
+                        value={assistant?.name || ""}
+                        onChange={handleChange}
+
+                    />
+
+                    <Stack gap={1} direction={"column"}>
+                        <TextField
+                            name="instructions"
+                            required
+                            label={i18n.t("assistant.configuration.form.instructions")}
+                            multiline
+                            minRows={4}
+                            maxRows={5}
+                            value={assistant?.instructions || ""}
+                            onChange={handleChange}
+                        />
+                        <Typography variant="p" color="textSecondary">{
+                            `${i18n.t("assistant.configuration.form.tokens")}: ${tokensInstructions} / 4096`
+                        }</Typography>
+                    </Stack>
+                    {/* <FormControl fullWidth>
+                        <InputLabel id="model-select-label">
+                            {i18n.t("assistant.configuration.form.model")}
+                        </InputLabel>
+                        <Select
+                            variant="filled"
+                            name="modelId"
+                            value={defaultModelId}
+                            onChange={handleChange}
+                            labelId="model-select-label"
+                        >
+                            {initialModels.map((model) => (
+                                <MenuItem key={model.id} value={model.id}>
+                                    {`${model.name} - ${model.contextWindow} ${i18n.t("assistant.configuration.form.select.optionDescription")}`}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl> */}
+                    {/* <MaxTokensSlider maxTokens={assistant.maxTokens} setMaxTokens={setMaxtTokens} /> */}
+                    <Stack alignItems={"center"}>
+                        <LoadingButton variant="contained" type="submit"
+                            disabled={assistant?.name === "" || assistant?.instructions === "" || tokensInstructions > 4096}
+                        >
+                            {i18n.t("assistant.configuration.form.saveButton")}
+                        </LoadingButton>
+                    </Stack>
+                </Stack>
+            </form>
+        </Box>
+    );
+}
+
+// function MaxTokensSlider({ setMaxTokens, maxTokens }) {
+
+//     const handleChageMaxTokens = (_, newValue) => {
+//         setMaxTokens(newValue);
+//     };
+
+//     return (
+//         <Box>
+//             <Typography id="max-tokens-slider">
+//                 {i18n.t("assistant.configuration.form.maxTokens")}
+//             </Typography>
+//             <Slider
+//                 marks={marks}
+//                 step={10}
+//                 aria-labelledby="max-tokens-slider"
+//                 valueLabelDisplay="auto"
+//                 min={MIN}
+//                 max={MAX}
+//                 value={maxTokens}
+//                 onChange={handleChageMaxTokens}
+//             />
+//             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+//                 <Typography
+//                     variant="body2"
+//                     onClick={() => setMaxTokens(MIN)}
+//                     sx={{ cursor: "pointer" }}
+//                 >
+//                     {MIN} min
+//                 </Typography>
+//                 <Typography
+//                     variant="body2"
+//                     onClick={() => setMaxTokens(MAX)}
+//                     sx={{ cursor: "pointer" }}
+//                 >
+//                     {MAX} max
+//                 </Typography>
+//             </Box>
+//         </Box>
+//     );
+// }

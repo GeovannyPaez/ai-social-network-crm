@@ -25,12 +25,14 @@ class Assistant extends Model<Assistant> {
     @Column
     instructions: string;
 
-    @Column
     @Default(false)
+    @Column
     isActivated: boolean;
 
+    // only for new messages of all tickets
+    @Default(false)
     @Column
-    model: string;
+    isActivatedForAllTickets: boolean;
 
     @Column // assistant or chat_completions
     type: string;
@@ -53,6 +55,7 @@ class Assistant extends Model<Assistant> {
 
     @BelongsTo(() => User)
     user: User;
+
 
 }
 

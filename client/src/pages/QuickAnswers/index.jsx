@@ -212,6 +212,7 @@ const QuickAnswers = () => {
           <TextField
             placeholder={i18n.t("quickAnswers.searchPlaceholder")}
             type="search"
+            size={"small"}
             value={searchParam}
             onChange={handleSearch}
             InputProps={{

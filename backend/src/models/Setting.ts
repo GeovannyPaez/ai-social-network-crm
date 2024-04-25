@@ -6,7 +6,7 @@ import {
   Model,
   PrimaryKey,
   AutoIncrement,
-  ForeignKey
+  ForeignKey,
 } from "sequelize-typescript";
 import User from "./User";
 
@@ -17,9 +17,6 @@ class Setting extends Model<Setting> {
   @Column
   id: number;
 
-  @Column
-  openaiApiKey: string;
-
   @ForeignKey(() => User)
   @Column
   userParentId: number;
@@ -29,6 +26,7 @@ class Setting extends Model<Setting> {
 
   @UpdatedAt
   updatedAt: Date;
+
 }
 
 export default Setting;

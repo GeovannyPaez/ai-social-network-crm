@@ -6,6 +6,7 @@ import MicRecorder from "mic-recorder-to-mp3";
 
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import IconButton from "@mui/material/IconButton";
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import MoreVert from "@mui/icons-material/MoreVert";
 import MoodIcon from "@mui/icons-material/Mood";
 import SendIcon from "@mui/icons-material/Send";
@@ -20,6 +21,7 @@ import {
   Menu,
   MenuItem,
   Switch,
+  Tooltip,
 } from "@mui/material";
 import {
   ViewMediaInputWrapper,
@@ -48,6 +50,8 @@ import { ReplyMessageContext } from "../../context/ReplyingMessage/ReplyingMessa
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import toastError from "../../errors/toastError";
+import { getAiRespose } from "../../services/asistanService.js";
+import streamReader from "../../services/streamReader.js";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -63,6 +67,7 @@ const MessageInput = ({ ticketStatus }) => {
   const [typeBar, setTypeBar] = useState(false);
   const inputRef = useRef();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [writingAiResponse, setWritingAiResponse] = useState(false);
   const { setReplyingMessage, replyingMessage } =
     useContext(ReplyMessageContext);
   const { user } = useContext(AuthContext);
@@ -236,7 +241,23 @@ const MessageInput = ({ ticketStatus }) => {
   const handleMenuItemClick = () => {
     setAnchorEl(null);
   };
-
+  const handleAiResponse = async (ticketId) => {
+    try {
+      setWritingAiResponse(true);
+      const response = await getAiRespose([], { ticketId });
+      if (!response.ok || !response.body) {
+        const res = await response.json();
+        setWritingAiResponse(false);
+        return toastError(res)
+      }
+      for await (const word of streamReader(response)) {
+        setInputMessage(last => last + word)
+      }
+    } catch (error) {
+      toastError(error);
+    }
+    setWritingAiResponse(false);
+  }
   const renderReplyingMessage = (message) => {
     return (
       <ReplyginMsgWrapper >
@@ -440,18 +461,33 @@ const MessageInput = ({ ticketStatus }) => {
               maxRows={5}
               value={inputMessage}
               onChange={handleChangeInput}
+              endAdornment={
+                (!inputMessage || writingAiResponse) && (
+                  <Tooltip
+                    title={i18n.t("messagesInput.assistantTooltip")}
+                  >
+                    <IconButton
+                      disabled={writingAiResponse}
+                      aria-label="assistant"
+                      onClick={() => handleAiResponse(ticketId)}
+                    >
+                      <AutoAwesomeIcon />
+                    </IconButton>
+                  </Tooltip>
+                )
+              }
               disabled={recording || loading || ticketStatus !== "open"}
               onPaste={(e) => {
                 ticketStatus === "open" && handleInputPaste(e);
               }}
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 if (loading || e.shiftKey) return;
                 else if (e.key === "Enter") {
                   handleSendMessage();
                 }
               }}
             />
-            {typeBar ? (
+            {typeBar && (
               <MessageQuickAnswersWrapper >
                 {quickAnswers.map((value, index) => {
                   return (
@@ -466,8 +502,6 @@ const MessageInput = ({ ticketStatus }) => {
                   );
                 })}
               </MessageQuickAnswersWrapper>
-            ) : (
-              <div></div>
             )}
           </MessageInputWrapper>
           {inputMessage ? (

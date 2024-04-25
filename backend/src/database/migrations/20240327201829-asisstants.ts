@@ -22,10 +22,6 @@ module.exports = {
                 defaultValue: false,
                 allowNull: false
             },
-            model: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
             type: {
                 type: DataTypes.STRING,
                 allowNull: false
@@ -40,7 +36,7 @@ module.exports = {
             },
             userParentId: {
                 type: DataTypes.INTEGER,
-                allowNull: true,
+                allowNull: false,
                 references: {
                     model: "Users",
                     key: "id"

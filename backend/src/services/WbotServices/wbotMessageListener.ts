@@ -25,6 +25,8 @@ import UpdateTicketService from "../TicketServices/UpdateTicketService";
 import CreateContactService from "../ContactServices/CreateContactService";
 // import GetContactService from "../ContactServices/GetContactService";
 import formatBody from "../../helpers/Mustache";
+import ShowAssistantService from "../AssistantService/ShowAssistantService";
+import { handleAiMessage } from "../../helpers/HandleAiMessage";
 
 interface Session extends Client {
   id?: number;
@@ -33,6 +35,7 @@ interface Session extends Client {
 const writeFileAsync = promisify(writeFile);
 
 const verifyContact = async (msgContact: WbotContact, userParentId: number | null): Promise<Contact> => {
+
   const profilePicUrl = await msgContact.getProfilePicUrl();
 
   const contactData = {
@@ -63,7 +66,6 @@ const verifyQuotedMessage = async (
 
   return quotedMsg;
 };
-
 
 // generate random id string for file names, function got from: https://stackoverflow.com/a/1349426/1851801
 function makeRandomId(length: number) {
@@ -151,6 +153,7 @@ const verifyMessage = async (
     quotedMsgId: quotedMsg?.id
   };
 
+  // @ts-ignore
   await ticket.update({ lastMessage: msg.type === "location" ? msg.location.description ? "Localization - " + msg.location?.description.split('\\n')[0] : "Localization" : msg.body });
 
   await CreateMessageService({ messageData });
@@ -160,9 +163,8 @@ const prepareLocation = (msg: WbotMessage): WbotMessage => {
   let gmapsUrl = "https://maps.google.com/maps?q=" + msg.location.latitude + "%2C" + msg.location.longitude + "&z=17&hl=pt-BR";
 
   msg.body = "data:image/png;base64," + msg.body + "|" + gmapsUrl;
-
+  // @ts-ignore
   msg.body += "|" + (msg.location.description ? msg.location.description : (msg.location.latitude + ", " + msg.location.longitude))
-
   return msg;
 };
 
@@ -302,6 +304,8 @@ const handleMessage = async (
       groupContact
     );
 
+
+
     if (msg.hasMedia) {
       await verifyMediaMessage(msg, ticket, contact);
     } else {
@@ -343,10 +347,23 @@ const handleMessage = async (
           });
         }
       } catch (error) {
-        console.log(error);
+        // eslint-disable-next-line no-console
+        // @ts-ignore
+        logger.error(error);
       }
     }
+    if (!msg.fromMe && msg.type === "chat" && userParentId) {
+      const assistant = await ShowAssistantService(userParentId);
 
+      if (!assistant || !assistant?.isActivated) return;
+
+      if (!contact.isAssistantActive && !assistant.isActivatedForAllTickets) return
+
+      await handleAiMessage({
+        ticket,
+        assistant
+      })
+    }
     /* if (msg.type === "multi_vcard") {
       try {
         const array = msg.vCards.toString().split("\n");
@@ -444,10 +461,14 @@ const handleMsgAck = async (msg: WbotMessage, ack: MessageAck) => {
   }
 };
 
+
+
 const wbotMessageListener = (wbot: Session, userParentId: number | null = null): void => {
   wbot.on("message_create", async msg => {
     handleMessage(msg, wbot, userParentId);
   });
+
+
 
   wbot.on("media_uploaded", async msg => {
     handleMessage(msg, wbot, userParentId);

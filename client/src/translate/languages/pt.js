@@ -141,6 +141,7 @@ const messages = {
           name: "Nome",
           whatsapp: "WhatsApp",
           email: "Email",
+          isAssistantActive: "Assistente",
           actions: "Ações",
         },
       },
@@ -148,6 +149,8 @@ const messages = {
         title: {
           add: "Adicionar contato",
           edit: "Editar contato",
+          isAssistantActive: "Ativar assistente",
+
         },
         form: {
           mainInfo: "Dados do contato",
@@ -286,6 +289,7 @@ const messages = {
           connections: "Conexões",
           tickets: "Tickets",
           contacts: "Contatos",
+          assistant: "Assistente",
           quickAnswers: "Respostas Rápidas",
           queues: "Filas",
           administration: "Administração",
@@ -392,6 +396,7 @@ const messages = {
         placeholderClosed:
           "Reabra ou aceite esse ticket para enviar uma mensagem.",
         signMessage: "Assinar",
+        assistantTooltip: "Resposta do assistente",
       },
       contactDrawer: {
         header: "Dados do contato",
@@ -462,6 +467,8 @@ const messages = {
           "Esta cor já está em uso, escolha outra.",
         ERR_WAPP_GREETING_REQUIRED:
           "A mensagem de saudação é obrigatório quando há mais de uma fila.",
+        ERR_OPENAI_API_INVALID: "Chave de API OpenAI inválida.",
+        ERR_ASSISTANT_NOT_FOUND: "Assistente não encontrado.",
       },
     },
   },

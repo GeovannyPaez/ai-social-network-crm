@@ -17,7 +17,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
-
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import api from "../../services/api";
 import TableRowSkeleton from "../../components/TableRowSkeleton";
 import ContactModal from "../../components/ContactModal";
@@ -238,6 +239,7 @@ const Contacts = () => {
         <Title>{i18n.t("contacts.title")}</Title>
         <MainHeaderButtonsWrapper>
           <TextField
+            size="small"
             placeholder={i18n.t("contacts.searchPlaceholder")}
             type="search"
             value={searchParam}
@@ -279,7 +281,7 @@ const Contacts = () => {
                 {i18n.t("contacts.table.whatsapp")}
               </TableCell>
               <TableCell align="center">
-                {i18n.t("contacts.table.email")}
+                {i18n.t("contacts.table.isAssistantActive")}
               </TableCell>
               <TableCell align="center">
                 {i18n.t("contacts.table.actions")}
@@ -295,7 +297,10 @@ const Contacts = () => {
                   </TableCell>
                   <TableCell>{contact.name}</TableCell>
                   <TableCell align="center">{contact.number}</TableCell>
-                  <TableCell align="center">{contact.email}</TableCell>
+                  <TableCell align="center">
+                    {contact.isAssistantActive ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />
+                    }
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton
                       size="small"

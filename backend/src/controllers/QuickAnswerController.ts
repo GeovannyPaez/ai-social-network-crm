@@ -44,6 +44,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
   try {
     await QuickAnswerSchema.validate(newQuickAnswer);
   } catch (err) {
+    // @ts-ignore
     throw new AppError(err.message);
   }
 
@@ -84,6 +85,7 @@ export const update = async (
   try {
     await schema.validate(quickAnswerData);
   } catch (err) {
+    // @ts-ignore
     throw new AppError(err.message);
   }
 

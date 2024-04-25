@@ -33,6 +33,7 @@ interface ContactData {
   name: string;
   number: string;
   email?: string;
+  isAsisstantActive?: boolean;
   extraInfo?: ExtraInfo[];
 }
 
@@ -67,12 +68,14 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     name: Yup.string().required(),
     number: Yup.string()
       .required()
-      .matches(/^\d+$/, "Invalid number format. Only numbers is allowed.")
+      .matches(/^\d+$/, "Invalid number format. Only numbers is allowed."),
+    isAssistantActive: Yup.boolean(),
   });
 
   try {
     await schema.validate(newContact);
   } catch (err) {
+    // @ts-ignore
     throw new AppError(err.message);
   }
 
@@ -85,13 +88,14 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
   let number = validNumber
   let email = newContact.email
   let extraInfo = newContact.extraInfo
-
+  let isAssistantActive = newContact.isAsisstantActive
   const contact = await CreateContactService({
     name,
     number,
     email,
     extraInfo,
     profilePicUrl,
+    isAssistantActive,
     userParentId: parentId
   });
 
@@ -124,12 +128,14 @@ export const update = async (
     number: Yup.string().matches(
       /^\d+$/,
       "Invalid number format. Only numbers is allowed."
-    )
+    ),
+    isAssistantActive: Yup.boolean(),
   });
 
   try {
     await schema.validate(contactData);
   } catch (err) {
+    // @ts-ignore
     throw new AppError(err.message);
   }
 

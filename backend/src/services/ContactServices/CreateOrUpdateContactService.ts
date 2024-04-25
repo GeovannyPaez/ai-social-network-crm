@@ -1,4 +1,3 @@
-import { build } from "factory-girl";
 import { getIO } from "../../libs/socket";
 import Contact from "../../models/Contact";
 import buildParentChannelString from "../../helpers/BuildParentChannelString";
@@ -15,6 +14,7 @@ interface Request {
   email?: string;
   userParentId?: number | null;
   profilePicUrl?: string;
+  isAssistantActive?: boolean;
   extraInfo?: ExtraInfo[];
 }
 
@@ -25,7 +25,8 @@ const CreateOrUpdateContactService = async ({
   isGroup,
   email = "",
   extraInfo = [],
-  userParentId = null
+  userParentId = null,
+  isAssistantActive = false
 }: Request): Promise<Contact> => {
   const number = isGroup ? rawNumber : rawNumber.replace(/[^0-9]/g, "");
 
@@ -50,7 +51,8 @@ const CreateOrUpdateContactService = async ({
       email,
       isGroup,
       extraInfo,
-      userParentId
+      userParentId,
+      isAssistantActive
     });
 
     io.to(channelToEmitSocket).emit("contact", {

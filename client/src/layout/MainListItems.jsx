@@ -1,4 +1,4 @@
-import  { useContext, useEffect, useState,useMemo,forwardRef } from "react";
+import { useContext, useEffect, useState, useMemo, forwardRef } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   ListItem,
@@ -7,8 +7,10 @@ import {
   ListSubheader,
   Divider,
   Badge,
+  Tooltip,
 } from "@mui/material";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -27,24 +29,24 @@ function ListItemLink(props) {
 
   const renderLink = useMemo(
     () =>
-    // eslint-disable-next-line react/display-name
-    forwardRef((itemProps, ref) => (
+      // eslint-disable-next-line react/display-name
+      forwardRef((itemProps, ref) => (
         <RouterLink to={to} ref={ref} {...itemProps} />
       )),
     [to]
   );
 
   return (
-  
-      <ListItem button component={renderLink} className={className}>
-        {icon && <ListItemIcon>{icon}</ListItemIcon>}
-        <ListItemText primary={primary} />
-      </ListItem>
+
+    <ListItem button component={renderLink} className={className}>
+      {icon && <ListItemIcon>{icon}</ListItemIcon>}
+      <ListItemText primary={primary} />
+    </ListItem>
   );
 }
 
 const MainListItems = ({ drawerClose }) => {
-  
+
   const { whatsApps } = useContext(WhatsAppsContext);
   const { user } = useContext(AuthContext);
   const [connectionWarning, setConnectionWarning] = useState(false);
@@ -77,33 +79,52 @@ const MainListItems = ({ drawerClose }) => {
         <ListItemLink
           to="/"
           primary="Dashboard"
-          icon={<DashboardOutlinedIcon color="secondary" />}
+          icon={
+            <Tooltip placement="right" title="Dashboard">
+              <DashboardOutlinedIcon color="secondary" />
+            </Tooltip>
+          }
         />
         <ListItemLink
           to="/connections"
           primary={i18n.t("mainDrawer.listItems.connections")}
           icon={
-            <Badge badgeContent={connectionWarning ? "!" : 0} color="error">
-              <SyncAltIcon color="secondary" />
-            </Badge>
+            <Tooltip placement="right" title={i18n.t("mainDrawer.listItems.connections")}>
+              <Badge badgeContent={connectionWarning ? "!" : 0} color="error">
+                <SyncAltIcon color="secondary" />
+              </Badge>
+            </Tooltip>
           }
         />
         <ListItemLink
           to="/tickets"
           primary={i18n.t("mainDrawer.listItems.tickets")}
-          icon={<WhatsAppIcon color="secondary" />}
+          icon={
+            <Tooltip placement="right"
+              title={i18n.t("mainDrawer.listItems.tickets")}
+            >
+              <WhatsAppIcon color="secondary" />
+            </Tooltip>
+          }
         />
-
         <ListItemLink
           to="/contacts"
           primary={i18n.t("mainDrawer.listItems.contacts")}
-          icon={<ContactPhoneOutlinedIcon color="secondary" />}
+          icon={
+            <Tooltip placement="right" title={i18n.t("mainDrawer.listItems.contacts")}>
+              <ContactPhoneOutlinedIcon color="secondary" />
+            </Tooltip>
+          }
         />
         <ListItemLink
           to="/quickAnswers"
           primary={i18n.t("mainDrawer.listItems.quickAnswers")}
-          icon={<QuestionAnswerOutlinedIcon color="secondary" />}
-          
+          icon={
+            <Tooltip placement="right" title={i18n.t("mainDrawer.listItems.quickAnswers")}>
+              <QuestionAnswerOutlinedIcon color="secondary" />
+            </Tooltip>
+          }
+
         />
         <Can
           role={user.profile}
@@ -117,17 +138,40 @@ const MainListItems = ({ drawerClose }) => {
               <ListItemLink
                 to="/users"
                 primary={i18n.t("mainDrawer.listItems.users")}
-                icon={<PeopleAltOutlinedIcon color="secondary" />}
+                icon={
+                  <Tooltip placement="right" title={i18n.t("mainDrawer.listItems.users")}>
+                    <PeopleAltOutlinedIcon color="secondary" />
+                  </Tooltip>
+                }
               />
               <ListItemLink
                 to="/queues"
                 primary={i18n.t("mainDrawer.listItems.queues")}
-                icon={<AccountTreeOutlinedIcon color="secondary" />}
+                icon={
+                  <Tooltip placement="right" title={i18n.t("mainDrawer.listItems.queues")}>
+                    <AccountTreeOutlinedIcon color="secondary" />
+                  </Tooltip>
+                }
+              />
+              <ListItemLink
+                to="/assistant"
+                primary={i18n.t("mainDrawer.listItems.assistant")}
+                icon={
+                  <Tooltip placement="right" title={i18n.t("mainDrawer.listItems.assistant")}>
+                    <SmartToyIcon color="secondary" />
+                  </Tooltip>
+                }
               />
               <ListItemLink
                 to="/settings"
                 primary={i18n.t("mainDrawer.listItems.settings")}
-                icon={<SettingsOutlinedIcon color="secondary" />}
+                icon={
+                  <Tooltip placement="right"
+                    title={i18n.t("mainDrawer.listItems.settings")}
+                  >
+                    <SettingsOutlinedIcon color="secondary" />
+                  </Tooltip>
+                }
               />
             </>
           )}

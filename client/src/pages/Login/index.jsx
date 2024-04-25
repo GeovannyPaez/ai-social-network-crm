@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import InputAdornment from "@mui/material/InputAdornment";
+import { Link } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { CssBaseline } from "@mui/material";
 
@@ -48,9 +49,12 @@ const Login = () => {
   };
 
   return (
-    <MainContainer maxWidth="xs">
+    <MainContainer maxWidth="xs" sx={{ justifyContent: "center", height: '100vh' }}>
       <CssBaseline />
-      <Logo />
+      <Logo style={{
+        width: '80px',
+        height: '80px',
+      }} />
       <Typography component="h1" style={{ marginTop: theme.spacing(3) }} variant="h5">
         {i18n.t("login.title")}
       </Typography>
@@ -104,14 +108,15 @@ const Login = () => {
         </Button>
         <Grid container justifyContent="center">
           <Grid item>
-            <RouterLink
+            <Link
               href="#"
               variant="body2"
+              // style={{ color: theme.palette.text.primary }}
               component={RouterLink}
               to="/signup"
             >
               {i18n.t("login.buttons.register")}
-            </RouterLink>
+            </Link>
           </Grid>
         </Grid>
       </StyledForm>

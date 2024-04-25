@@ -1,9 +1,9 @@
 import { styled } from "@mui/system";
 import Card from "@mui/material/Card";
-import Button from "@mui/material/Button";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import TicketHeaderSkeleton from "../TicketHeaderSkeleton";
 import { useNavigate } from "react-router-dom";
+import { IconButton, Stack } from "@mui/material";
 
 const TicketHeaderWrapper = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -11,7 +11,7 @@ const TicketHeaderWrapper = styled(Card)(({ theme }) => ({
   flex: "none",
   borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
   [theme.breakpoints.down("sm")]: {
-    flexWrap: "wrap",
+    flexWrap: "nowrap",
   },
 }));
 
@@ -27,10 +27,17 @@ const TicketHeader = ({ loading, children }) => {
         <TicketHeaderSkeleton />
       ) : (
         <TicketHeaderWrapper square>
-          <Button color="primary" onClick={handleBack}>
+          <IconButton color="primary" onClick={handleBack}>
             <ArrowBackIos />
-          </Button>
-          {children}
+          </IconButton>
+          <Stack
+            sx={{ width: "100%" }}
+            direction={"row"}
+            justifyContent={"space-between"}
+          >
+            {children}
+          </Stack>
+
         </TicketHeaderWrapper>
       )}
     </>

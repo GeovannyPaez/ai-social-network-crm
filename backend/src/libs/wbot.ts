@@ -52,7 +52,7 @@ export const initWbot = async ({
       }
 
       const args: String = process.env.CHROME_ARGS || "";
-
+      // const wwebVersion = "2.2411.2";
       const wbot: Session = new Client({
         session: sessionCfg,
         authStrategy: new LocalAuth({ clientId: "bd_" + whatsapp.id }),
@@ -61,6 +61,10 @@ export const initWbot = async ({
           // @ts-ignore
           browserWSEndpoint: process.env.CHROME_WS || undefined,
           args: args.split(" ")
+        },
+        webVersionCache: {
+          "remotePath": 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2410.1.html',
+          type: 'remote'
         }
       });
 
@@ -88,7 +92,8 @@ export const initWbot = async ({
       });
 
       wbot.on("auth_failure", async msg => {
-        console.error(
+
+        logger.error(
           `Session: ${sessionName} AUTHENTICATION FAILURE! Reason: ${msg}`
         );
 
@@ -136,6 +141,7 @@ export const initWbot = async ({
         resolve(wbot);
       });
     } catch (err) {
+      // @ts-ignore
       logger.error(err);
     }
   });
@@ -158,6 +164,7 @@ export const removeWbot = (whatsappId: number): void => {
       sessions.splice(sessionIndex, 1);
     }
   } catch (err) {
+    // @ts-ignore
     logger.error(err);
   }
 };

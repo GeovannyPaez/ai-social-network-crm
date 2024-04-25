@@ -10,6 +10,7 @@ interface ExtraInfo {
 interface ContactData {
   email?: string;
   number?: string;
+  isAssistantActive?: boolean;
   name?: string;
   extraInfo?: ExtraInfo[];
 }
@@ -25,7 +26,7 @@ const UpdateContactService = async ({
   contactId,
   userParentId
 }: Request): Promise<Contact> => {
-  const { email, name, number, extraInfo } = contactData;
+  const { email, name, number, extraInfo, isAssistantActive } = contactData;
 
   const contact = await Contact.findOne({
     where: { id: contactId, userParentId },
@@ -58,7 +59,8 @@ const UpdateContactService = async ({
   await contact.update({
     name,
     number,
-    email
+    email,
+    isAssistantActive
   });
 
   await contact.reload({

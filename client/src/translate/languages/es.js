@@ -65,7 +65,7 @@ const messages = {
           disconnectMessage: "Estás seguro? Deberá volver a leer el código QR",
         },
         buttons: {
-          add: "Agrega WhatsApp",
+          add: "Agregar",
           disconnect: "Desconectar",
           tryAgain: "Inténtalo de nuevo",
           qrcode: "QR CODE",
@@ -136,13 +136,14 @@ const messages = {
             "¿Quieres importar todos los contactos desde tu teléfono?",
         },
         buttons: {
-          import: "Importar Contactos",
-          add: "Agregar Contacto",
+          import: "Importar",
+          add: "Agregar",
         },
         table: {
           name: "Nombre",
           whatsapp: "WhatsApp",
           email: "Correo Electrónico",
+          isAssistantActive: "Asistente IA",
           actions: "Acciones",
         },
       },
@@ -150,6 +151,7 @@ const messages = {
         title: {
           add: "Agregar contacto",
           edit: "Editar contacto",
+          isAssistantActive: "Asistente IA",
         },
         form: {
           mainInfo: "Detalles del contacto",
@@ -186,8 +188,8 @@ const messages = {
       },
       queueModal: {
         title: {
-          add: "Agregar cola",
-          edit: "Editar cola",
+          add: "Agregar departamento",
+          edit: "Editar departamento",
         },
         form: {
           name: "Nombre",
@@ -228,7 +230,7 @@ const messages = {
         },
       },
       ticketsQueueSelect: {
-        placeholder: "Filas",
+        placeholder: "Departamentos",
       },
       tickets: {
         toasts: {
@@ -252,9 +254,9 @@ const messages = {
       transferTicketModal: {
         title: "Transferir Ticket",
         fieldLabel: "Escriba para buscar usuarios",
-        fieldQueueLabel: "Transferir a la cola",
+        fieldQueueLabel: "Transferir al departamento",
         fieldConnectionLabel: "Transferir to conexión",
-        fieldQueuePlaceholder: "Seleccione una cola",
+        fieldQueuePlaceholder: "Seleccione un departamento",
         fieldConnectionPlaceholder: "Seleccione una conexión",
         noOptions: "No se encontraron usuarios con ese nombre",
         buttons: {
@@ -263,7 +265,7 @@ const messages = {
         },
       },
       ticketsList: {
-        pendingHeader: "Cola",
+        pendingHeader: "Cola de espera",
         assignedHeader: "Trabajando en",
         noTicketsTitle: "¡Nada acá!",
         connectionTitle: "Conexión que se está utilizando actualmente.",
@@ -288,8 +290,9 @@ const messages = {
           connections: "Conexiones",
           tickets: "Tickets",
           contacts: "Contactos",
+          assistant: "Asistente AI",
           quickAnswers: "Respuestas rápidas",
-          queues: "Filas",
+          queues: "Departamentos",
           administration: "Administración",
           users: "Usuarios",
           settings: "Configuración",
@@ -305,24 +308,24 @@ const messages = {
         noTickets: "Sin notificaciones.",
       },
       queues: {
-        title: "Filas",
+        title: "Departamentos",
         table: {
           name: "Nombre",
           color: "Color",
           greeting: "Mensaje de saludo",
-          actions: "Comportamiento",
+          actions: "Acciones",
         },
         buttons: {
-          add: "Agregar cola",
+          add: "Agregar",
         },
         confirmationModal: {
           deleteTitle: "Eliminar",
           deleteMessage:
-            "¿Estás seguro? ¡Esta acción no se puede revertir! Los tickets en esa cola seguirán existiendo, pero ya no tendrán ninguna cola asignada.",
+            "¿Estás seguro? ¡Esta acción no se puede revertir! Los tickets en este departamento seguirán existiendo, pero ya no tendrán ningun deparatemento asignada.",
         },
       },
       queueSelect: {
-        inputLabel: "Filas",
+        inputLabel: "Departamentos",
       },
       quickAnswers: {
         title: "Respuestas rápidas",
@@ -332,7 +335,7 @@ const messages = {
           actions: "Acciones",
         },
         buttons: {
-          add: "Agregar respuesta rápida",
+          add: "Agregar",
         },
         toasts: {
           deleted: "Respuesta rápida eliminada correctamente",
@@ -354,7 +357,7 @@ const messages = {
           actions: "Acciones",
         },
         buttons: {
-          add: "Agregar usuario",
+          add: "Agregar",
         },
         toasts: {
           deleted: "Usuario borrado satisfactoriamente.",
@@ -362,7 +365,52 @@ const messages = {
         confirmationModal: {
           deleteTitle: "Borrar",
           deleteMessage:
-            "Toda la información del usuario se perderá. Los tickets abiertos de los usuarios se moverán a la cola.",
+            "Toda la información del usuario se perderá. Los tickets abiertos de los usuarios se moverán al departamento.",
+        },
+      },
+      assistant: {
+        header: {
+          title: "Asistente AI",
+          activationModal: {
+            actionButton: "Activar",
+            submitButton: "Guardar cambios",
+            cancelButton: "Cancelar",
+            description: "Para activar el asistente, cambie el estado a activado de cada uno de los  que necesite.",
+            title: "Activación",
+            success: "¡Cambios guardados satisfactoriamente!",
+          },
+          switch: {
+            active: "Activar asistente AI",
+            activeTooltip: "Se activara, y solo respondera a los contactos activados en la sección de contactos",
+            desactive: "Desactivar asistente AI",
+            isDesactivatedForAllTickets: "Activar para responder a todos los contactos",
+            isActivatedForAllTickets: "Desactivar para responder a solo los contactos activados",
+          },
+          save: "Guardar cambios"
+        },
+        test: {
+          title: "Prueba de chat con el asistente AI",
+          inputPlaceholder: "Escribe un mensaje...",
+          message: {
+            user: "Tú",
+            assistant: "Asistente",
+          }
+        },
+        configuration: {
+          title: "Configuración",
+          form: {
+            name: "Nombre",
+            openaiApiKey: "OpenAI API Key",
+            instructions: "Instrucciones",
+            maxTokens: "Máximo de tokens",
+            model: "Modelo AI",
+            tokens: "Tokens utilizados:",
+            saveButton: "Guardar cambios",
+            select: {
+              optionDescription: "Tokens de contexto",
+            },
+            success: "Configuración guardada satisfactoriamente.",
+          }
         },
       },
       settings: {
@@ -376,7 +424,15 @@ const messages = {
               disabled: "Deshabilitado",
             },
           },
-        },
+          openApiKey: {
+            name: "OpenAI API Key",
+            description: "Clave de API de OpenAI para el asistente AI.",
+            label: "OpenAI API Key",
+            button: {
+              save: "Guardar"
+            }
+          },
+        }
       },
       messagesList: {
         header: {
@@ -390,10 +446,11 @@ const messages = {
         },
       },
       messagesInput: {
-        placeholderOpen: "Escriba un mensaje o presione '' / '' para usar las respuestas rápidas registradas",
+        placeholderOpen: "Presione / para respuestas rapidas",
         placeholderClosed:
           "Vuelva a abrir o acepte este ticket para enviar un mensaje.",
         signMessage: "Firmar",
+        assistantTooltip: "Respuesta del asistente",
       },
       contactDrawer: {
         header: "Detalles del contacto",
@@ -430,6 +487,7 @@ const messages = {
           message: "Esta acción no puede ser revertida.",
         },
       },
+
       backendErrors: {
         ERR_NO_OTHER_WHATSAPP:
           "Debe haber al menos una conexión de WhatsApp predeterminada.",
@@ -465,10 +523,13 @@ const messages = {
         ERR_QUEUE_COLOR_ALREADY_EXISTS:
           "Este color ya está en uso, elija otro.",
         ERR_WAPP_GREETING_REQUIRED:
-          "El mensaje de saludo es obligatorio cuando hay más de una cola.",
+          "El mensaje de saludo es obligatorio cuando hay más de un departamento.",
+        ERR_OPENAI_API_INVALID: "Clave de API de OpenAI no válida.",
+        ERR_ASSISTANT_NOT_FOUND: "Por favor, guarde la configuración del asistente AI."
       },
-    },
+    }
   },
 };
+
 
 export { messages };

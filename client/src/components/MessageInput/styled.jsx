@@ -1,6 +1,6 @@
 
 
-import { Paper, CircularProgress, InputBase } from "@mui/material";
+import { Paper, CircularProgress, InputBase, Box } from "@mui/material";
 import { green } from "@mui/material/colors";
 import { styled } from "@mui/system";
 
@@ -86,8 +86,6 @@ export const MainWrapper = styled(Paper)(({ theme }) => ({
   alignItems: "center",
   borderTop: "1px solid rgba(0, 0, 0, 0.12)",
   [theme.breakpoints.down("sm")]: {
-    position: "fixed",
-    bottom: 0,
     width: "100%",
   },
 }));
@@ -115,12 +113,12 @@ export const EmojiBox = styled("div")({
 export const UploadInput = styled("input")({
   display: "none",
 });
-export const MessageInputWrapper = styled("div")({
+export const MessageInputWrapper = styled(Box)({
   padding: 6,
   marginRight: 7,
-  backgroundColor: "#a1a1a1",
-  display: "flex",
+  backgroundColor: "gray",
   borderRadius: 20,
+  display: "flex",
   flex: 1,
   position: "relative",
 });

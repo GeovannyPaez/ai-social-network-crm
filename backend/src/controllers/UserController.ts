@@ -52,6 +52,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     parentId: Number(req.user?.id)
   });
 
+
   const channelParentId = buildParentChannelString(user.parentId || user.id);
   const io = getIO();
   io.to(channelParentId).emit("user", {
