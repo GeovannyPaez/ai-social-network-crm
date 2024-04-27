@@ -4,7 +4,7 @@ import api from "./api";
 export function getAiRespose(messages, { ticketId = undefined } = {}) {
     const tokenAuth = localStorage.getItem("token");
     const token = tokenAuth.slice(1, -1);
-    const url = `${getBackendUrl()}aiResponse`
+    const url = `${getBackendUrl()}/aiResponse`
 
     if (ticketId) {
         url + `?tiketId=${ticketId}`
