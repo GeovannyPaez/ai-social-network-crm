@@ -11,8 +11,8 @@ import ShowTicketService from "../services/TicketServices/ShowTicketService";
 import CheckIsValidContact from "../services/WbotServices/CheckIsValidContact";
 import CheckContactNumber from "../services/WbotServices/CheckNumber";
 import GetProfilePicUrl from "../services/WbotServices/GetProfilePicUrl";
-import SendWhatsAppMedia from "../services/WbotServices/SendWhatsAppMedia";
-import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage";
+import VenomSendWhatsappMessage from "../services/WVenomServices.ts/VenomSendWhatsappMessage";
+import VenomSendMediaMessage from "../services/WVenomServices.ts/VenomSendMediaMessage";
 
 type WhatsappData = {
   whatsappId: number;
@@ -102,11 +102,11 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
   if (medias) {
     await Promise.all(
       medias.map(async (media: Express.Multer.File) => {
-        await SendWhatsAppMedia({ body, media, ticket: contactAndTicket });
+        await VenomSendMediaMessage({ body, media, ticket: contactAndTicket });
       })
     );
   } else {
-    await SendWhatsAppMessage({ body, ticket: contactAndTicket, quotedMsg });
+    await VenomSendWhatsappMessage({ body, ticket: contactAndTicket, quotedMsg });
   }
 
   return res.send();

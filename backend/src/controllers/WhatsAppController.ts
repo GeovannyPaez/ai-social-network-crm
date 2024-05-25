@@ -9,6 +9,7 @@ import ShowWhatsAppService from "../services/WhatsappService/ShowWhatsAppService
 import UpdateWhatsAppService from "../services/WhatsappService/UpdateWhatsAppService";
 import ListByUserParentWhatsappService from "../services/WhatsappService/ListByUserParentWhatsappService";
 import buildParentChannelString from "../helpers/BuildParentChannelString";
+import { VenomStartWhatsappSession } from "../services/WVenomServices.ts/VenomStartWhatsappSession";
 
 interface WhatsappData {
   name: string;
@@ -46,7 +47,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
     userId: parentId
   });
   const parentIdChannel = buildParentChannelString(parentId);
-  StartWhatsAppSession({ whatsapp, channelToEmitSocket: parentIdChannel, userParentId: parentId });
+  VenomStartWhatsappSession({ whatsapp, channelToEmitSocket: parentIdChannel, userParentId: parentId });
 
   const io = getIO();
   io.to(parentIdChannel).emit("whatsapp", {

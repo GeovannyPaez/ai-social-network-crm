@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(Sentry.Handlers.requestHandler());
 app.use("/public", express.static(uploadConfig.directory));
 app.use(routes);
-
+require("./libs/passport");
 app.use(Sentry.Handlers.errorHandler());
 
 app.use(async (err: Error, req: Request, res: Response, _: NextFunction) => {
