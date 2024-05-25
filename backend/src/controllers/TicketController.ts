@@ -6,10 +6,10 @@ import DeleteTicketService from "../services/TicketServices/DeleteTicketService"
 import ListTicketsService from "../services/TicketServices/ListTicketsService";
 import ShowTicketService from "../services/TicketServices/ShowTicketService";
 import UpdateTicketService from "../services/TicketServices/UpdateTicketService";
-import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage";
 import ShowWhatsAppService from "../services/WhatsappService/ShowWhatsAppService";
 import formatBody from "../helpers/Mustache";
 import BuildNotificationParentChannel from "../helpers/BuildNotificationParentChannel";
+import VenomSendWhatsappMessage from "../services/WVenomServices.ts/VenomSendWhatsappMessage";
 
 type IndexQuery = {
   searchParam: string;
@@ -101,7 +101,7 @@ export const update = async (
     const { farewellMessage } = whatsapp;
 
     if (farewellMessage) {
-      await SendWhatsAppMessage({
+      await VenomSendWhatsappMessage({
         body: formatBody(farewellMessage, ticket.contact),
         ticket
       });

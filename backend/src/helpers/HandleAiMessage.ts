@@ -2,7 +2,7 @@ import Assistant from "../models/Assistant"
 import Message from "../models/Message"
 import Ticket from "../models/Ticket"
 import ShowTicketService from "../services/TicketServices/ShowTicketService"
-import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage"
+import VenomSendWhatsappMessage from "../services/WVenomServices.ts/VenomSendWhatsappMessage"
 import { logger } from "../utils/logger"
 import GetAiResponse from "./GetAiResponse"
 import { ResponseOpenAiChatCompletions } from "./ResponseOpenaiChatCompletions"
@@ -45,7 +45,7 @@ export const handleAiMessage = async ({
             return
         }
         logger.info(`AI response: ${aiResponse.message} to ticket: ${ticket.id}`)
-        await SendWhatsAppMessage({
+        await VenomSendWhatsappMessage({
             body: aiResponse.message,
             ticket: ticketWitIncludes
         })

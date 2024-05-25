@@ -124,7 +124,7 @@ const Settings = () => {
 								Manual
 							</Button>
 						</a>
-						<a rel="noreferrer" target="_blank" href={"https://api.whatsapp.com/send/?phone=%2B573158227811&text&type=phone_number&app_absent=0"}>
+						<a rel="noreferrer" target="_blank" href={"https://api.whatsapp.com/send/?phone=%2B573175536413&text&type=phone_number&app_absent=0"}>
 							<Button size="small" variant="contained" color="primary">Soporte</Button>
 						</a>
 					</Box>

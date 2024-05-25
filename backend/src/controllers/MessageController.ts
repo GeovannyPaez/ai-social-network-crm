@@ -7,8 +7,8 @@ import Message from "../models/Message";
 import ListMessagesService from "../services/MessageServices/ListMessagesService";
 import ShowTicketService from "../services/TicketServices/ShowTicketService";
 import DeleteWhatsAppMessage from "../services/WbotServices/DeleteWhatsAppMessage";
-import SendWhatsAppMedia from "../services/WbotServices/SendWhatsAppMedia";
-import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage";
+import VenomSendWhatsappMessage from "../services/WVenomServices.ts/VenomSendWhatsappMessage";
+import VenomSendMediaMessage from "../services/WVenomServices.ts/VenomSendMediaMessage";
 
 type IndexQuery = {
   pageNumber: string;
@@ -47,11 +47,11 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
   if (medias) {
     await Promise.all(
       medias.map(async (media: Express.Multer.File) => {
-        await SendWhatsAppMedia({ media, ticket });
+        await VenomSendMediaMessage({ media, ticket });
       })
     );
   } else {
-    await SendWhatsAppMessage({ body, ticket, quotedMsg });
+    await VenomSendWhatsappMessage({ body, ticket, quotedMsg });
   }
 
   return res.send();
