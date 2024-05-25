@@ -31,7 +31,6 @@ export const initWbot = async ({
         try {
             const io = getIO();
             const sessionName = whatsapp.name;
-
             create(
                 buildSessionName(whatsapp.id),
                 (base64Qrimg, asciiQR, attempts, urlCode) => {
@@ -48,6 +47,10 @@ export const initWbot = async ({
                 },
                 {
                     logQR: false,
+                    puppeteerOptions: {
+                        executablePath: process.env.CHROME_BIN || undefined,
+                    },
+                    browserWS: process.env.CHROME_WS || undefined,
                 }
 
             ).then((wbot) => {
