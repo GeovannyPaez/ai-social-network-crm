@@ -48,7 +48,7 @@ const verifyQuotedMessage = async (
 ): Promise<Message | null> => {
     if (!msg.quotedMsgObj) return null;
     // @ts-ignore
-    const wbotQuotedMsg = msg.quotedMsgObj.id;
+    const wbotQuotedMsg = msg.quotedMsgObj.id.id;
 
     const quotedMsg = await Message.findOne({
         where: { id: wbotQuotedMsg }
