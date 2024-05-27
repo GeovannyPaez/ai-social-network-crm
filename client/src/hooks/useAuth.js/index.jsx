@@ -35,11 +35,11 @@ const useAuth = () => {
 			if (error?.response?.status === 403 && !originalRequest._retry) {
 				originalRequest._retry = true;
 
-				const { data } = await api.post("/auth/refresh_token");
-				if (data) {
-					localStorage.setItem("token", JSON.stringify(data.token));
-					api.defaults.headers.Authorization = `Bearer ${data.token}`;
-				}
+				// const { data } = await api.post("/auth/refresh_token", {}, { withCredentials: true });
+				// if (data) {
+				// 	localStorage.setItem("token", JSON.stringify(data.token));
+				// 	api.defaults.headers.Authorization = `Bearer ${data.token}`;
+				// }
 				return api(originalRequest);
 			}
 			if (error?.response?.status === 401) {
@@ -56,10 +56,10 @@ const useAuth = () => {
 		(async () => {
 			if (token) {
 				try {
-					const { data } = await api.post("/auth/refresh_token");
-					api.defaults.headers.Authorization = `Bearer ${data.token}`;
+					api.defaults.headers.Authorization = `Bearer ${token}`;
+					const { data } = await api.get("/users/profile", {}, { withCredentials: true });
 					setIsAuth(true);
-					setUser(data.user);
+					setUser(data);
 				} catch (err) {
 					toastError(err);
 				}

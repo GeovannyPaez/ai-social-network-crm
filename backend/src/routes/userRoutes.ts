@@ -9,6 +9,8 @@ userRoutes.get("/users", isAuth, UserController.index);
 
 userRoutes.post("/users", isAuth, UserController.store);
 
+userRoutes.get("/users/profile", isAuth, UserController.profile);
+
 userRoutes.put("/users/:userId", isAuth, UserController.update);
 
 userRoutes.get("/users/:userId", isAuth, UserController.show);

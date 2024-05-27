@@ -116,3 +116,10 @@ export const remove = async (
 
   return res.status(200).json({ message: "User deleted" });
 };
+export const profile = async (req: Request, res: Response): Promise<Response> => {
+  const { id } = req.user;
+
+  const user = await ShowUserService(id);
+
+  return res.status(200).json(user);
+};
