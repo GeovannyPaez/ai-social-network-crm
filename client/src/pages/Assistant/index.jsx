@@ -89,7 +89,7 @@ export default function AssistantPage() {
                                         <Tab label="Configuración" value="1" />
                                         <Tab label="Prueba" value="2" />
                                     </TabList>
-                                    <TabPanel sx={{ padding: 0 }} value="1">
+                                    <TabPanel sx={{ padding: 1 }} value="1">
                                         <AssistantConfiguration
                                             onChangeKeyFromAsisstant={onChangeKeyFromAsisstant}
                                             assistant={assistant || initialState}

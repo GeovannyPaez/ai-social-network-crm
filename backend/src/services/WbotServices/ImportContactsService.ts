@@ -1,9 +1,10 @@
 import GetDefaultWhatsApp from "../../helpers/GetDefaultWhatsApp";
-import { getWbot } from "../../libs/wbot";
+import { getWbot } from "../../libs/venom-bot";
 import Contact from "../../models/Contact";
 import { logger } from "../../utils/logger";
+import { Contact as VContact } from "venom-bot";
 
-const ImportContactsService = async (userId:number): Promise<void> => {
+const ImportContactsService = async (userId: number): Promise<void> => {
   const defaultWhatsapp = await GetDefaultWhatsApp(userId);
 
   const wbot = getWbot(defaultWhatsapp.id);
@@ -11,28 +12,28 @@ const ImportContactsService = async (userId:number): Promise<void> => {
   let phoneContacts;
 
   try {
-    phoneContacts = await wbot.getContacts();
+    phoneContacts = await wbot.getAllContacts() as VContact[];
   } catch (err) {
     logger.error(`Could not get whatsapp contacts from phone. Err: ${err}`);
   }
 
   if (phoneContacts) {
     await Promise.all(
-      phoneContacts.map(async ({ number, name }) => {
-        if (!number) {
+      phoneContacts.map(async ({ id, name }) => {
+        if (!id) {
           return null;
         }
         if (!name) {
-          name = number;
+          name = id.user;
         }
 
         const numberExists = await Contact.findOne({
-          where: { number }
+          where: { number: id.user }
         });
 
         if (numberExists) return null;
 
-        return Contact.create({ number, name });
+        return await Contact.create({ number: id.user, name });
       })
     );
   }

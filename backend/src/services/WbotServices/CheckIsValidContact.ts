@@ -1,6 +1,6 @@
 import AppError from "../../errors/AppError";
 import GetDefaultWhatsApp from "../../helpers/GetDefaultWhatsApp";
-import { getWbot } from "../../libs/wbot";
+import { getWbot } from "../../libs/venom-bot";
 
 const CheckIsValidContact = async (number: string): Promise<void> => {
   const defaultWhatsapp = await GetDefaultWhatsApp();
@@ -8,7 +8,7 @@ const CheckIsValidContact = async (number: string): Promise<void> => {
   const wbot = getWbot(defaultWhatsapp.id);
 
   try {
-    const isValidNumber = await wbot.isRegisteredUser(`${number}@c.us`);
+    const isValidNumber = await wbot.getContact(`${number}@c.us`);
     if (!isValidNumber) {
       throw new AppError("invalidNumber");
     }
